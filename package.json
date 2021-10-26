@@ -1,0 +1,25 @@
+{
+    "name": "js-data-explorer",
+    "version": "0.0.0",
+    "description": "jsDataExplorer",
+    "author": "",
+    "scripts": {
+        "build": "webpack"
+    },
+    "keywords": [],
+    "devDependencies": {
+        "@types/node": "latest",
+        "@types/webpack": "latest",
+        "clean-webpack-plugin": "latest",
+        "copy-webpack-plugin": "latest",
+        "declaration-bundler-webpack-plugin": "latest",
+        "ts-loader": "latest",
+        "typedoc": "latest",
+        "typedoc-webpack-plugin": "latest",
+        "typescript": "latest",
+        "uglifyjs-webpack-plugin": "latest",
+        "webpack": "latest",
+        "webpack-cli": "latest",
+        "wepack-cli": "latest"
+    }
+}
