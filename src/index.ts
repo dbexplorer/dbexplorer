@@ -1,2 +1,1 @@
-export * from './elements/table';
-
+import { Table } from "./nodes/table";
