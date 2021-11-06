@@ -25,12 +25,19 @@ export class TableRowViewModel {
   constructor() {}
   updateCallback: (data: TableCellViewModel[]) => any;
 }
+export class TableColumnDescription {
+  name: string;
+  title?: string;
+}
 export class TableViewModel {
+  private columns: TableColumnDescription[];
   loadData() {
     this.getDataCallback((data) => {});
   }
   rows: TableRowViewModel;
   getDataCallback: (ready: any) => void;
-  constructor() {}
+  constructor(columns: TableColumnDescription[]) {
+      this.columns = columns;
+  }
   addRowsCallback: (rows: TableRowViewModel[]) => any;
 }
