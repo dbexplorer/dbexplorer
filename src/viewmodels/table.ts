@@ -1,6 +1,6 @@
 export class TableCellViewModel {
   private text: string;
-  setText(text) {
+  setText(text: string) {
     this.text = text;
     this.updateCallback(this.text);
   }
