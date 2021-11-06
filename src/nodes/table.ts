@@ -1,8 +1,8 @@
-export class TableCell {
+export class TableCellNode {
   constructor() {}
 }
 
-export class TableRow {
+export class TableRowNode {
   constructor() {}
 }
 
