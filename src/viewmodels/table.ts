@@ -22,7 +22,9 @@ export class TableRowViewModel {
       this.cells = data.map((s) => new TableCellViewModel(s));
     }
   }
-  constructor() {}
+  constructor(data: string[]) {
+    this.setCellsText(data);
+  }
   updateCallback: (data: TableCellViewModel[]) => any;
 }
 export class TableColumnDescription {
@@ -31,13 +33,25 @@ export class TableColumnDescription {
 }
 export class TableViewModel {
   private columns: TableColumnDescription[];
-  loadData() {
-    this.getDataCallback((data) => {});
+  loadData(limit: number, offset: number) {
+    this.getDataCallback(limit, offset, (data: any) => {
+      this.addRowsCallback(
+        data.map(
+          (rowData: any) =>
+            new TableRowViewModel(
+              this.columns.map((col) => rowData[col.name].toString())
+            )
+        )
+      );
+    });
   }
   rows: TableRowViewModel;
-  getDataCallback: (ready: any) => void;
+  getDataCallback: (limit: number, offset: number, ready: any) => void;
   constructor(columns: TableColumnDescription[]) {
-      this.columns = columns;
+    this.columns = columns;
+  }
+  getColumns() {
+    return this.columns;
   }
   addRowsCallback: (rows: TableRowViewModel[]) => any;
 }
