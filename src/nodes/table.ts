@@ -58,11 +58,12 @@ export class TableHeaderRowNode extends TableRowNode {
 }
 
 export class TableNode extends BaseNode {
-  tableHTMLElement: HTMLTableElement;
-  tableHeadElement: HTMLTableSectionElement;
-  tableBodyElement: HTMLTableSectionElement;
+  private tableHTMLElement: HTMLTableElement;
+  private tableHeadElement: HTMLTableSectionElement;
+  private tableBodyElement: HTMLTableSectionElement;
+  private tableFootElement: HTMLTableSectionElement;
 
-  tableRowNodes: TableRowNode[] = [];
+  private tableRowNodes: TableRowNode[] = [];
 
   constructor(private viewModel: TableViewModel) {
     super();
@@ -70,6 +71,8 @@ export class TableNode extends BaseNode {
 
     this.tableHTMLElement = document.createElement("table");
     this.tableHeadElement = this.tableHTMLElement.createTHead();
+    this.tableFootElement = this.tableHTMLElement.createTFoot();
+    this.fillFooter();
 
     const tableCaptions = new TableHeaderRowNode(
       viewModel.headerViewModel.captionsViewModel
@@ -78,7 +81,15 @@ export class TableNode extends BaseNode {
     this.tableHeadElement.appendChild(tableCaptions.element());
     this.tableBodyElement = this.tableHTMLElement.createTBody();
 
-    this.viewModel.loadData(2, 0);
+    this.viewModel.loadData();
+  }
+  fillFooter() {
+    const button = document.createElement("button");
+    button.textContent = "Load more data...";
+    button.onclick = () => {
+      this.viewModel.loadData();
+    };
+    this.tableFootElement.appendChild(button);
   }
   addRows = (data: []) => {
     data.forEach((rowViewModel) => {

@@ -42,18 +42,25 @@ export class TableColumnDescription {
 
 export class TableViewModel {
   private columns: TableColumnDescription[];
+  private dataOffset: number = 0;
+  dataPartRowCount: number = 10;
   headerViewModel: TableHeaderViewModel;
-  loadData(limit: number, offset: number) {
-    this.getDataCallback(limit, offset, (data: any) => {
-      this.addRowsCallback(
-        data.map(
-          (rowData: any) =>
-            new TableRowViewModel(
-              this.columns.map((col) => rowData[col.name].toString())
-            )
-        )
-      );
-    });
+  loadData() {
+    this.getDataCallback(
+      this.dataPartRowCount,
+      this.dataOffset,
+      (data: any) => {
+        this.dataOffset += this.dataPartRowCount;
+        this.addRowsCallback(
+          data.map(
+            (rowData: any) =>
+              new TableRowViewModel(
+                this.columns.map((col) => rowData[col.name].toString())
+              )
+          )
+        );
+      }
+    );
   }
   rows: TableRowViewModel[];
   getDataCallback: (limit: number, offset: number, ready: any) => void;
