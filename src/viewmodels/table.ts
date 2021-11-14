@@ -27,12 +27,22 @@ export class TableRowViewModel {
   }
   updateCallback: (data: TableCellViewModel[]) => any;
 }
+
+export class TableHeaderViewModel {
+  public captionsViewModel: TableRowViewModel;
+  constructor(captions: string[]) {
+    this.captionsViewModel = new TableRowViewModel(captions);
+  }
+}
+
 export class TableColumnDescription {
   name: string;
   title?: string;
 }
+
 export class TableViewModel {
   private columns: TableColumnDescription[];
+  headerViewModel: TableHeaderViewModel;
   loadData(limit: number, offset: number) {
     this.getDataCallback(limit, offset, (data: any) => {
       this.addRowsCallback(
@@ -45,10 +55,13 @@ export class TableViewModel {
       );
     });
   }
-  rows: TableRowViewModel;
+  rows: TableRowViewModel[];
   getDataCallback: (limit: number, offset: number, ready: any) => void;
   constructor(columns: TableColumnDescription[]) {
     this.columns = columns;
+    this.headerViewModel = new TableHeaderViewModel(
+      columns.map((col) => col.title || col.name)
+    );
   }
   getColumns() {
     return this.columns;

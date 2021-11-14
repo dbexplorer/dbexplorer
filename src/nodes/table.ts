@@ -1,14 +1,17 @@
 import { BaseNode } from "./basenode";
 import {
   TableCellViewModel,
-  TableColumnDescription,
   TableRowViewModel,
   TableViewModel
 } from "../viewmodels/table";
+
 export class TableCellNode {
   private cellHTMLElement: HTMLTableCellElement;
+  protected createElement(): HTMLTableCellElement {
+    return null;
+  }
   constructor(private viewModel: TableCellViewModel) {
-    this.cellHTMLElement = document.createElement("td");
+    this.cellHTMLElement = this.createElement();
     this.cellHTMLElement.innerHTML = viewModel.getText();
   }
   element(): HTMLElement {
@@ -16,19 +19,41 @@ export class TableCellNode {
   }
 }
 
+export class TableDataCellNode extends TableCellNode {
+  protected createElement() {
+    return document.createElement("td");
+  }
+}
+
+export class TableHeaderCellNode extends TableCellNode {
+  protected createElement() {
+    return document.createElement("th");
+  }
+}
+
 export class TableRowNode {
   private rowHTMLElement: HTMLTableRowElement;
   private tableCellNodes: TableCellNode[] = [];
+
+  protected createTableCellNode(cellViewModel: TableCellViewModel) {
+    return new TableDataCellNode(cellViewModel) as TableCellNode;
+  }
   constructor(private viewModel: TableRowViewModel) {
     this.rowHTMLElement = document.createElement("tr");
     this.viewModel.getCells().forEach((cellViewModel) => {
-      const tableCellNode = new TableCellNode(cellViewModel);
+      const tableCellNode = this.createTableCellNode(cellViewModel);
       this.tableCellNodes.push(tableCellNode);
       this.rowHTMLElement.appendChild(tableCellNode.element());
     });
   }
   element(): HTMLElement {
     return this.rowHTMLElement;
+  }
+}
+
+export class TableHeaderRowNode extends TableRowNode {
+  createTableCellNode(cellViewModel: TableCellViewModel) {
+    return new TableHeaderCellNode(cellViewModel);
   }
 }
 
@@ -45,13 +70,12 @@ export class TableNode extends BaseNode {
 
     this.tableHTMLElement = document.createElement("table");
     this.tableHeadElement = this.tableHTMLElement.createTHead();
-    const tr = document.createElement("tr");
-    this.viewModel.getColumns().forEach((col) => {
-      const th = document.createElement("th");
-      th.innerHTML = col.name;
-      tr.appendChild(th);
-    });
-    this.tableHeadElement.appendChild(tr);
+
+    const tableCaptions = new TableHeaderRowNode(
+      viewModel.headerViewModel.captionsViewModel
+    );
+
+    this.tableHeadElement.appendChild(tableCaptions.element());
     this.tableBodyElement = this.tableHTMLElement.createTBody();
 
     this.viewModel.loadData(2, 0);
