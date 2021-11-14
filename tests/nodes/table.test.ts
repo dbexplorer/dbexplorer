@@ -19,5 +19,7 @@ test("document test", () => {
     ]);
   };
   var table: TableNode = new TableNode(tableViewModel);
-  expect(table.element().outerHTML).toEqual("");
+  expect(table.element().outerHTML).toEqual(
+    "<table><thead><tr><th>f1</th><th>f2</th><th>f3</th></tr></thead><tbody><tr><td>1</td><td>one</td><td>first</td></tr><tr><td>2</td><td>two</td><td>second</td></tr></tbody></table>"
+  );
 });

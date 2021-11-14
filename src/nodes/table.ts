@@ -1,11 +1,35 @@
 import { BaseNode } from "./basenode";
-import { TableColumnDescription, TableViewModel } from "../viewmodels/table";
+import {
+  TableCellViewModel,
+  TableColumnDescription,
+  TableRowViewModel,
+  TableViewModel
+} from "../viewmodels/table";
 export class TableCellNode {
-  constructor() {}
+  private cellHTMLElement: HTMLTableCellElement;
+  constructor(private viewModel: TableCellViewModel) {
+    this.cellHTMLElement = document.createElement("td");
+    this.cellHTMLElement.innerHTML = viewModel.getText();
+  }
+  element(): HTMLElement {
+    return this.cellHTMLElement;
+  }
 }
 
 export class TableRowNode {
-  constructor() {}
+  private rowHTMLElement: HTMLTableRowElement;
+  private tableCellNodes: TableCellNode[] = [];
+  constructor(private viewModel: TableRowViewModel) {
+    this.rowHTMLElement = document.createElement("tr");
+    this.viewModel.getCells().forEach((cellViewModel) => {
+      const tableCellNode = new TableCellNode(cellViewModel);
+      this.tableCellNodes.push(tableCellNode);
+      this.rowHTMLElement.appendChild(tableCellNode.element());
+    });
+  }
+  element(): HTMLElement {
+    return this.rowHTMLElement;
+  }
 }
 
 export class TableNode extends BaseNode {
@@ -13,7 +37,9 @@ export class TableNode extends BaseNode {
   tableHeadElement: HTMLTableSectionElement;
   tableBodyElement: HTMLTableSectionElement;
 
-  constructor(public viewModel: TableViewModel) {
+  tableRowNodes: TableRowNode[] = [];
+
+  constructor(private viewModel: TableViewModel) {
     super();
     this.viewModel.addRowsCallback = this.addRows;
 
@@ -30,7 +56,13 @@ export class TableNode extends BaseNode {
 
     this.viewModel.loadData(2, 0);
   }
-  addRows(data: []) {}
+  addRows = (data: []) => {
+    data.forEach((rowViewModel) => {
+      const node = new TableRowNode(rowViewModel);
+      this.tableRowNodes.push(node);
+      this.tableBodyElement.appendChild(node.element());
+    });
+  };
 
   element(): HTMLElement {
     return this.tableHTMLElement;
