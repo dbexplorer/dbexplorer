@@ -1,6 +1,5 @@
 import { BaseNode } from "./basenode";
 import { TableColumnDescription, TableViewModel } from "../viewmodels/table";
-import { truncateSync } from "fs";
 export class TableCellNode {
   constructor() {}
 }
