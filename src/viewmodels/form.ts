@@ -1,8 +1,10 @@
+import { IBaseViewModel } from "./base";
 import { TableColumnDescription } from "./table";
 export class FormStringFieldViewModel {
   getName() {
     return this.columnDescription.name;
   }
+
   getTitle() {
     return this.columnDescription.title;
   }
@@ -22,7 +24,7 @@ export class FormStringFieldViewModel {
   updateCallback: (data: string) => any;
 }
 
-export class FormViewModel {
+export class FormViewModel implements IBaseViewModel {
   fields: FormStringFieldViewModel[] = [];
   constructor(private fieldsDescription: TableColumnDescription[]) {
     this.fields = fieldsDescription.map(
