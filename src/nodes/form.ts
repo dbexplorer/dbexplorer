@@ -12,9 +12,9 @@ export class FormInputFieldNode {
     this.fieldHTMLElement.appendChild(this.inputHTMLElement);
 
     this.labelHTMLElement.innerHTML = viewModel.getTitle();
-    this.inputHTMLElement.innerHTML = viewModel.getText();
+    this.inputHTMLElement.value = viewModel.getText();
     viewModel.updateCallback = (data: string) => {
-      this.inputHTMLElement.innerHTML = data;
+      this.inputHTMLElement.value = data;
     };
   }
   element(): HTMLElement {
@@ -33,6 +33,7 @@ export class FormNode {
       this.fieldNodes.push();
       this.formHTMLElement.appendChild(fieldNode.element());
     });
+    viewModel.reloadData();
   }
   element(): HTMLElement {
     return this.formHTMLElement;
