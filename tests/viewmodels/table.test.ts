@@ -35,7 +35,7 @@ test("First table test", () => {
   table.addRowsCallback = (data: TableRowViewModel[]) => {
     d = data.map((row) => row.getCells().map((cell) => cell.getText()));
   };
-  table.loadData(2, 0);
+  table.loadData();
   expect(d).toEqual([
     ["1", "one", "first"],
     ["2", "two", "second"]
