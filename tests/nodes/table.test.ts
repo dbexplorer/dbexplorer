@@ -24,10 +24,6 @@ test("document test", () => {
   var table: TableNode = new TableNode(tableViewModel);
   tableViewModel.loadData();
   tableViewModel.loadData();
-  expect(table.element().querySelector("thead").innerHTML).toEqual(
-    "<tr><th>f1</th><th>f2</th><th>f3</th></tr>"
-  );
-  expect(table.element().querySelector("tbody").innerHTML).toEqual(
-    "<tr><td>1</td><td>one</td><td>first</td></tr><tr><td>2</td><td>two</td><td>second</td></tr><tr><td>5</td><td>one</td><td>first</td></tr><tr><td>6</td><td>two</td><td>second</td></tr><tr><td>9</td><td>one</td><td>first</td></tr><tr><td>10</td><td>two</td><td>second</td></tr>"
-  );
+  expect(table.element().querySelector("thead")).toMatchSnapshot();
+  expect(table.element().querySelector("tbody")).toMatchSnapshot();
 });

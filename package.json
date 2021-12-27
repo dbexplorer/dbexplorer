@@ -4,15 +4,20 @@
   "description": "",
   "author": "",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "test": "jest"
   },
   "keywords": [],
   "devDependencies": {
+    "@babel/preset-env": "^7.16.5",
+    "@babel/preset-typescript": "^7.16.5",
+    "@types/jest": "^27.0.3",
     "@types/node": "latest",
     "@types/webpack": "latest",
     "clean-webpack-plugin": "latest",
     "copy-webpack-plugin": "latest",
     "declaration-bundler-webpack-plugin": "latest",
+    "jest": "^27.4.5",
     "ts-loader": "latest",
     "typedoc": "latest",
     "typedoc-webpack-plugin": "latest",

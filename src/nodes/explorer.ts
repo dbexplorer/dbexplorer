@@ -5,14 +5,14 @@ import { TableNode } from "../nodes/table";
 import { TableViewModel } from "../viewmodels/table";
 
 export class ExplorerPanelNode {
-  private panelHTMLElement: HTMLSectionElement;
+  private panelHTMLElement: HTMLDivElement;
   private closeButtonHTMLElement: HTMLDivElement;
   private containerHTMLElement: HTMLDivElement;
 
   protected containerNode: BaseNode;
 
   protected createElements() {
-    this.panelHTMLElement = document.createElement("section");
+    this.panelHTMLElement = document.createElement("div");
     this.closeButtonHTMLElement = document.createElement("div");
     this.containerHTMLElement = document.createElement("div");
     this.panelHTMLElement.appendChild(this.closeButtonHTMLElement);

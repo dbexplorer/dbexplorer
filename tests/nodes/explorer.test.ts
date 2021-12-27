@@ -11,7 +11,5 @@ test("table panel test", () => {
     panelViewModel
   );
   panel.element().querySelector("table").innerHTML = "";
-  expect(panel.element().innerHTML).toEqual(
-    "<tr><th>f1</th><th>f2</th><th>f3</th></tr>"
-  );
+  expect(panel.element()).toMatchSnapshot();
 });

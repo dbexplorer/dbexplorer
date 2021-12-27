@@ -10,13 +10,9 @@ test("Form field HTML test", () => {
   });
 
   var field: FormInputFieldNode = new FormInputFieldNode(fieldViewModel);
-  expect(field.element().outerHTML).toEqual(
-    "<div><label>field_1</label><input></div>"
-  );
+  expect(field.element()).toMatchSnapshot();
   fieldViewModel.setText("t1");
-  expect(field.element().outerHTML).toEqual(
-    "<div><label>field_1</label><input></div>"
-  );
+  expect(field.element()).toMatchSnapshot();
   expect(field.element().querySelector("input").value).toEqual("t1");
 });
 
@@ -40,9 +36,7 @@ test("Form HTML test", () => {
     ready({ f1: 1, f2: "one", f3: "first" });
   };
   var form: FormNode = new FormNode(formViewModel);
-  expect(form.element().outerHTML).toEqual(
-    '<form action="#"><div><label>field_1</label><input></div><div><label>field_2</label><input></div><div><label>field_3</label><input></div></form>'
-  );
+  expect(form.element()).toMatchSnapshot();
   expect(
     Array.from(form.element().querySelectorAll("input")).map((i) => i.value)
   ).toEqual(["1", "one", "first"]);
