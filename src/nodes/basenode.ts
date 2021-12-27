@@ -1,1 +1,5 @@
-export class BaseNode {}
+export class BaseNode {
+  element(): HTMLElement {
+    return null;
+  }
+}

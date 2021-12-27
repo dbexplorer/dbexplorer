@@ -4,7 +4,7 @@ import { TableViewModel } from "./table";
 
 export interface IExplorerOptions {}
 export class ExplorerPanelViewModel {
-  constructor(private dataViewModel: IBaseViewModel) {}
+  constructor(public dataViewModel: IBaseViewModel) {}
 }
 export class ExplorerViewModel {
   private panels: ExplorerPanelViewModel[] = [];
