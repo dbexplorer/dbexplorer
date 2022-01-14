@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`document test 1`] = `
+exports[`table test - load more 1`] = `
 <thead>
   <tr>
     <th>
@@ -16,7 +16,94 @@ exports[`document test 1`] = `
 </thead>
 `;
 
-exports[`document test 2`] = `
+exports[`table test - load more 2`] = `
+<tbody>
+  <tr>
+    <td>
+      1
+    </td>
+    <td>
+      one
+    </td>
+    <td>
+      first
+    </td>
+  </tr>
+  <tr>
+    <td>
+      2
+    </td>
+    <td>
+      two
+    </td>
+    <td>
+      second
+    </td>
+  </tr>
+  <tr>
+    <td>
+      5
+    </td>
+    <td>
+      one
+    </td>
+    <td>
+      first
+    </td>
+  </tr>
+  <tr>
+    <td>
+      6
+    </td>
+    <td>
+      two
+    </td>
+    <td>
+      second
+    </td>
+  </tr>
+  <tr>
+    <td>
+      9
+    </td>
+    <td>
+      one
+    </td>
+    <td>
+      first
+    </td>
+  </tr>
+  <tr>
+    <td>
+      10
+    </td>
+    <td>
+      two
+    </td>
+    <td>
+      second
+    </td>
+  </tr>
+</tbody>
+`;
+
+exports[`table test 1`] = `
+<thead>
+  <tr>
+    <th>
+      f1
+    </th>
+    <th>
+      f2
+    </th>
+    <th>
+      f3
+    </th>
+  </tr>
+</thead>
+`;
+
+exports[`table test 2`] = `
 <tbody>
   <tr>
     <td>

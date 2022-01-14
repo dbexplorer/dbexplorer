@@ -18,6 +18,23 @@ test("Field test", () => {
   expect(field.getTitle()).toEqual("field 1");
 });
 
+test("Field test update", () => {
+  var field = new FormStringFieldViewModel({
+    name: "f1",
+    title: "field 1"
+  });
+  var d = [];
+  field.updateCallback = (data: string) => {
+    d.push(data);
+  };
+  field.setText("test");
+  expect(d).toEqual(["test"]);
+  field.setText("test2");
+  expect(d).toEqual(["test", "test2"]);
+  field.setText("test2");
+  expect(d).toEqual(["test", "test2"]);
+});
+
 test("Form test", () => {
   var form = new FormViewModel([
     {

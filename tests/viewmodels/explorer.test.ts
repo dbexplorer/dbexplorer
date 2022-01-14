@@ -30,3 +30,19 @@ test("Explorer table test", () => {
     ["2", "two", "second"]
   ]);
 });
+
+
+test("Explorer add form panel test", () => {
+  var explorer = new ExplorerViewModel(dbDescription, {});
+  var actualEntityId, actualAttributes;
+  explorer.getDataCallback = (entityId, attributes, limit, offset, ready) => {
+    actualEntityId = entityId;
+    actualAttributes = attributes;
+    ready([
+      { table_key: 1, f1: "one", f2: "first" },
+      { table_key: 2, f1: "two", f2: "second" }
+    ]);
+  };
+  explorer.start("table");
+
+});

@@ -1,6 +1,7 @@
 import { IBaseViewModel } from "./base";
 import { DataBaseDescription, IDataBase, IDataEntity } from "../schema";
 import { TableViewModel } from "./table";
+import { FormViewModel } from "./form";
 
 export interface IExplorerOptions {}
 export class ExplorerPanelViewModel {
@@ -24,7 +25,17 @@ export class ExplorerViewModel {
     };
     this.panels.push(new ExplorerPanelViewModel(tableViewModel));
   }
-  private addFormPanel(entityId: string) {}
+  /*
+  private addFormPanel(entityId: string) {
+    const fields = this.description.getFormFields(entityId);
+    const attributes = fields.map((field) => field.name);
+    let formViewModel = new FormViewModel(fields);
+    formViewModel.getDataCallback = (ready) => {
+      this.getDataCallback(entityId, attributes, 0, 0, ready);
+    };
+    this.panels.push(new ExplorerPanelViewModel(formViewModel));
+  }
+  */
   public getDataCallback: (
     entityId: string,
     attributes: string[],

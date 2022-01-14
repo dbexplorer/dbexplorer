@@ -21,6 +21,9 @@ export class TableRowViewModel {
     if (!this.cells) {
       this.cells = data.map((s) => new TableCellViewModel(s));
     }
+    else {
+      data.map((s, idx) => this.cells[idx].setText(s));
+    }
   }
   constructor(data: string[]) {
     this.setCellsText(data);
@@ -69,9 +72,6 @@ export class TableViewModel {
     this.headerViewModel = new TableHeaderViewModel(
       columns.map((col) => col.title || col.name)
     );
-  }
-  getColumns() {
-    return this.columns;
   }
   addRowsCallback: (rows: TableRowViewModel[]) => any;
 }

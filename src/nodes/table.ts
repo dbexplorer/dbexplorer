@@ -5,11 +5,9 @@ import {
   TableViewModel
 } from "../viewmodels/table";
 
-export class TableCellNode {
+export abstract class TableCellNode {
   private cellHTMLElement: HTMLTableCellElement;
-  protected createElement(): HTMLTableCellElement {
-    return null;
-  }
+  protected abstract createElement(): HTMLTableCellElement;
   constructor(private viewModel: TableCellViewModel) {
     this.cellHTMLElement = this.createElement();
     this.cellHTMLElement.innerHTML = viewModel.getText();
@@ -62,6 +60,7 @@ export class TableNode extends BaseNode {
   private tableHeadElement: HTMLTableSectionElement;
   private tableBodyElement: HTMLTableSectionElement;
   private tableFootElement: HTMLTableSectionElement;
+  private loadMoreButtonElement: HTMLButtonElement;
 
   private tableRowNodes: TableRowNode[] = [];
 
@@ -84,12 +83,12 @@ export class TableNode extends BaseNode {
     this.viewModel.loadData();
   }
   fillFooter() {
-    const button = document.createElement("button");
-    button.textContent = "Load more data...";
-    button.onclick = () => {
+    this.loadMoreButtonElement = document.createElement("button");
+    this.loadMoreButtonElement.textContent = "Load more data...";
+    this.loadMoreButtonElement.onclick = () => {
       this.viewModel.loadData();
     };
-    this.tableFootElement.appendChild(button);
+    this.tableFootElement.appendChild(this.loadMoreButtonElement);
   }
   addRows = (data: []) => {
     data.forEach((rowViewModel) => {
