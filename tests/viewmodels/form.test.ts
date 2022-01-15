@@ -51,7 +51,7 @@ test("Form test", () => {
     }
   ]);
   form.getDataCallback = (ready) => {
-    ready({ f1: 1, f2: "one", f3: "first" });
+    ready([{ f1: 1, f2: "one", f3: "first" }]);
   };
   var d: string[] = [];
   form.fields.forEach((field) => {

@@ -1,4 +1,4 @@
-import { ExplorerPanelViewModel } from "../viewmodels/explorer";
+import { ExplorerPanelViewModel, ExplorerViewModel } from "../viewmodels/explorer";
 
 import { BaseNode } from "../nodes/basenode";
 import { TableNode } from "../nodes/table";
@@ -47,5 +47,28 @@ export class ExplorerFormPanelNode extends ExplorerPanelNode {
       this.viewModel.dataViewModel as FormViewModel
     );
     this.createElements();
+  }
+}
+
+export class ExplorerNode {
+  private explorerHTMLElement: HTMLDivElement;
+  private panelNodes: ExplorerPanelNode[];
+  private createPanelNode(viewModel: ExplorerPanelViewModel): ExplorerPanelNode{
+    if (viewModel.dataViewModel instanceof FormViewModel) {
+      return new ExplorerFormPanelNode(viewModel);
+    }
+    return new ExplorerTablePanelNode(viewModel);
+  }
+  constructor(private viewModel: ExplorerViewModel) {
+    this.explorerHTMLElement = document.createElement("div");
+    this.panelNodes = [];
+    viewModel.addPanelCallback = (panelViewModel) => {
+      const panel = this.createPanelNode(panelViewModel);
+      this.panelNodes.push(panel);
+      this.explorerHTMLElement.appendChild(panel.element());
+    }
+  }
+  element(): HTMLElement {
+    return this.explorerHTMLElement;
   }
 }

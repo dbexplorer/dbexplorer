@@ -33,7 +33,7 @@ test("Form HTML test", () => {
   ]);
 
   formViewModel.getDataCallback = (ready) => {
-    ready({ f1: 1, f2: "one", f3: "first" });
+    ready([{ f1: 1, f2: "one", f3: "first" }]);
   };
   var form: FormNode = new FormNode(formViewModel);
   expect(form.element()).toMatchSnapshot();

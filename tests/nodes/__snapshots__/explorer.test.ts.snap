@@ -1,5 +1,140 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`explorer test 1`] = `
+<div>
+  <div>
+    <div />
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              table_key
+            </th>
+            <th>
+              first
+            </th>
+            <th>
+              second
+            </th>
+          </tr>
+        </thead>
+        <tfoot>
+          <button>
+            Load more data...
+          </button>
+        </tfoot>
+        <tbody>
+          <tr>
+            <td>
+              1
+            </td>
+            <td>
+              one
+            </td>
+            <td>
+              first
+            </td>
+          </tr>
+          <tr>
+            <td>
+              2
+            </td>
+            <td>
+              two
+            </td>
+            <td>
+              second
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`explorer test 2`] = `
+<div>
+  <div>
+    <div />
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              table_key
+            </th>
+            <th>
+              first
+            </th>
+            <th>
+              second
+            </th>
+          </tr>
+        </thead>
+        <tfoot>
+          <button>
+            Load more data...
+          </button>
+        </tfoot>
+        <tbody>
+          <tr>
+            <td>
+              1
+            </td>
+            <td>
+              one
+            </td>
+            <td>
+              first
+            </td>
+          </tr>
+          <tr>
+            <td>
+              2
+            </td>
+            <td>
+              two
+            </td>
+            <td>
+              second
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div>
+    <div />
+    <div>
+      <form
+        action="#"
+      >
+        <div>
+          <label>
+            table_key
+          </label>
+          <input />
+        </div>
+        <div>
+          <label>
+            first
+          </label>
+          <input />
+        </div>
+        <div>
+          <label>
+            third
+          </label>
+          <input />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`form panel test 1`] = `
 <div>
   <div />

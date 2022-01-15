@@ -33,8 +33,9 @@ export class FormViewModel implements IBaseViewModel {
   }
   reloadData() {
     this.getDataCallback((data: any) => {
+      let dataRow = data[0];
       this.fields.forEach((field) =>
-        field.setText(data[field.getName()].toString())
+        field.setText(dataRow[field.getName()].toString())
       );
     });
   }

@@ -23,19 +23,27 @@ export class ExplorerViewModel {
     tableViewModel.getDataCallback = (limit, offset, ready) => {
       this.getDataCallback(entityId, attributes, limit, offset, ready);
     };
-    this.panels.push(new ExplorerPanelViewModel(tableViewModel));
+    const panel = new ExplorerPanelViewModel(tableViewModel);
+    this.panels.push(panel);
+    this.addPanelCallback(panel);
+
+    tableViewModel.exploreRowCallback = () => {
+      this.addFormPanel(entityId);
+    }
   }
-  /*
+  
   private addFormPanel(entityId: string) {
     const fields = this.description.getFormFields(entityId);
     const attributes = fields.map((field) => field.name);
     let formViewModel = new FormViewModel(fields);
     formViewModel.getDataCallback = (ready) => {
-      this.getDataCallback(entityId, attributes, 0, 0, ready);
+      this.getDataCallback(entityId, attributes, 1, 0, ready);
     };
-    this.panels.push(new ExplorerPanelViewModel(formViewModel));
+    const panel = new ExplorerPanelViewModel(formViewModel);
+    this.panels.push(panel);
+    this.addPanelCallback(panel);
   }
-  */
+  
   public getDataCallback: (
     entityId: string,
     attributes: string[],
@@ -43,6 +51,9 @@ export class ExplorerViewModel {
     offset: number,
     ready: (data: any) => void
   ) => void;
+  
+  public addPanelCallback: (viewModel: ExplorerPanelViewModel) => void;
+
   public start(entityId: string) {
     this.panels = [];
     this.addTablePanel(entityId);
