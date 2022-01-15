@@ -15,14 +15,14 @@ export interface IDataEntity {
 export interface IDataEntities {
   [key: string]: IDataEntity;
 }
-export interface IDataRelationship {}
+export interface IDataRelationship { }
 
 export interface IDataBase {
   entities: IDataEntities;
 }
 
 export class DataBaseDescription {
-  constructor(private database: IDataBase) {}
+  constructor(private database: IDataBase) { }
   public getTableColumns(entityId: string) {
     let columns = [];
     const attributes = this.database.entities[entityId].attributes;

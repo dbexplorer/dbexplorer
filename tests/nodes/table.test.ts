@@ -86,5 +86,5 @@ test("table test - row click", () => {
   }
 
   (<HTMLTableRowElement>table.element().querySelector("tbody tr")).onclick(null);
-  expect(d).toEqual([{"text": "1"}, {"text": "one"}, {"text": "first"}]);
+  expect(d).toEqual([{ "text": "1" }, { "text": "one" }, { "text": "first" }]);
 });

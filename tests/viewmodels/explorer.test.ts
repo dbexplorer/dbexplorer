@@ -8,7 +8,7 @@ import { FormViewModel } from "../../src/viewmodels/form";
 
 test("Explorer table test", () => {
   var explorer = new ExplorerViewModel(dbDescription, {});
-  
+
   var actualEntityId, actualAttributes;
   explorer.getDataCallback = (entityId, attributes, limit, offset, ready) => {
     actualEntityId = entityId;
@@ -45,13 +45,13 @@ test("Explorer add form panel test", () => {
   explorer.getDataCallback = (entityId, attributes, limit, offset, ready) => {
     actualEntityId = entityId;
     actualAttributes = attributes;
-    if(limit == 2) {
+    if (limit == 2) {
       ready([
         { table_key: 1, f1: "one", f2: "first" },
         { table_key: 2, f1: "two", f2: "second" }
       ]);
     }
-    if(limit == 1) {
+    if (limit == 1) {
       ready([
         { table_key: 1, f1: "one", f3: "third" },
       ]);

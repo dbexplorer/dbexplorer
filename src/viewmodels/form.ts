@@ -20,7 +20,7 @@ export class FormStringFieldViewModel {
   constructor(
     private columnDescription: TableColumnDescription,
     private text: string = null
-  ) {}
+  ) { }
   updateCallback: (data: string) => any;
 }
 

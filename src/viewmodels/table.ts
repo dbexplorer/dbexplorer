@@ -62,7 +62,7 @@ export class TableViewModel {
             )
             row.exploreCallback = () => {
               this.exploreRowCallback(row);
-            } 
+            }
             return row;
           }
         )
@@ -81,5 +81,5 @@ export class TableViewModel {
     this.rows = [];
   }
   addRowsCallback: (rows: TableRowViewModel[]) => any;
-  exploreRowCallback: (row: TableRowViewModel) => any; 
+  exploreRowCallback: (row: TableRowViewModel) => any;
 }

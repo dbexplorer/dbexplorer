@@ -32,13 +32,13 @@ test("form panel test", () => {
 test("explorer test", () => {
   var explorerViewModel = new ExplorerViewModel(dbDescription, {});
   explorerViewModel.getDataCallback = (entityId, attributes, limit, offset, ready) => {
-    if(limit > 1) {
+    if (limit > 1) {
       ready([
         { table_key: 1, f1: "one", f2: "first" },
         { table_key: 2, f1: "two", f2: "second" }
       ]);
     }
-    if(limit == 1) {
+    if (limit == 1) {
       ready([
         { table_key: 1, f1: "one", f3: "third" },
       ]);

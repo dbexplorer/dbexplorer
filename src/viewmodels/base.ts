@@ -1,1 +1,1 @@
-export interface IBaseViewModel {}
+export interface IBaseViewModel { }

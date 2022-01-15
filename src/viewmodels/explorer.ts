@@ -3,9 +3,9 @@ import { DataBaseDescription, IDataBase, IDataEntity } from "../schema";
 import { TableViewModel } from "./table";
 import { FormViewModel } from "./form";
 
-export interface IExplorerOptions {}
+export interface IExplorerOptions { }
 export class ExplorerPanelViewModel {
-  constructor(public dataViewModel: IBaseViewModel) {}
+  constructor(public dataViewModel: IBaseViewModel) { }
 }
 export class ExplorerViewModel {
   private panels: ExplorerPanelViewModel[] = [];
@@ -31,7 +31,7 @@ export class ExplorerViewModel {
       this.addFormPanel(entityId);
     }
   }
-  
+
   private addFormPanel(entityId: string) {
     const fields = this.description.getFormFields(entityId);
     const attributes = fields.map((field) => field.name);
@@ -43,7 +43,7 @@ export class ExplorerViewModel {
     this.panels.push(panel);
     this.addPanelCallback(panel);
   }
-  
+
   public getDataCallback: (
     entityId: string,
     attributes: string[],
@@ -51,7 +51,7 @@ export class ExplorerViewModel {
     offset: number,
     ready: (data: any) => void
   ) => void;
-  
+
   public addPanelCallback: (viewModel: ExplorerPanelViewModel) => void;
 
   public start(entityId: string) {

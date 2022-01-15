@@ -22,7 +22,7 @@ export class ExplorerPanelNode {
     this.containerHTMLElement.appendChild(this.containerNode.element());
   }
 
-  constructor() {}
+  constructor() { }
   element(): HTMLElement {
     return this.panelHTMLElement;
   }
@@ -53,7 +53,7 @@ export class ExplorerFormPanelNode extends ExplorerPanelNode {
 export class ExplorerNode {
   private explorerHTMLElement: HTMLDivElement;
   private panelNodes: ExplorerPanelNode[];
-  private createPanelNode(viewModel: ExplorerPanelViewModel): ExplorerPanelNode{
+  private createPanelNode(viewModel: ExplorerPanelViewModel): ExplorerPanelNode {
     if (viewModel.dataViewModel instanceof FormViewModel) {
       return new ExplorerFormPanelNode(viewModel);
     }

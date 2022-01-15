@@ -14,12 +14,12 @@ test("First table cell test", () => {
 });
 
 test("Table row test", () => {
-  var row = new TableRowViewModel(["a","b","c"]);
+  var row = new TableRowViewModel(["a", "b", "c"]);
   var d = [];
-  row.getCells().map((cell) => cell.updateCallback = (data) => { d.push(data)})
-  row.setCellsText(["e","f","g"]);
-  expect(row.getCells().map((cell) => cell.getText())).toEqual(["e","f","g"]);
-  expect(d).toEqual(["e","f","g"]);
+  row.getCells().map((cell) => cell.updateCallback = (data) => { d.push(data) })
+  row.setCellsText(["e", "f", "g"]);
+  expect(row.getCells().map((cell) => cell.getText())).toEqual(["e", "f", "g"]);
+  expect(d).toEqual(["e", "f", "g"]);
 })
 
 test("First table test", () => {
