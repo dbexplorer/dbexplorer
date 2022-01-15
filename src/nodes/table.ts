@@ -38,6 +38,9 @@ export class TableRowNode {
   }
   constructor(private viewModel: TableRowViewModel) {
     this.rowHTMLElement = document.createElement("tr");
+    this.rowHTMLElement.onclick = () => { 
+      this.viewModel.exploreCallback();
+    }
     this.viewModel.getCells().forEach((cellViewModel) => {
       const tableCellNode = this.createTableCellNode(cellViewModel);
       this.tableCellNodes.push(tableCellNode);

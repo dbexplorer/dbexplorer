@@ -29,6 +29,7 @@ export class TableRowViewModel {
     this.setCellsText(data);
   }
   updateCallback: (data: TableCellViewModel[]) => any;
+  exploreCallback: () => void;
 }
 
 export class TableHeaderViewModel {
@@ -54,14 +55,19 @@ export class TableViewModel {
       this.dataOffset,
       (data: any) => {
         this.dataOffset += this.dataPartRowCount;
-        this.addRowsCallback(
-          data.map(
-            (rowData: any) =>
-              new TableRowViewModel(
-                this.columns.map((col) => rowData[col.name].toString())
-              )
-          )
-        );
+        const rows = data.map(
+          (rowData: any) => {
+            const row = new TableRowViewModel(
+              this.columns.map((col) => rowData[col.name].toString())
+            )
+            row.exploreCallback = () => {
+              this.exploreRowCallback(row);
+            } 
+            return row;
+          }
+        )
+        this.rows = this.rows.concat(rows);
+        this.addRowsCallback(rows);
       }
     );
   }
@@ -72,6 +78,8 @@ export class TableViewModel {
     this.headerViewModel = new TableHeaderViewModel(
       columns.map((col) => col.title || col.name)
     );
+    this.rows = [];
   }
   addRowsCallback: (rows: TableRowViewModel[]) => any;
+  exploreRowCallback: (row: TableRowViewModel) => any; 
 }
