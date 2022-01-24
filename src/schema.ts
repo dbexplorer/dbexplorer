@@ -10,15 +10,22 @@ export interface IDataAttributes {
   [key: string]: IDataAttribute;
 }
 export interface IDataEntity {
+  title?: string;
   attributes: IDataAttributes;
 }
 export interface IDataEntities {
   [key: string]: IDataEntity;
 }
-export interface IDataRelationship { }
+export interface IDataRelationship {
+  title?: string;
+  parent: string;
+  child: string;
+  childKey: string | string[];
+}
 
 export interface IDataBase {
   entities: IDataEntities;
+  relationships: IDataRelationship[];
 }
 
 export class DataBaseDescription {
@@ -43,4 +50,16 @@ export class DataBaseDescription {
     }
     return fields;
   }
+  public getDownRelationships(entityId: string) {
+    return this.database.relationships
+      .filter(rel => rel.parent == entityId)
+      .map(rel => <any>{ entity: rel.child, key: rel.childKey, title: rel.title || this.database.entities[rel.child].title });
+  }
+  /*
+  public getUpRelationships(entityId: string) {
+    return this.database.relationships
+      .filter(rel => rel.child == entityId)
+      .map(rel => <any> { entity: rel.parent, key: rel.childKey, title: rel.title || this.database.entities[rel.child].title });
+  }
+  */
 }

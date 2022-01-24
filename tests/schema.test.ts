@@ -36,3 +36,15 @@ test("Database Schema tests  - fields", () => {
     }
   ]);
 });
+
+test("Database Schema tests  - relationships", () => {
+  const desc = new DataBaseDescription(dbDescription);
+  expect(desc.getDownRelationships("table")).toEqual([]);
+
+  expect(desc.getDownRelationships("child1")).toEqual([]);
+
+  expect(desc.getDownRelationships("child2")).toEqual([]);
+
+  expect(desc.getDownRelationships("grandchild")).toEqual([]);
+
+});
