@@ -39,12 +39,24 @@ test("Database Schema tests  - fields", () => {
 
 test("Database Schema tests  - relationships", () => {
   const desc = new DataBaseDescription(dbDescription);
-  expect(desc.getDownRelationships("table")).toEqual([]);
+  expect(desc.getDownRelationships("table")).toEqual([{
+    title: "c1 rel",
+    entity: "child1",
+    key: "e_key"
+  },
+  {
+    title: "child table 2",
+    entity: "child2",
+    key: "e_key"
+  }]);
 
-  expect(desc.getDownRelationships("child1")).toEqual([]);
+  expect(desc.getDownRelationships("child1")).toEqual([{
+    title: "grandchild table",
+    entity: "grandchild",
+    key: "c_key"
+  }]);
 
   expect(desc.getDownRelationships("child2")).toEqual([]);
 
   expect(desc.getDownRelationships("grandchild")).toEqual([]);
-
 });
