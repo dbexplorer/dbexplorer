@@ -1,5 +1,9 @@
 import { IBaseViewModel } from "./base";
 import { TableColumnDescription } from "./table";
+
+export class FormRelationshipDescription {
+  title: string;
+}
 export class FormStringFieldViewModel {
   getName() {
     return this.columnDescription.name;
@@ -24,12 +28,28 @@ export class FormStringFieldViewModel {
   updateCallback: (data: string) => any;
 }
 
+export class FormRelationshipViewModel {
+  getTitle() {
+    return this.relDescription.title;
+  }
+  constructor(
+    private relDescription: FormRelationshipDescription,
+  ) { }
+  updateCallback: (data: string) => any;
+}
+
 export class FormViewModel implements IBaseViewModel {
   fields: FormStringFieldViewModel[] = [];
-  constructor(private fieldsDescription: TableColumnDescription[]) {
+  rels: FormRelationshipViewModel[] = [];
+  constructor(private fieldsDescription: TableColumnDescription[], relDescriptions: FormRelationshipDescription[]) {
     this.fields = fieldsDescription.map(
       (field) => new FormStringFieldViewModel(field)
     );
+    if (relDescriptions) {
+      this.rels = relDescriptions.map(
+        (rel) => new FormRelationshipViewModel(rel)
+      );
+    }
   }
   reloadData() {
     this.getDataCallback((data: any) => {
