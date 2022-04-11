@@ -1,4 +1,4 @@
-import { ExplorerFormPanelNode, ExplorerNode, ExplorerTablePanelNode } from "../../src/nodes/explorer";
+import { ExplorerFormPanelNode, ExplorerNode, ExplorerTablePanelNode } from "../../src/vanilla/explorer";
 import { TableViewModel } from "../../src/viewmodels/table";
 import { ExplorerPanelViewModel, ExplorerViewModel } from "../../src/viewmodels/explorer";
 import { FormViewModel } from "../../src/viewmodels/form";

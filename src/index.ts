@@ -1,5 +1,5 @@
-import { FormNode } from "./nodes/form";
-import { TableNode } from "./nodes/table";
+import { FormNode } from "./vanilla/form";
+import { TableNode } from "./vanilla/table";
 import { FormViewModel } from "./viewmodels/form";
 import { TableViewModel } from "./viewmodels/table";
 

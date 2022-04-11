@@ -1,4 +1,4 @@
-import { FormInputFieldNode, FormNode } from "../../src/nodes/form";
+import { FormInputFieldNode, FormNode } from "../../src/vanilla/form";
 import {
   FormStringFieldViewModel,
   FormViewModel

@@ -1,4 +1,4 @@
-import { TableNode } from "../../src/nodes/table";
+import { TableNode } from "../../src/vanilla/table";
 import { TableViewModel } from "../../src/viewmodels/table";
 test("table test", () => {
   var tableViewModel = new TableViewModel([

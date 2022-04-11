@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form HTML test 1`] = `
+<form
+  action="#"
+>
+  <div>
+    <label>
+      field_1
+    </label>
+    <input
+      value=""
+    />
+  </div>
+  <div>
+    <label>
+      field_2
+    </label>
+    <input
+      value=""
+    />
+  </div>
+  <div>
+    <label>
+      field_3
+    </label>
+    <input
+      value=""
+    />
+  </div>
+</form>
+`;
+
+exports[`Form HTML test 2`] = `
+<form
+  action="#"
+>
+  <div>
+    <label>
+      field_1
+    </label>
+    <input
+      value="1"
+    />
+  </div>
+  <div>
+    <label>
+      field_2
+    </label>
+    <input
+      value="one"
+    />
+  </div>
+  <div>
+    <label>
+      field_3
+    </label>
+    <input
+      value="first"
+    />
+  </div>
+</form>
+`;
+
+exports[`Form field HTML test 1`] = `
+<div>
+  <label>
+    field_1
+  </label>
+  <input
+    value=""
+  />
+</div>
+`;
+
+exports[`Form field HTML test 2`] = `
+<div>
+  <label>
+    field_1
+  </label>
+  <input
+    value="t1"
+  />
+</div>
+`;

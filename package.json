@@ -9,15 +9,20 @@
   },
   "keywords": [],
   "devDependencies": {
-    "@babel/preset-env": "^7.16.5",
+    "@babel/plugin-transform-react-jsx": "^7.17.3",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.5",
-    "@types/jest": "^27.0.3",
+    "@testing-library/react": "^13.0.0",
+    "@types/jest": "^27.4.0",
     "@types/node": "latest",
+    "@types/react": "^18.0.0",
     "@types/webpack": "latest",
     "clean-webpack-plugin": "latest",
     "copy-webpack-plugin": "latest",
     "declaration-bundler-webpack-plugin": "latest",
     "jest": "^27.4.5",
+    "react-dom": "^18.0.0",
     "ts-loader": "latest",
     "typedoc": "latest",
     "typedoc-webpack-plugin": "latest",
@@ -26,5 +31,10 @@
     "webpack": "latest",
     "webpack-cli": "latest",
     "wepack-cli": "latest"
+  },
+  "dependencies": {
+    "@types/react-test-renderer": "^17.0.1",
+    "react": "^18.0.0",
+    "react-test-renderer": "^18.0.0"
   }
 }
