@@ -12,6 +12,10 @@ interface IState {
 export class Table extends React.Component<IProps, IState> {
   constructor(props: any) {
     super(props);
+    this.state = { rows: props.model.rows };
+    this.props.model.addRowsCallback = (data: []) => {
+      this.state = { rows: this.state.rows.concat(data).slice() };
+    };
   }
   getHeaderCells() {
     return this.props.model.headerViewModel.captionsViewModel.getCells();
@@ -22,7 +26,7 @@ export class Table extends React.Component<IProps, IState> {
   render() {
     return (
       <table>
-        <thead>{this.getHeaderCells().map((cell) => <th>{cell.getText()}</th>)}</thead>
+        <thead><tr>{this.getHeaderCells().map((cell) => <th>{cell.getText()}</th>)}</tr></thead>
         <tbody>
           {
             this.state.rows.map((row) => <TableRow model={row} />)

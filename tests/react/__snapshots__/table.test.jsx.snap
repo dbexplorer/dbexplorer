@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table cell test 1`] = `
+<td>
+  t1
+</td>
+`;
+
+exports[`Table cell test 2`] = `
+<td>
+  t2
+</td>
+`;
+
+exports[`Table row test 1`] = `
+<tr>
+  <td>
+    t1
+  </td>
+  <td>
+    t2
+  </td>
+</tr>
+`;
+
+exports[`Table row test 2`] = `
+<tr>
+  <td>
+    t3
+  </td>
+  <td>
+    t2
+  </td>
+</tr>
+`;
+
+exports[`Table test 1`] = `
+<table>
+  <thead>
+    <tr>
+      <th>
+        f1
+      </th>
+      <th>
+        f2
+      </th>
+      <th>
+        f3
+      </th>
+    </tr>
+  </thead>
+  <tbody />
+</table>
+`;
+
+exports[`Table test 2`] = `
+<table>
+  <thead>
+    <tr>
+      <th>
+        f1
+      </th>
+      <th>
+        f2
+      </th>
+      <th>
+        f3
+      </th>
+    </tr>
+  </thead>
+  <tbody />
+</table>
+`;
