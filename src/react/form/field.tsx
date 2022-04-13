@@ -6,16 +6,14 @@ interface IProps {
 }
 
 interface IState {
-  title: string;
   text: string;
 }
 export class FormInputField extends React.Component<IProps, IState> {
   constructor(props: any) {
     super(props);
     this.handleChange = this.handleChange.bind(this)
-    const model = props.model as FormStringFieldViewModel;
-    this.state = { title: model.getTitle(), text: model.getText() };
-    model.updateCallback = (data: string) => {
+    this.state = { text: props.model.getText() };
+    props.model.updateCallback = (data: string) => {
       this.setState({ text: data });
     };
   }
@@ -25,7 +23,7 @@ export class FormInputField extends React.Component<IProps, IState> {
   render() {
     return (
       <div>
-        <label>{this.state.title}</label>
+        <label>{this.props.model.getTitle()}</label>
         <input value={this.state.text} onChange={this.handleChange}></input>
       </div>
     );
