@@ -56,6 +56,67 @@ test("Table test", () => {
   act(() => {
     tableViewModel.loadData();
   })
+  expect(container.querySelector("tbody").childElementCount).toEqual(2);
   expect(container.firstChild).toMatchSnapshot();
 });
+test("table test - load more", () => {
+  var tableViewModel = new TableViewModel([
+    {
+      name: "f1"
+    },
+    {
+      name: "f2"
+    },
+    {
+      name: "f3"
+    }
+  ]);
+  tableViewModel.dataPartRowCount = 2;
+  tableViewModel.getDataCallback = (limit, offset, ready) => {
+    if (limit === 2) {
+      ready([
+        { f1: 1 + offset * 2, f2: "one", f3: "first" },
+        { f1: 2 + offset * 2, f2: "two", f3: "second" }
+      ]);
+    }
+  };
+  const { container } = render(<Table model={tableViewModel} />);
+  act(() => {
+    tableViewModel.loadData();
+  })
+  fireEvent.click(container.querySelector("tfoot button"));
+  expect(container.firstChild).toMatchSnapshot();
+});
+test("Table test - row click", () => {
+  var tableViewModel = new TableViewModel([
+    {
+      name: "f1"
+    },
+    {
+      name: "f2"
+    },
+    {
+      name: "f3"
+    }
+  ]);
+  tableViewModel.dataPartRowCount = 2;
+  tableViewModel.getDataCallback = (limit, offset, ready) => {
+    if (limit === 2) {
+      ready([
+        { f1: 1 + offset * 2, f2: "one", f3: "first" },
+        { f1: 2 + offset * 2, f2: "two", f3: "second" }
+      ]);
+    }
+  };
+  const { container } = render(<Table model={tableViewModel} />);
+  act(() => {
+    tableViewModel.loadData();
+  })
+  var d = [];
+  tableViewModel.exploreRowCallback = (data) => {
+    d = data.getCells().map(c => { return { text: c.text } });
+  }
 
+  fireEvent.click(container.querySelector("tbody tr"));
+  expect(d).toEqual([{ "text": "1" }, { "text": "one" }, { "text": "first" }]);
+});

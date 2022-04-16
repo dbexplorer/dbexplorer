@@ -11,13 +11,17 @@ interface IState {
 export class TableRow extends React.Component<IProps, IState> {
   constructor(props: any) {
     super(props);
+    this.handleClick = this.handleClick.bind(this);
   }
   getCells() {
     return this.props.model.getCells();
   }
+  handleClick() {
+    this.props.model.exploreCallback();
+  }
   render() {
     return (
-      <tr>{this.getCells().map((cell) => <TableCell model={cell} />)}</tr>
+      <tr onClick={this.handleClick}>{this.getCells().map((cell) => <TableCell model={cell} />)}</tr>
     );
   }
 }

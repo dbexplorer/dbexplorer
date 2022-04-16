@@ -14,14 +14,18 @@ export class Table extends React.Component<IProps, IState> {
     super(props);
     this.state = { rows: props.model.rows };
     this.props.model.addRowsCallback = (data: []) => {
-      this.state = { rows: this.state.rows.concat(data).slice() };
+      this.setState({ rows: data });
     };
+    this.handleLoadMoreClick = this.handleLoadMoreClick.bind(this);
   }
   getHeaderCells() {
     return this.props.model.headerViewModel.captionsViewModel.getCells();
   }
   getRows() {
     return this.props.model.rows;
+  }
+  handleLoadMoreClick() {
+    this.props.model.loadData();
   }
   render() {
     return (
@@ -32,6 +36,7 @@ export class Table extends React.Component<IProps, IState> {
             this.state.rows.map((row) => <TableRow model={row} />)
           }
         </tbody>
+        <tfoot><button onClick={this.handleLoadMoreClick}>Load more data...</button></tfoot>
       </table>
     );
   }
