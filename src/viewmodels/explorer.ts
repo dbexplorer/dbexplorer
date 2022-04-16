@@ -52,6 +52,9 @@ export class ExplorerViewModel {
     ready: (data: any) => void
   ) => void;
 
+  public getPanels() {
+    return this.panels;
+  }
   public addPanelCallback: (viewModel: ExplorerPanelViewModel) => void;
 
   public start(entityId: string) {

@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Explorer test 1`] = `<div />`;
+
+exports[`Form panel test 1`] = `
+<div>
+  <div>
+    Close
+  </div>
+  <div>
+    <form
+      action="#"
+    />
+  </div>
+</div>
+`;
+
+exports[`Table panel test 1`] = `
+<div>
+  <div>
+    Close
+  </div>
+  <div>
+    <table>
+      <thead>
+        <tr />
+      </thead>
+      <tbody />
+      <tfoot>
+        <button>
+          Load more data...
+        </button>
+      </tfoot>
+    </table>
+  </div>
+</div>
+`;

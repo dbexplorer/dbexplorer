@@ -21,10 +21,11 @@ export class Table extends React.Component<IProps, IState> {
   getHeaderCells() {
     return this.props.model.headerViewModel.captionsViewModel.getCells();
   }
-  getRows() {
-    return this.props.model.rows;
-  }
   handleLoadMoreClick() {
+    this.props.model.loadData();
+  }
+
+  componentDidMount() {
     this.props.model.loadData();
   }
   render() {

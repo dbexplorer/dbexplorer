@@ -52,10 +52,6 @@ test("Table test", () => {
   };
 
   const { container } = render(<Table model={tableViewModel} />);
-  expect(container.firstChild).toMatchSnapshot();
-  act(() => {
-    tableViewModel.loadData();
-  })
   expect(container.querySelector("tbody").childElementCount).toEqual(2);
   expect(container.firstChild).toMatchSnapshot();
 });
@@ -109,9 +105,6 @@ test("Table test - row click", () => {
     }
   };
   const { container } = render(<Table model={tableViewModel} />);
-  act(() => {
-    tableViewModel.loadData();
-  })
   var d = [];
   tableViewModel.exploreRowCallback = (data) => {
     d = data.getCells().map(c => { return { text: c.text } });
