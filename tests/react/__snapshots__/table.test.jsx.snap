@@ -49,30 +49,6 @@ exports[`Table test 1`] = `
       </th>
     </tr>
   </thead>
-  <tbody />
-  <tfoot>
-    <button>
-      Load more data...
-    </button>
-  </tfoot>
-</table>
-`;
-
-exports[`Table test 2`] = `
-<table>
-  <thead>
-    <tr>
-      <th>
-        f1
-      </th>
-      <th>
-        f2
-      </th>
-      <th>
-        f3
-      </th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
       <td>
@@ -98,9 +74,13 @@ exports[`Table test 2`] = `
     </tr>
   </tbody>
   <tfoot>
-    <button>
-      Load more data...
-    </button>
+    <tr>
+      <td>
+        <button>
+          Load more data...
+        </button>
+      </td>
+    </tr>
   </tfoot>
 </table>
 `;
@@ -145,9 +125,13 @@ exports[`table test - load more 1`] = `
     </tr>
   </tbody>
   <tfoot>
-    <button>
-      Load more data...
-    </button>
+    <tr>
+      <td>
+        <button>
+          Load more data...
+        </button>
+      </td>
+    </tr>
   </tfoot>
 </table>
 `;

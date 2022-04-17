@@ -14,6 +14,9 @@ export class TableCellViewModel {
 }
 export class TableRowViewModel {
   private cells: TableCellViewModel[];
+  getKey() {
+    return this.key as string;
+  }
   getCells() {
     return this.cells;
   }
@@ -25,7 +28,7 @@ export class TableRowViewModel {
       data.map((s, idx) => this.cells[idx].setText(s));
     }
   }
-  constructor(data: string[]) {
+  constructor(data: string[], private key: string | string[]) {
     this.setCellsText(data);
   }
   updateCallback: (data: TableCellViewModel[]) => any;
@@ -35,7 +38,7 @@ export class TableRowViewModel {
 export class TableHeaderViewModel {
   public captionsViewModel: TableRowViewModel;
   constructor(captions: string[]) {
-    this.captionsViewModel = new TableRowViewModel(captions);
+    this.captionsViewModel = new TableRowViewModel(captions, null);
   }
 }
 
@@ -58,7 +61,8 @@ export class TableViewModel {
         const rows = data.map(
           (rowData: any) => {
             const row = new TableRowViewModel(
-              this.columns.map((col) => rowData[col.name].toString())
+              this.columns.map((col) => rowData.data[col.name].toString()),
+              rowData.key
             )
             row.exploreCallback = () => {
               this.exploreRowCallback(row);

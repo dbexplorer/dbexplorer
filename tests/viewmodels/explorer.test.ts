@@ -14,8 +14,8 @@ test("Explorer table test", () => {
     actualEntityId = entityId;
     actualAttributes = attributes;
     ready([
-      { table_key: 1, f1: "one", f2: "first" },
-      { table_key: 2, f1: "two", f2: "second" }
+      { key: 1, data: { table_key: 1, f1: "one", f2: "first" } },
+      { key: 2, data: { table_key: 2, f1: "two", f2: "second" } }
     ]);
   };
   var dVM: any;

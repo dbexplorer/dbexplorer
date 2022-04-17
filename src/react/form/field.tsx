@@ -24,7 +24,7 @@ export class FormInputField extends React.Component<IProps, IState> {
     return (
       <div>
         <label>{this.props.model.getTitle()}</label>
-        <input value={this.state.text} onChange={this.handleChange}></input>
+        <input value={this.state.text || ""} onChange={this.handleChange}></input>
       </div>
     );
   }

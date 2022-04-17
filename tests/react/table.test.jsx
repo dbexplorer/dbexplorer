@@ -20,7 +20,7 @@ test("Table cell test", () => {
   expect(container.firstChild).toMatchSnapshot();
 });
 test("Table row test", () => {
-  var tableRowViewModel = new TableRowViewModel(["t1", "t2"]);
+  var tableRowViewModel = new TableRowViewModel(["t1", "t2"], "t1");
 
   const { container } = render(<TableRow model={tableRowViewModel} />);
   expect(container.firstChild).toMatchSnapshot();
@@ -45,8 +45,8 @@ test("Table test", () => {
   tableViewModel.getDataCallback = (limit, offset, ready) => {
     if (limit === 2) {
       ready([
-        { f1: 1 + offset * 2, f2: "one", f3: "first" },
-        { f1: 2 + offset * 2, f2: "two", f3: "second" }
+        { key: 1 + offset * 2, data: { f1: 1 + offset * 2, f2: "one", f3: "first" } },
+        { key: 2 + offset * 2, data: { f1: 2 + offset * 2, f2: "two", f3: "second" } }
       ]);
     }
   };
@@ -71,8 +71,8 @@ test("table test - load more", () => {
   tableViewModel.getDataCallback = (limit, offset, ready) => {
     if (limit === 2) {
       ready([
-        { f1: 1 + offset * 2, f2: "one", f3: "first" },
-        { f1: 2 + offset * 2, f2: "two", f3: "second" }
+        { key: 1 + offset * 2, data: { f1: 1 + offset * 2, f2: "one", f3: "first" } },
+        { key: 2 + offset * 2, data: { f1: 2 + offset * 2, f2: "two", f3: "second" } }
       ]);
     }
   };
@@ -99,8 +99,8 @@ test("Table test - row click", () => {
   tableViewModel.getDataCallback = (limit, offset, ready) => {
     if (limit === 2) {
       ready([
-        { f1: 1 + offset * 2, f2: "one", f3: "first" },
-        { f1: 2 + offset * 2, f2: "two", f3: "second" }
+        { key: 1 + offset * 2, data: { f1: 1 + offset * 2, f2: "one", f3: "first" } },
+        { key: 2 + offset * 2, data: { f1: 2 + offset * 2, f2: "two", f3: "second" } }
       ]);
     }
   };

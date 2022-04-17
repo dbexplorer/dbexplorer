@@ -21,7 +21,7 @@ export class TableRow extends React.Component<IProps, IState> {
   }
   render() {
     return (
-      <tr onClick={this.handleClick}>{this.getCells().map((cell) => <TableCell model={cell} />)}</tr>
+      <><tr onClick={this.handleClick}>{this.getCells().map((cell, index) => <TableCell key={index} model={cell} />)}</tr></>
     );
   }
 }

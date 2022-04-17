@@ -14,13 +14,13 @@ export class Explorer extends React.Component<IProps, IState> {
     super(props);
     this.state = { panels: props.model.getPanels() };
     this.props.model.addPanelCallback = (panelViewModel) => {
-      this.setState({ panels: props.model.getPanels().splice() });
+      this.setState({ panels: props.model.getPanels().slice() });
     };
   }
   render() {
     return (
       <div>
-        {this.state.panels.map((row) => <ExplorerPanel model={row} />)}
+        {this.state.panels.map((row, index) => <ExplorerPanel key={index} model={row} />)}
       </div>
     );
   }

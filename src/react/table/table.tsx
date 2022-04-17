@@ -31,13 +31,13 @@ export class Table extends React.Component<IProps, IState> {
   render() {
     return (
       <table>
-        <thead><tr>{this.getHeaderCells().map((cell) => <th>{cell.getText()}</th>)}</tr></thead>
+        <thead><tr>{this.getHeaderCells().map((cell, index) => <th key={index}>{cell.getText()}</th>)}</tr></thead>
         <tbody>
           {
-            this.state.rows.map((row) => <TableRow model={row} />)
+            this.state.rows.map((row, index) => <TableRow key={index} model={row} />)
           }
         </tbody>
-        <tfoot><button onClick={this.handleLoadMoreClick}>Load more data...</button></tfoot>
+        <tfoot><tr><td><button onClick={this.handleLoadMoreClick}>Load more data...</button></td></tr></tfoot>
       </table>
     );
   }

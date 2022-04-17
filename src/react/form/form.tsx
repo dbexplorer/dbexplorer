@@ -13,7 +13,7 @@ export class Form extends React.Component<IProps> {
   render() {
     return (
       <form action="#">
-        {this.props.model.fields.map((f) => <FormInputField model={f} />)}
+        {this.props.model.fields.map((f, index) => <FormInputField key={index} model={f} />)}
       </form>
     );
   }

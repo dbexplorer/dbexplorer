@@ -1,6 +1,159 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Explorer test 1`] = `<div />`;
+exports[`Explorer test 1`] = `
+<div>
+  <div>
+    <div>
+      Close
+    </div>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              table_key
+            </th>
+            <th>
+              first
+            </th>
+            <th>
+              second
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              1
+            </td>
+            <td>
+              one
+            </td>
+            <td>
+              first
+            </td>
+          </tr>
+          <tr>
+            <td>
+              2
+            </td>
+            <td>
+              two
+            </td>
+            <td>
+              second
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>
+              <button>
+                Load more data...
+              </button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Explorer test 2`] = `
+<div>
+  <div>
+    <div>
+      Close
+    </div>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              table_key
+            </th>
+            <th>
+              first
+            </th>
+            <th>
+              second
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              1
+            </td>
+            <td>
+              one
+            </td>
+            <td>
+              first
+            </td>
+          </tr>
+          <tr>
+            <td>
+              2
+            </td>
+            <td>
+              two
+            </td>
+            <td>
+              second
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>
+              <button>
+                Load more data...
+              </button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <div>
+    <div>
+      Close
+    </div>
+    <div>
+      <form
+        action="#"
+      >
+        <div>
+          <label>
+            table_key
+          </label>
+          <input
+            value=""
+          />
+        </div>
+        <div>
+          <label>
+            first
+          </label>
+          <input
+            value=""
+          />
+        </div>
+        <div>
+          <label>
+            third
+          </label>
+          <input
+            value=""
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;
 
 exports[`Form panel test 1`] = `
 <div>
@@ -27,9 +180,13 @@ exports[`Table panel test 1`] = `
       </thead>
       <tbody />
       <tfoot>
-        <button>
-          Load more data...
-        </button>
+        <tr>
+          <td>
+            <button>
+              Load more data...
+            </button>
+          </td>
+        </tr>
       </tfoot>
     </table>
   </div>

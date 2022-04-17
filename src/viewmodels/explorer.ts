@@ -35,7 +35,7 @@ export class ExplorerViewModel {
   private addFormPanel(entityId: string) {
     const fields = this.description.getFormFields(entityId);
     const attributes = fields.map((field) => field.name);
-    let formViewModel = new FormViewModel(fields);
+    let formViewModel = new FormViewModel(fields, []);
     formViewModel.getDataCallback = (ready) => {
       this.getDataCallback(entityId, attributes, 1, 0, ready);
     };
