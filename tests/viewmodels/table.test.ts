@@ -36,8 +36,8 @@ test("First table test", () => {
   ]);
   table.getDataCallback = (limit, offset, ready) => {
     ready([
-      { key: 1, data: { f1: 1, f2: "one", f3: "first" } },
-      { key: 2, data: { f1: 2, f2: "two", f3: "second" } }
+      { key: 1, data: { f1: 1 + offset, f2: "one" + offset, f3: "first" + offset } },
+      { key: 2, data: { f1: 2 + offset, f2: "two" + offset, f3: "second" + offset } }
     ]);
   };
   var d: string[][];
@@ -46,7 +46,22 @@ test("First table test", () => {
   };
   table.loadData();
   expect(d).toEqual([
-    ["1", "one", "first"],
-    ["2", "two", "second"]
+    ["1", "one0", "first0"],
+    ["2", "two0", "second0"]
+  ]);
+
+  d = table.rows.map((row) => row.getCells().map((cell) => cell.getText()));
+  expect(d).toEqual([
+    ["1", "one0", "first0"],
+    ["2", "two0", "second0"]
+  ]);
+
+  table.loadData();
+  d = table.rows.map((row) => row.getCells().map((cell) => cell.getText()));
+  expect(d).toEqual([
+    ["1", "one0", "first0"],
+    ["2", "two0", "second0"],
+    ["11", "one10", "first10"],
+    ["12", "two10", "second10"]
   ]);
 });

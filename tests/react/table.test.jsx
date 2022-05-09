@@ -77,11 +77,9 @@ test("table test - load more", () => {
     }
   };
   const { container } = render(<Table model={tableViewModel} />);
-  act(() => {
-    tableViewModel.loadData();
-  })
+  expect(container.firstChild).toMatchSnapshot("After render");
   fireEvent.click(container.querySelector("tfoot button"));
-  expect(container.firstChild).toMatchSnapshot();
+  expect(container.firstChild).toMatchSnapshot("Load more");
 });
 test("Table test - row click", () => {
   var tableViewModel = new TableViewModel([

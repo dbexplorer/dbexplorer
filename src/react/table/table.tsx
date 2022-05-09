@@ -14,7 +14,7 @@ export class Table extends React.Component<IProps, IState> {
     super(props);
     this.state = { rows: props.model.rows };
     this.props.model.addRowsCallback = (data: []) => {
-      this.setState({ rows: data });
+      this.setState({ rows: this.props.model.rows });
     };
     this.handleLoadMoreClick = this.handleLoadMoreClick.bind(this);
   }
