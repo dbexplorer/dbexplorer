@@ -5,7 +5,8 @@
   "author": "",
   "scripts": {
     "build": "webpack",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "start": "webpack-dev-server dev --open"
   },
   "keywords": [],
   "devDependencies": {
@@ -35,6 +36,7 @@
   "dependencies": {
     "@types/react-test-renderer": "^17.0.1",
     "react": "^18.0.0",
-    "react-test-renderer": "^18.0.0"
+    "react-test-renderer": "^18.0.0",
+    "webpack-dev-server": "^4.9.0"
   }
 }

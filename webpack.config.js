@@ -28,36 +28,45 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
     entry: {
-        mylib: path.resolve(__dirname, 'src/index.ts')
+        jsdataexplorer: path.resolve(__dirname, 'src/index.ts')
     },
     module: {
         rules: [
             {
-                test: /\.ts$/,
+                test: /\.(ts|tsx)$/,
                 exclude: [/node_modules/],
                 loader: 'ts-loader'
             }
         ]
     },
-    resolve: { extensions: ['.ts'] },
+    resolve: { extensions: ['.ts', '.tsx'] },
     output: {
         chunkFilename: '[name].js',
-        filename: '[name].js'
+        filename: '[name].js',
+		library: 'JSDataExplorer',
+        libraryTarget:'umd'
     },
 
     mode: 'development',
     plugins: [
         new CleanWebpackPlugin(),
-        new UglifyJSPlugin(),
-        new CopyWebpackPlugin({patterns: [
-            {
-                from: './src/package.json',
-                to: '../dist/package.json'
-            }
-        ]})
+        //new UglifyJSPlugin(),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: './src/package.json',
+                    to: '../dist/package.json'
+                }
+            ]
+        })
     ],
     devtool: 'source-map',
     optimization: {
         splitChunks: false
+    },
+	devServer: {
+	  static: ['./demo/react', './dist'],
+      compress: false,
+      port: 8080
     }
 }
