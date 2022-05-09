@@ -13,14 +13,17 @@ export class ExplorerPanel extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
   }
+  css() {
+    return this.props.model.css()
+  }
   isForm() {
     return this.props.model.dataViewModel instanceof FormViewModel;
   }
   render() {
     return (
-      <div>
-        <div>Close</div>
-        <div>
+      <div className={this.css().root}>
+        <div className={this.css().close}>Close</div>
+        <div className={this.css().body}>
           {
             this.isForm() ?
               <Form model={this.props.model.dataViewModel as FormViewModel}></Form> :

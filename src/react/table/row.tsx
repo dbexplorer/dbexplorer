@@ -13,6 +13,9 @@ export class TableRow extends React.Component<IProps, IState> {
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
+  css() {
+    return this.props.model.css()
+  }
   getCells() {
     return this.props.model.getCells();
   }
@@ -21,7 +24,7 @@ export class TableRow extends React.Component<IProps, IState> {
   }
   render() {
     return (
-      <><tr onClick={this.handleClick}>{this.getCells().map((cell, index) => <TableCell key={index} model={cell} />)}</tr></>
+      <><tr className={this.css().root} onClick={this.handleClick}>{this.getCells().map((cell, index) => <TableCell key={index} model={cell} />)}</tr></>
     );
   }
 }

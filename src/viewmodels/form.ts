@@ -1,3 +1,4 @@
+import { cssPrefix } from "../utils";
 import { IBaseViewModel } from "./base";
 import { TableColumnDescription } from "./table";
 
@@ -25,6 +26,13 @@ export class FormStringFieldViewModel {
     private columnDescription: TableColumnDescription,
     private text: string = null
   ) { }
+  css() {
+    return {
+      root: cssPrefix("field"),
+      label: cssPrefix("field__label"),
+      input: cssPrefix("field__input"),
+    };
+  }
   updateCallback: (data: string) => any;
 }
 
@@ -50,6 +58,11 @@ export class FormViewModel implements IBaseViewModel {
         (rel) => new FormRelationshipViewModel(rel)
       );
     }
+  }
+  css() {
+    return {
+      root: cssPrefix("form"),
+    };
   }
   reloadData() {
     this.getDataCallback((data: any) => {

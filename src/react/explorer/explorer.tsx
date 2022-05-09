@@ -17,9 +17,12 @@ export class Explorer extends React.Component<IProps, IState> {
       this.setState({ panels: props.model.getPanels().slice() });
     };
   }
+  css() {
+    return this.props.model.css()
+  }
   render() {
     return (
-      <div>
+      <div className={this.css().root}>
         {this.state.panels.map((row, index) => <ExplorerPanel key={index} model={row} />)}
       </div>
     );

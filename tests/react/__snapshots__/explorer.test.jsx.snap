@@ -1,14 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Explorer test 1`] = `
-<div>
-  <div>
-    <div>
+<div
+  class="jsde-explorer"
+>
+  <div
+    class="jsde-panel"
+  >
+    <div
+      class="jsde-panel__close"
+    >
       Close
     </div>
-    <div>
-      <table>
-        <thead>
+    <div
+      class="jsde-panel-body"
+    >
+      <table
+        class="jsde-table"
+      >
+        <thead
+          class="jsde-table-head"
+        >
           <tr>
             <th>
               table_key
@@ -21,31 +33,51 @@ exports[`Explorer test 1`] = `
             </th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>
+        <tbody
+          class="jsde-table-body"
+        >
+          <tr
+            class="jsde-table-row"
+          >
+            <td
+              class="jsde-table-cell"
+            >
               1
             </td>
-            <td>
+            <td
+              class="jsde-table-cell"
+            >
               one
             </td>
-            <td>
+            <td
+              class="jsde-table-cell"
+            >
               first
             </td>
           </tr>
-          <tr>
-            <td>
+          <tr
+            class="jsde-table-row"
+          >
+            <td
+              class="jsde-table-cell"
+            >
               2
             </td>
-            <td>
+            <td
+              class="jsde-table-cell"
+            >
               two
             </td>
-            <td>
+            <td
+              class="jsde-table-cell"
+            >
               second
             </td>
           </tr>
         </tbody>
-        <tfoot>
+        <tfoot
+          class="jsde-table-foot"
+        >
           <tr>
             <td>
               <button>
@@ -61,14 +93,26 @@ exports[`Explorer test 1`] = `
 `;
 
 exports[`Explorer test 2`] = `
-<div>
-  <div>
-    <div>
+<div
+  class="jsde-explorer"
+>
+  <div
+    class="jsde-panel"
+  >
+    <div
+      class="jsde-panel__close"
+    >
       Close
     </div>
-    <div>
-      <table>
-        <thead>
+    <div
+      class="jsde-panel-body"
+    >
+      <table
+        class="jsde-table"
+      >
+        <thead
+          class="jsde-table-head"
+        >
           <tr>
             <th>
               table_key
@@ -81,31 +125,51 @@ exports[`Explorer test 2`] = `
             </th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>
+        <tbody
+          class="jsde-table-body"
+        >
+          <tr
+            class="jsde-table-row"
+          >
+            <td
+              class="jsde-table-cell"
+            >
               1
             </td>
-            <td>
+            <td
+              class="jsde-table-cell"
+            >
               one
             </td>
-            <td>
+            <td
+              class="jsde-table-cell"
+            >
               first
             </td>
           </tr>
-          <tr>
-            <td>
+          <tr
+            class="jsde-table-row"
+          >
+            <td
+              class="jsde-table-cell"
+            >
               2
             </td>
-            <td>
+            <td
+              class="jsde-table-cell"
+            >
               two
             </td>
-            <td>
+            <td
+              class="jsde-table-cell"
+            >
               second
             </td>
           </tr>
         </tbody>
-        <tfoot>
+        <tfoot
+          class="jsde-table-foot"
+        >
           <tr>
             <td>
               <button>
@@ -117,35 +181,57 @@ exports[`Explorer test 2`] = `
       </table>
     </div>
   </div>
-  <div>
-    <div>
+  <div
+    class="jsde-panel"
+  >
+    <div
+      class="jsde-panel__close"
+    >
       Close
     </div>
-    <div>
+    <div
+      class="jsde-panel-body"
+    >
       <form
         action="#"
+        class="jsde-form"
       >
-        <div>
-          <label>
+        <div
+          class="jsde-field"
+        >
+          <label
+            class="jsde-field__label"
+          >
             table_key
           </label>
           <input
+            class="jsde-field__input"
             value=""
           />
         </div>
-        <div>
-          <label>
+        <div
+          class="jsde-field"
+        >
+          <label
+            class="jsde-field__label"
+          >
             first
           </label>
           <input
+            class="jsde-field__input"
             value=""
           />
         </div>
-        <div>
-          <label>
+        <div
+          class="jsde-field"
+        >
+          <label
+            class="jsde-field__label"
+          >
             third
           </label>
           <input
+            class="jsde-field__input"
             value=""
           />
         </div>
@@ -156,30 +242,51 @@ exports[`Explorer test 2`] = `
 `;
 
 exports[`Form panel test 1`] = `
-<div>
-  <div>
+<div
+  class="jsde-panel"
+>
+  <div
+    class="jsde-panel__close"
+  >
     Close
   </div>
-  <div>
+  <div
+    class="jsde-panel-body"
+  >
     <form
       action="#"
+      class="jsde-form"
     />
   </div>
 </div>
 `;
 
 exports[`Table panel test 1`] = `
-<div>
-  <div>
+<div
+  class="jsde-panel"
+>
+  <div
+    class="jsde-panel__close"
+  >
     Close
   </div>
-  <div>
-    <table>
-      <thead>
+  <div
+    class="jsde-panel-body"
+  >
+    <table
+      class="jsde-table"
+    >
+      <thead
+        class="jsde-table-head"
+      >
         <tr />
       </thead>
-      <tbody />
-      <tfoot>
+      <tbody
+        class="jsde-table-body"
+      />
+      <tfoot
+        class="jsde-table-foot"
+      >
         <tr>
           <td>
             <button>

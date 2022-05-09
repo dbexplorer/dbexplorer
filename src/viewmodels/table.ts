@@ -1,3 +1,5 @@
+import { cssPrefix } from "../utils";
+
 export class TableCellViewModel {
   private text: string;
   getText() {
@@ -9,6 +11,9 @@ export class TableCellViewModel {
   }
   constructor(text: string = null) {
     this.text = text;
+  }
+  css() {
+    return { root: cssPrefix("table-cell") };
   }
   updateCallback: (data: string) => any;
 }
@@ -27,6 +32,9 @@ export class TableRowViewModel {
     else {
       data.map((s, idx) => this.cells[idx].setText(s));
     }
+  }
+  css() {
+    return { root: cssPrefix("table-row") };
   }
   constructor(data: string[], private key: string | string[]) {
     this.setCellsText(data);
@@ -76,6 +84,14 @@ export class TableViewModel {
     );
   }
   rows: TableRowViewModel[];
+  css() {
+    return {
+      root: cssPrefix("table"),
+      head: cssPrefix("table-head"),
+      body: cssPrefix("table-body"),
+      foot: cssPrefix("table-foot"),
+    };
+  }
   getDataCallback: (limit: number, offset: number, ready: any) => void;
   constructor(columns: TableColumnDescription[]) {
     this.columns = columns;

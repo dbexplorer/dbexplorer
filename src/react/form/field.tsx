@@ -17,14 +17,17 @@ export class FormInputField extends React.Component<IProps, IState> {
       this.setState({ text: data });
     };
   }
+  css() {
+    return this.props.model.css()
+  }
   handleChange(e: any) {
     this.props.model.setText(e.target.value);
   }
   render() {
     return (
-      <div>
-        <label>{this.props.model.getTitle()}</label>
-        <input value={this.state.text || ""} onChange={this.handleChange}></input>
+      <div className={this.css().root}>
+        <label className={this.css().label}>{this.props.model.getTitle()}</label>
+        <input className={this.css().input} value={this.state.text || ""} onChange={this.handleChange}></input>
       </div>
     );
   }

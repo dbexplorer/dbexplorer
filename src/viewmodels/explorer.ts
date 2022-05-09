@@ -2,10 +2,18 @@ import { IBaseViewModel } from "./base";
 import { DataBaseDescription, IDataBase, IDataEntity } from "../schema";
 import { TableViewModel } from "./table";
 import { FormViewModel } from "./form";
+import { cssPrefix } from "../utils";
 
 export interface IExplorerOptions { }
 export class ExplorerPanelViewModel {
   constructor(public dataViewModel: IBaseViewModel) { }
+  css() {
+    return {
+      root: cssPrefix("panel"),
+      close: cssPrefix("panel__close"),
+      body: cssPrefix("panel-body"),
+    };
+  }
 }
 export class ExplorerViewModel {
   private panels: ExplorerPanelViewModel[] = [];
@@ -15,6 +23,11 @@ export class ExplorerViewModel {
     private options: IExplorerOptions
   ) {
     this.description = new DataBaseDescription(dataBaseDescription);
+  }
+  css() {
+    return {
+      root: cssPrefix("explorer"),
+    };
   }
   private addTablePanel(entityId: string) {
     const columns = this.description.getTableColumns(entityId);

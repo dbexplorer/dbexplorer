@@ -1,42 +1,62 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Table cell test 1`] = `
-<td>
+<td
+  class="jsde-table-cell"
+>
   t1
 </td>
 `;
 
 exports[`Table cell test 2`] = `
-<td>
+<td
+  class="jsde-table-cell"
+>
   t2
 </td>
 `;
 
 exports[`Table row test 1`] = `
-<tr>
-  <td>
+<tr
+  class="jsde-table-row"
+>
+  <td
+    class="jsde-table-cell"
+  >
     t1
   </td>
-  <td>
+  <td
+    class="jsde-table-cell"
+  >
     t2
   </td>
 </tr>
 `;
 
 exports[`Table row test 2`] = `
-<tr>
-  <td>
+<tr
+  class="jsde-table-row"
+>
+  <td
+    class="jsde-table-cell"
+  >
     t3
   </td>
-  <td>
+  <td
+    class="jsde-table-cell"
+  >
     t2
   </td>
 </tr>
 `;
 
 exports[`Table test 1`] = `
-<table>
-  <thead>
+<table
+  class="jsde-table"
+>
+  <thead
+    class="jsde-table-head"
+  >
     <tr>
       <th>
         f1
@@ -49,155 +69,51 @@ exports[`Table test 1`] = `
       </th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <td>
+  <tbody
+    class="jsde-table-body"
+  >
+    <tr
+      class="jsde-table-row"
+    >
+      <td
+        class="jsde-table-cell"
+      >
         1
       </td>
-      <td>
+      <td
+        class="jsde-table-cell"
+      >
         one
       </td>
-      <td>
+      <td
+        class="jsde-table-cell"
+      >
         first
       </td>
     </tr>
-    <tr>
-      <td>
+    <tr
+      class="jsde-table-row"
+    >
+      <td
+        class="jsde-table-cell"
+      >
         2
       </td>
-      <td>
+      <td
+        class="jsde-table-cell"
+      >
         two
       </td>
-      <td>
+      <td
+        class="jsde-table-cell"
+      >
         second
       </td>
     </tr>
   </tbody>
-  <tfoot>
-    <tr>
-      <td>
-        <button>
-          Load more data...
-        </button>
-      </td>
-    </tr>
-  </tfoot>
-</table>
-`;
-
-exports[`table test - load more 1`] = `
-<table>
-  <thead>
-    <tr>
-      <th>
-        f1
-      </th>
-      <th>
-        f2
-      </th>
-      <th>
-        f3
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        1
-      </td>
-      <td>
-        one
-      </td>
-      <td>
-        first
-      </td>
-    </tr>
-    <tr>
-      <td>
-        2
-      </td>
-      <td>
-        two
-      </td>
-      <td>
-        second
-      </td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <tr>
-      <td>
-        <button>
-          Load more data...
-        </button>
-      </td>
-    </tr>
-  </tfoot>
-</table>
-`;
-
-exports[`table test - load more: After first load 1`] = `
-<table>
-  <thead>
-    <tr>
-      <th>
-        f1
-      </th>
-      <th>
-        f2
-      </th>
-      <th>
-        f3
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        1
-      </td>
-      <td>
-        one
-      </td>
-      <td>
-        first
-      </td>
-    </tr>
-    <tr>
-      <td>
-        2
-      </td>
-      <td>
-        two
-      </td>
-      <td>
-        second
-      </td>
-    </tr>
-    <tr>
-      <td>
-        5
-      </td>
-      <td>
-        one
-      </td>
-      <td>
-        first
-      </td>
-    </tr>
-    <tr>
-      <td>
-        6
-      </td>
-      <td>
-        two
-      </td>
-      <td>
-        second
-      </td>
-    </tr>
-  </tbody>
-  <tfoot>
+  <tfoot
+    class="jsde-table-foot"
+  >
     <tr>
       <td>
         <button>
@@ -210,8 +126,12 @@ exports[`table test - load more: After first load 1`] = `
 `;
 
 exports[`table test - load more: After render 1`] = `
-<table>
-  <thead>
+<table
+  class="jsde-table"
+>
+  <thead
+    class="jsde-table-head"
+  >
     <tr>
       <th>
         f1
@@ -224,31 +144,51 @@ exports[`table test - load more: After render 1`] = `
       </th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <td>
+  <tbody
+    class="jsde-table-body"
+  >
+    <tr
+      class="jsde-table-row"
+    >
+      <td
+        class="jsde-table-cell"
+      >
         1
       </td>
-      <td>
+      <td
+        class="jsde-table-cell"
+      >
         one
       </td>
-      <td>
+      <td
+        class="jsde-table-cell"
+      >
         first
       </td>
     </tr>
-    <tr>
-      <td>
+    <tr
+      class="jsde-table-row"
+    >
+      <td
+        class="jsde-table-cell"
+      >
         2
       </td>
-      <td>
+      <td
+        class="jsde-table-cell"
+      >
         two
       </td>
-      <td>
+      <td
+        class="jsde-table-cell"
+      >
         second
       </td>
     </tr>
   </tbody>
-  <tfoot>
+  <tfoot
+    class="jsde-table-foot"
+  >
     <tr>
       <td>
         <button>
@@ -261,8 +201,12 @@ exports[`table test - load more: After render 1`] = `
 `;
 
 exports[`table test - load more: Load more 1`] = `
-<table>
-  <thead>
+<table
+  class="jsde-table"
+>
+  <thead
+    class="jsde-table-head"
+  >
     <tr>
       <th>
         f1
@@ -275,53 +219,89 @@ exports[`table test - load more: Load more 1`] = `
       </th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <td>
+  <tbody
+    class="jsde-table-body"
+  >
+    <tr
+      class="jsde-table-row"
+    >
+      <td
+        class="jsde-table-cell"
+      >
         1
       </td>
-      <td>
+      <td
+        class="jsde-table-cell"
+      >
         one
       </td>
-      <td>
+      <td
+        class="jsde-table-cell"
+      >
         first
       </td>
     </tr>
-    <tr>
-      <td>
+    <tr
+      class="jsde-table-row"
+    >
+      <td
+        class="jsde-table-cell"
+      >
         2
       </td>
-      <td>
+      <td
+        class="jsde-table-cell"
+      >
         two
       </td>
-      <td>
+      <td
+        class="jsde-table-cell"
+      >
         second
       </td>
     </tr>
-    <tr>
-      <td>
+    <tr
+      class="jsde-table-row"
+    >
+      <td
+        class="jsde-table-cell"
+      >
         5
       </td>
-      <td>
+      <td
+        class="jsde-table-cell"
+      >
         one
       </td>
-      <td>
+      <td
+        class="jsde-table-cell"
+      >
         first
       </td>
     </tr>
-    <tr>
-      <td>
+    <tr
+      class="jsde-table-row"
+    >
+      <td
+        class="jsde-table-cell"
+      >
         6
       </td>
-      <td>
+      <td
+        class="jsde-table-cell"
+      >
         two
       </td>
-      <td>
+      <td
+        class="jsde-table-cell"
+      >
         second
       </td>
     </tr>
   </tbody>
-  <tfoot>
+  <tfoot
+    class="jsde-table-foot"
+  >
     <tr>
       <td>
         <button>

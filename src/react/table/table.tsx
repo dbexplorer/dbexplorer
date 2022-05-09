@@ -18,6 +18,9 @@ export class Table extends React.Component<IProps, IState> {
     };
     this.handleLoadMoreClick = this.handleLoadMoreClick.bind(this);
   }
+  css() {
+    return this.props.model.css()
+  }
   getHeaderCells() {
     return this.props.model.headerViewModel.captionsViewModel.getCells();
   }
@@ -30,14 +33,14 @@ export class Table extends React.Component<IProps, IState> {
   }
   render() {
     return (
-      <table>
-        <thead><tr>{this.getHeaderCells().map((cell, index) => <th key={index}>{cell.getText()}</th>)}</tr></thead>
-        <tbody>
+      <table className={this.css().root}>
+        <thead className={this.css().head}><tr>{this.getHeaderCells().map((cell, index) => <th key={index}>{cell.getText()}</th>)}</tr></thead>
+        <tbody className={this.css().body}>
           {
             this.state.rows.map((row, index) => <TableRow key={index} model={row} />)
           }
         </tbody>
-        <tfoot><tr><td><button onClick={this.handleLoadMoreClick}>Load more data...</button></td></tr></tfoot>
+        <tfoot className={this.css().foot}><tr><td><button onClick={this.handleLoadMoreClick}>Load more data...</button></td></tr></tfoot>
       </table>
     );
   }

@@ -16,9 +16,12 @@ export class TableCell extends React.Component<IProps, IState> {
       this.setState({ text: data });
     };
   }
+  css() {
+    return this.props.model.css()
+  }
   render() {
     return (
-      <td>{this.state.text}</td>
+      <td className={this.css().root}>{this.state.text}</td>
     );
   }
 }
