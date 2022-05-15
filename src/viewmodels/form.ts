@@ -4,6 +4,8 @@ import { TableColumnDescription } from "./table";
 
 export class FormRelationshipDescription {
   title: string;
+  childTable: string;
+  childKey: string | string[];
 }
 export class FormStringFieldViewModel {
   getName() {
@@ -43,7 +45,14 @@ export class FormRelationshipViewModel {
   constructor(
     private relDescription: FormRelationshipDescription,
   ) { }
+  css() {
+    return {
+      root: cssPrefix("relationship"),
+      label: cssPrefix("relationship__label"),
+    };
+  }
   updateCallback: (data: string) => any;
+  exploreCallback: () => void;
 }
 
 export class FormViewModel implements IBaseViewModel {
@@ -55,7 +64,13 @@ export class FormViewModel implements IBaseViewModel {
     );
     if (relDescriptions) {
       this.rels = relDescriptions.map(
-        (rel) => new FormRelationshipViewModel(rel)
+        (rel) => {
+          const relation = new FormRelationshipViewModel(rel)
+          relation.exploreCallback = () => {
+            this.exploreRelationshipCallback(relation);
+          }
+          return relation;
+        }
       );
     }
   }
@@ -73,4 +88,5 @@ export class FormViewModel implements IBaseViewModel {
     });
   }
   getDataCallback: (ready: any) => void;
+  exploreRelationshipCallback: (row: FormRelationshipViewModel) => any;
 }

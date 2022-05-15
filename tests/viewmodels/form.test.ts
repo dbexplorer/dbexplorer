@@ -49,7 +49,7 @@ test("Form test", () => {
       name: "f3",
       title: "field_3"
     }
-  ]);
+  ], []);
   form.getDataCallback = (ready) => {
     ready([{ f1: 1, f2: "one", f3: "first" }]);
   };
@@ -62,4 +62,35 @@ test("Form test", () => {
 
   form.reloadData();
   expect(d).toEqual(["1", "one", "first"]);
+});
+test("Form relationships test", () => {
+  var form = new FormViewModel([
+    {
+      name: "f1",
+      title: "field_1"
+    }
+  ], [{
+    title: "r 1",
+    childTable: "child1",
+    childKey: "e_key"
+  },
+  {
+    title: "r 2",
+    childTable: "child2",
+    childKey: "e_key"
+  }]);
+
+  form.fields.forEach((field) => {
+    field.updateCallback = (text) => { };
+  });
+
+  var r: any;
+  form.exploreRelationshipCallback = (rel) => r = rel;
+  form.getDataCallback = (ready) => {
+    ready([{ f1: 1 }]);
+  };
+  form.reloadData();
+  expect(form.rels.map(r => r.getTitle())).toEqual(["r 1", "r 2"]);
+  form.rels[1].exploreCallback();
+  expect(r.getTitle()).toEqual("r 2");
 });

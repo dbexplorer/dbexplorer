@@ -1,9 +1,11 @@
 import React from 'react';
 import { FormInputField } from "../../src/react/form/field";
+import { FormRelationship } from "../../src/react/form/relationship";
 import { Form } from "../../src/react/form/form";
 import { render, fireEvent, waitFor, screen } from '@testing-library/react'
 import {
   FormStringFieldViewModel,
+  FormRelationshipViewModel,
   FormViewModel
 } from "../../src/viewmodels/form";
 import { act } from 'react-dom/test-utils';
@@ -22,6 +24,20 @@ test("Form field HTML test", () => {
   expect(container.firstChild).toMatchSnapshot();
   fireEvent.change(container.querySelector("input"), { target: { value: 't2' } })
   expect(fieldViewModel.getText()).toEqual("t2");
+});
+
+test("Form rel HTML test", () => {
+  var relViewModel = new FormRelationshipViewModel({
+    title: "rel_1"
+  });
+  let d = 0;
+  relViewModel.exploreCallback = () => { d++ };
+
+  const { container } = render(<FormRelationship model={relViewModel} />);
+  expect(container.firstChild).toMatchSnapshot();
+
+  fireEvent.click(container.querySelector("label"));
+  expect(d).toEqual(1);
 });
 
 test("Form HTML test", () => {

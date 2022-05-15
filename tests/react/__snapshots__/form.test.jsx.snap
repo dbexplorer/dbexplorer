@@ -125,3 +125,15 @@ exports[`Form field HTML test 2`] = `
   />
 </div>
 `;
+
+exports[`Form rel HTML test 1`] = `
+<div
+  class="jsde-relationship"
+>
+  <label
+    class="jsde-relationship__label"
+  >
+    rel_1
+  </label>
+</div>
+`;
