@@ -34,7 +34,8 @@ test("First table test", () => {
       name: "f3"
     }
   ]);
-  table.getDataCallback = (limit, offset, ready) => {
+  table.getDataCallback = (options, ready) => {
+    let offset = options.offset;
     ready([
       { key: 1, data: { f1: 1 + offset, f2: "one" + offset, f3: "first" + offset } },
       { key: 2, data: { f1: 2 + offset, f2: "two" + offset, f3: "second" + offset } }

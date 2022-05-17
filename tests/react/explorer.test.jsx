@@ -10,7 +10,7 @@ import { act } from 'react-dom/test-utils';
 test("Table panel test", () => {
   var tableViewModel = new TableViewModel([]);
   var panelViewModel = new ExplorerPanelViewModel(tableViewModel);
-  tableViewModel.getDataCallback = (limit, offset, ready) => {
+  tableViewModel.getDataCallback = (options, ready) => {
     ready([]);
   };
   const { container } = render(<ExplorerPanel model={panelViewModel} />);
@@ -29,14 +29,14 @@ test("Form panel test", () => {
 
 test("Explorer test", () => {
   var explorerViewModel = new ExplorerViewModel(dbDescription, {});
-  explorerViewModel.getDataCallback = (entityId, attributes, limit, offset, ready) => {
-    if (limit > 1) {
+  explorerViewModel.getDataCallback = (entityId, attributes, options, ready) => {
+    if (options.limit > 1) {
       ready([
         { key: 1, data: { table_key: 1, f1: "one", f2: "first" } },
         { key: 2, data: { table_key: 2, f1: "two", f2: "second" } }
       ]);
     }
-    if (limit == 1) {
+    if (options.limit == 1) {
       ready([
         { table_key: 1, f1: "one", f3: "third" },
       ]);

@@ -3,6 +3,7 @@ import { DataBaseDescription, IDataBase, IDataEntity } from "../schema";
 import { TableViewModel } from "./table";
 import { FormViewModel } from "./form";
 import { cssPrefix } from "../utils";
+import { IGetDataOptions } from "../data";
 
 export interface IExplorerOptions { }
 export class ExplorerPanelViewModel {
@@ -33,8 +34,8 @@ export class ExplorerViewModel {
     const columns = this.description.getTableColumns(entityId);
     const attributes = columns.map((col) => col.name);
     let tableViewModel = new TableViewModel(columns);
-    tableViewModel.getDataCallback = (limit, offset, ready) => {
-      this.getDataCallback(entityId, attributes, limit, offset, ready);
+    tableViewModel.getDataCallback = (options, ready) => {
+      this.getDataCallback(entityId, attributes, options, ready);
     };
     const panel = new ExplorerPanelViewModel(tableViewModel);
     this.panels.push(panel);
@@ -51,7 +52,7 @@ export class ExplorerViewModel {
     const attributes = fields.map((field) => field.name);
     let formViewModel = new FormViewModel(fields, rels);
     formViewModel.getDataCallback = (ready) => {
-      this.getDataCallback(entityId, attributes, 1, 0, ready);
+      this.getDataCallback(entityId, attributes, { limit: 1, offset: 0 }, ready);
     };
     const panel = new ExplorerPanelViewModel(formViewModel);
     this.panels.push(panel);
@@ -61,8 +62,7 @@ export class ExplorerViewModel {
   public getDataCallback: (
     entityId: string,
     attributes: string[],
-    limit: number,
-    offset: number,
+    options: IGetDataOptions,
     ready: (data: any) => void
   ) => void;
 

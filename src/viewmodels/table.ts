@@ -1,3 +1,4 @@
+import { IGetDataOptions } from "../data";
 import { cssPrefix } from "../utils";
 
 export class TableCellViewModel {
@@ -62,8 +63,7 @@ export class TableViewModel {
   headerViewModel: TableHeaderViewModel;
   loadData() {
     this.getDataCallback(
-      this.dataPartRowCount,
-      this.dataOffset,
+      { limit: this.dataPartRowCount, offset: this.dataOffset },
       (data: any) => {
         this.dataOffset += this.dataPartRowCount;
         const rows = data.map(
@@ -92,7 +92,7 @@ export class TableViewModel {
       foot: cssPrefix("table-foot"),
     };
   }
-  getDataCallback: (limit: number, offset: number, ready: any) => void;
+  getDataCallback: (options: IGetDataOptions, ready: any) => void;
   constructor(columns: TableColumnDescription[]) {
     this.columns = columns;
     this.headerViewModel = new TableHeaderViewModel(

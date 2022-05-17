@@ -42,8 +42,9 @@ test("Table test", () => {
     }
   ]);
   tableViewModel.dataPartRowCount = 2;
-  tableViewModel.getDataCallback = (limit, offset, ready) => {
-    if (limit === 2) {
+  tableViewModel.getDataCallback = (options, ready) => {
+    let offset = options.offset;
+    if (options.limit === 2) {
       ready([
         { key: 1 + offset * 2, data: { f1: 1 + offset * 2, f2: "one", f3: "first" } },
         { key: 2 + offset * 2, data: { f1: 2 + offset * 2, f2: "two", f3: "second" } }
@@ -68,8 +69,9 @@ test("table test - load more", () => {
     }
   ]);
   tableViewModel.dataPartRowCount = 2;
-  tableViewModel.getDataCallback = (limit, offset, ready) => {
-    if (limit === 2) {
+  tableViewModel.getDataCallback = (options, ready) => {
+    let offset = options.offset;
+    if (options.limit === 2) {
       ready([
         { key: 1 + offset * 2, data: { f1: 1 + offset * 2, f2: "one", f3: "first" } },
         { key: 2 + offset * 2, data: { f1: 2 + offset * 2, f2: "two", f3: "second" } }
@@ -94,8 +96,9 @@ test("Table test - row click", () => {
     }
   ]);
   tableViewModel.dataPartRowCount = 2;
-  tableViewModel.getDataCallback = (limit, offset, ready) => {
-    if (limit === 2) {
+  tableViewModel.getDataCallback = (options, ready) => {
+    let offset = options.offset;
+    if (options.limit === 2) {
       ready([
         { key: 1 + offset * 2, data: { f1: 1 + offset * 2, f2: "one", f3: "first" } },
         { key: 2 + offset * 2, data: { f1: 2 + offset * 2, f2: "two", f3: "second" } }
