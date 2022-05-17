@@ -41,18 +41,31 @@ export class ExplorerViewModel {
     this.panels.push(panel);
     this.addPanelCallback(panel);
 
-    tableViewModel.exploreRowCallback = () => {
-      this.addFormPanel(entityId);
+    tableViewModel.exploreRowCallback = (row) => {
+      this.addFormPanel(entityId, row.getKey());
     }
   }
 
-  private addFormPanel(entityId: string) {
+  private addFormPanel(entityId: string, key: string | string[]) {
     const fields = this.description.getFormFields(entityId);
     const rels = this.description.getDownRelationships(entityId);
     const attributes = fields.map((field) => field.name);
+    const formkey = this.description.getPrimaryKey(entityId);
     let formViewModel = new FormViewModel(fields, rels);
     formViewModel.getDataCallback = (ready) => {
-      this.getDataCallback(entityId, attributes, { limit: 1, offset: 0 }, ready);
+      this.getDataCallback(
+        entityId,
+        attributes,
+        { limit: 1, offset: 0, filter: { type: "EQ", field: formkey, value: key } },
+        (result) => {
+          if (result.length == 1) {
+            ready([result[0].data])
+          }
+          else {
+            ready({})
+          }
+
+        });
     };
     const panel = new ExplorerPanelViewModel(formViewModel);
     this.panels.push(panel);

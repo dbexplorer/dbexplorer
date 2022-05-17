@@ -4,7 +4,7 @@ export const dbDescription: IDataBase = {
   entities: {
     table: {
       attributes: {
-        table_key: {},
+        table_key: { isPrimaryKey: true },
         f1: {
           title: "first"
         },
@@ -75,3 +75,23 @@ export const dbDescription: IDataBase = {
     childKey: "c_key"
   }]
 };
+/*
+function generateMockData() {
+  let tableData = [];
+  let child1Data = [];
+  for (let i: number = 0; i < 23; i++) {
+    tableData.push({ table_key: "table_" + i, f1: "table_f1_" + i, f2: "table_f2_" + i, f3: "table_f3_" + i })
+  }
+  for (let i: number = 0; i < 200; i++) {
+    child1Data.push({ child_key: "child1_" + i, e_key: "table_" + (i * 17 % 13), f1: "child1_f1_" + i, f2: "child1_f2_" + i })
+  }
+}
+
+
+export function getDataMock(entityId, attributes, limit, offset, filter, ready) {
+  let d = [];
+  for (let i: number = 1; i < limit; i++) {
+
+  }
+}
+*/

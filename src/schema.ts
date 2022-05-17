@@ -30,6 +30,16 @@ export interface IDataBase {
 
 export class DataBaseDescription {
   constructor(private database: IDataBase) { }
+  public getPrimaryKey(entityId: string): string | string[] {
+    let columns = [];
+    const attributes = this.database.entities[entityId].attributes;
+    for (let col in attributes) {
+      if (attributes[col].isPrimaryKey) {
+        columns.push(col);
+      }
+    }
+    return columns.length == 1 ? columns[0] : columns;
+  }
   public getTableColumns(entityId: string) {
     let columns = [];
     const attributes = this.database.entities[entityId].attributes;
