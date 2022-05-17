@@ -44,6 +44,24 @@ exports[`Form HTML test 1`] = `
       value=""
     />
   </div>
+  <div
+    class="jsde-relationship"
+  >
+    <label
+      class="jsde-relationship__label"
+    >
+      r 1
+    </label>
+  </div>
+  <div
+    class="jsde-relationship"
+  >
+    <label
+      class="jsde-relationship__label"
+    >
+      r 2
+    </label>
+  </div>
 </form>
 `;
 
@@ -90,6 +108,24 @@ exports[`Form HTML test 2`] = `
       class="jsde-field__input"
       value="first"
     />
+  </div>
+  <div
+    class="jsde-relationship"
+  >
+    <label
+      class="jsde-relationship__label"
+    >
+      r 1
+    </label>
+  </div>
+  <div
+    class="jsde-relationship"
+  >
+    <label
+      class="jsde-relationship__label"
+    >
+      r 2
+    </label>
   </div>
 </form>
 `;

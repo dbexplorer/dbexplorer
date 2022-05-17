@@ -55,7 +55,16 @@ test("Form HTML test", () => {
       name: "f3",
       title: "field_3"
     }
-  ]);
+  ], [{
+    title: "r 1",
+    childTable: "child1",
+    childKey: "e_key"
+  },
+  {
+    title: "r 2",
+    childTable: "child2",
+    childKey: "e_key"
+  }]);
 
   formViewModel.getDataCallback = (ready) => {
     ready([{ f1: 1, f2: "one", f3: "first" }]);

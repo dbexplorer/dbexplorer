@@ -235,6 +235,24 @@ exports[`Explorer test 2`] = `
             value=""
           />
         </div>
+        <div
+          class="jsde-relationship"
+        >
+          <label
+            class="jsde-relationship__label"
+          >
+            c1 rel
+          </label>
+        </div>
+        <div
+          class="jsde-relationship"
+        >
+          <label
+            class="jsde-relationship__label"
+          >
+            child table 2
+          </label>
+        </div>
       </form>
     </div>
   </div>

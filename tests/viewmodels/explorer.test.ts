@@ -67,6 +67,10 @@ test("Explorer add form panel test", () => {
 
   table.exploreRowCallback(table.rows[0]);
   var form = (explorer as any).panels[1].dataViewModel as FormViewModel;
+
+  expect(form.fields.map(f => f.getTitle())).toEqual(["table_key", "first", "third"]);
+  expect(form.rels.map(r => r.getTitle())).toEqual(["c1 rel", "child table 2"]);
+
   var fieldStringsUpdated = [];
   form.fields.map(f => f.updateCallback = (text) => { fieldStringsUpdated.push(text) });
   expect(dVM).toEqual(form);
