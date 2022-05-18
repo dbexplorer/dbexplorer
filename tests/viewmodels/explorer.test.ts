@@ -46,10 +46,22 @@ test("Explorer add form panel test", () => {
     actualEntityId = entityId;
     actualAttributes = attributes;
     if (options.limit == 2) {
-      ready([
-        { key: 1, data: { table_key: 1, f1: "one", f2: "first" } },
-        { key: 2, data: { table_key: 2, f1: "two", f2: "second" } }
-      ]);
+      if (entityId == "table")
+        ready([
+          { key: 1, data: { table_key: 1, f1: "one", f2: "first" } },
+          { key: 2, data: { table_key: 2, f1: "two", f2: "second" } }
+        ]);
+      if (entityId == "child1" && options.filter.value == "1" && options.filter.type == "EQ" && options.filter.field == "e_key")
+        ready([
+          { key: 1, data: { child_key: 1, e_key: 1, f1: "One", f2: "First" } },
+          { key: 2, data: { child_key: 2, e_key: 1, f1: "Two", f2: "Second" } }
+        ])
+      if (entityId == "child1" && options.filter.value == "2" && options.filter.type == "EQ" && options.filter.field == "e_key")
+        ready([
+          { key: 1, data: { child_key: 3, e_key: 1, f1: "Three", f2: "Third" } },
+          { key: 2, data: { child_key: 4, e_key: 1, f1: "Four", f2: "Fourth" } }
+        ])
+
     }
     if (options.limit == 1) {
       if (options.filter.value == "1" && options.filter.type == "EQ" && options.filter.field == "table_key")
@@ -88,8 +100,19 @@ test("Explorer add form panel test", () => {
   form.reloadData();
   expect(fieldStringsUpdated).toEqual(["1", "one", "third"]);
 
+  form.exploreRelationshipCallback(form.rels[0]);
+  expect(explorerPanels.length).toBe(3);
+  var c_table = explorerPanels[2].dataViewModel as TableViewModel;
+  var d;
+  c_table.addRowsCallback = (data: TableRowViewModel[]) => {
+    d = data.map((row) => row.getCells().map((cell) => cell.getText()));
+  };
+  c_table["dataPartRowCount"] = 2;
+  c_table.loadData();
+  expect(d).toEqual([["1", "1", "One", "First"], ["2", "1", "Two", "Second"]]);
+
   table.exploreRowCallback(table.rows[1]);
-  //expect(explorerPanels.length).toBe(2);
+  expect(explorerPanels.length).toBe(2);
   var form2 = explorerPanels[explorerPanels.length - 1].dataViewModel as FormViewModel;
 
   expect(form2.fields.map(f => f.getTitle())).toEqual(["table_key", "first", "third"]);

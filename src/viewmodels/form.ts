@@ -4,8 +4,8 @@ import { TableColumnDescription } from "./table";
 
 export class FormRelationshipDescription {
   title: string;
-  childTable: string;
-  childKey: string | string[];
+  entity: string;
+  key: string | string[];
 }
 export class FormStringFieldViewModel {
   getName() {
@@ -41,6 +41,12 @@ export class FormStringFieldViewModel {
 export class FormRelationshipViewModel {
   getTitle() {
     return this.relDescription.title;
+  }
+  getEntityId() {
+    return this.relDescription.entity;
+  }
+  getKeyField() {
+    return this.relDescription.key;
   }
   constructor(
     private relDescription: FormRelationshipDescription,
