@@ -3,7 +3,9 @@ const dbDescription = {
   entities: {
     table: {
       attributes: {
-        table_key: {},
+        table_key: {
+          isPrimaryKey: true
+        },
         f1: {
           title: "first"
         },
@@ -76,19 +78,39 @@ const dbDescription = {
 };
 
 var explorerViewModel = new JSDataExplorer.ExplorerViewModel(dbDescription, {});
-explorerViewModel.getDataCallback = (entityId, attributes, limit, offset, ready) => {
-  if (limit > 1) {
-    ready([
-      { key: 1, data: { table_key: 1, f1: "one", f2: "first" } },
-      { key: 2, data: { table_key: 2, f1: "two", f2: "second" } }
-    ]);
+explorerViewModel.getDataCallback = function (entityId, attributes, options, ready) {
+  console.log(entityId, attributes, options);
+  if (options.limit > 1) {
+    if (entityId == "table")
+      ready([
+        { key: 1, data: { table_key: 1, f1: "one", f2: "first" } },
+        { key: 2, data: { table_key: 2, f1: "two", f2: "second" } }
+      ]);
+    if (entityId == "child1" && options.filter.value == "1" && options.filter.type == "EQ" && options.filter.field == "e_key")
+      ready([
+        { key: 1, data: { child_key: 1, e_key: 1, f1: "One", f2: "First" } },
+        { key: 2, data: { child_key: 2, e_key: 1, f1: "Two", f2: "Second" } }
+      ])
+    if (entityId == "child1" && options.filter.value == "2" && options.filter.type == "EQ" && options.filter.field == "e_key")
+      ready([
+        { key: 1, data: { child_key: 3, e_key: 1, f1: "Three", f2: "Third" } },
+        { key: 2, data: { child_key: 4, e_key: 1, f1: "Four", f2: "Fourth" } }
+      ])
+
   }
-  if (limit === 1) {
-    ready([
-      { table_key: 1, f1: "one", f3: "third" },
-    ]);
+  if (options.limit == 1) {
+    if (options.filter.value == "1" && options.filter.type == "EQ" && options.filter.field == "table_key")
+      ready(
+        [{ key: 1, data: { table_key: 1, f1: "one", f3: "third" } }]
+      );
+    if (options.filter.value == "2" && options.filter.type == "EQ" && options.filter.field == "table_key")
+      ready(
+        [{ key: 2, data: { table_key: 2, f1: "two", f3: "second" } }]
+      );
   }
 };
+
+
 let element = document.createElement("div");
 element.id = "explorerElement";
 document.body.appendChild(element);

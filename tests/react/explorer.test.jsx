@@ -37,14 +37,17 @@ test("Explorer test", () => {
       ]);
     }
     if (options.limit == 1) {
-      ready([
-        { table_key: 1, f1: "one", f3: "third" },
-      ]);
+      if (options.filter.value == 1)
+        ready([{ key: 1, data: { table_key: 1, f1: "one", f3: "third" } }]);
+      if (options.filter.value == 2)
+        ready([{ key: 2, data: { table_key: 2, f1: "two", f3: "second" } }]);
     }
   };
   const { container } = render(<Explorer model={explorerViewModel} />);
   act(() => explorerViewModel.start("table"));
   expect(container.firstChild).toMatchSnapshot();
-  fireEvent.click(container.querySelector("tbody tr"));
+  fireEvent.click(container.querySelectorAll("tbody tr")[0]);
+  expect(container.firstChild).toMatchSnapshot();
+  fireEvent.click(container.querySelectorAll("tbody tr")[1]);
   expect(container.firstChild).toMatchSnapshot();
 });

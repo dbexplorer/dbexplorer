@@ -64,7 +64,7 @@ export class FormRelationshipViewModel {
 export class FormViewModel implements IBaseViewModel {
   fields: FormStringFieldViewModel[] = [];
   rels: FormRelationshipViewModel[] = [];
-  constructor(private fieldsDescription: TableColumnDescription[], relDescriptions: FormRelationshipDescription[]) {
+  constructor(private fieldsDescription: TableColumnDescription[], private relDescriptions: FormRelationshipDescription[], private key: any) {
     this.fields = fieldsDescription.map(
       (field) => new FormStringFieldViewModel(field)
     );
@@ -85,9 +85,12 @@ export class FormViewModel implements IBaseViewModel {
       root: cssPrefix("form"),
     };
   }
+  getKey() {
+    return this.key;
+  }
   reloadData() {
     this.getDataCallback((data: any) => {
-      let dataRow = data[0];
+      let dataRow = data;
       this.fields.forEach((field) =>
         field.setText(dataRow[field.getName()].toString())
       );

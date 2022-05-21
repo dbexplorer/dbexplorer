@@ -55,7 +55,7 @@ export class ExplorerViewModel {
     const rels = this.description.getDownRelationships(entityId);
     const attributes = fields.map((field) => field.name);
     const formkey = this.description.getPrimaryKey(entityId);
-    let formViewModel = new FormViewModel(fields, rels);
+    let formViewModel = new FormViewModel(fields, rels, key);
     formViewModel.getDataCallback = (ready) => {
       this.getDataCallback(
         entityId,
@@ -63,7 +63,7 @@ export class ExplorerViewModel {
         { limit: 1, offset: 0, filter: { type: "EQ", field: formkey, value: key } },
         (result) => {
           if (result.length == 1) {
-            ready([result[0].data])
+            ready(result[0].data)
           }
           else {
             ready({})
@@ -96,6 +96,6 @@ export class ExplorerViewModel {
 
   public start(entityId: string) {
     this.panels = [];
-    this.addTablePanel(entityId, -1);
+    this.addTablePanel(entityId, null, -1);
   }
 }

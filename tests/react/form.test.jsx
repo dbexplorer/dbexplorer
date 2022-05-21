@@ -67,13 +67,9 @@ test("Form HTML test", () => {
   }]);
 
   formViewModel.getDataCallback = (ready) => {
-    ready([{ f1: 1, f2: "one", f3: "first" }]);
+    ready({ f1: 1, f2: "one", f3: "first" });
   };
 
   const { container } = render(<Form model={formViewModel} />);
-  expect(container.firstChild).toMatchSnapshot();
-  act(() => {
-    formViewModel.reloadData();
-  })
   expect(container.firstChild).toMatchSnapshot();
 });

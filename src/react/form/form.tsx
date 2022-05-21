@@ -14,6 +14,9 @@ export class Form extends React.Component<IProps> {
   css() {
     return this.props.model.css();
   }
+  componentDidMount() {
+    this.props.model.reloadData();
+  }
   render() {
     return (
       <form className={this.css().root} action="#">

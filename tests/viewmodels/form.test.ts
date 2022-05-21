@@ -49,9 +49,9 @@ test("Form test", () => {
       name: "f3",
       title: "field_3"
     }
-  ], []);
+  ], [], 1);
   form.getDataCallback = (ready) => {
-    ready([{ f1: 1, f2: "one", f3: "first" }]);
+    ready({ f1: 1, f2: "one", f3: "first" });
   };
   var d: string[] = [];
   form.fields.forEach((field) => {
@@ -71,14 +71,14 @@ test("Form relationships test", () => {
     }
   ], [{
     title: "r 1",
-    childTable: "child1",
-    childKey: "e_key"
+    entity: "child1",
+    key: "e_key"
   },
   {
     title: "r 2",
-    childTable: "child2",
-    childKey: "e_key"
-  }]);
+    entity: "child2",
+    key: "e_key"
+  }], 1);
 
   form.fields.forEach((field) => {
     field.updateCallback = (text) => { };
@@ -87,7 +87,7 @@ test("Form relationships test", () => {
   var r: any;
   form.exploreRelationshipCallback = (rel) => r = rel;
   form.getDataCallback = (ready) => {
-    ready([{ f1: 1 }]);
+    ready({ f1: 1 });
   };
   form.reloadData();
   expect(form.rels.map(r => r.getTitle())).toEqual(["r 1", "r 2"]);

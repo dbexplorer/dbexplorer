@@ -19,6 +19,12 @@ export class ExplorerPanel extends React.Component<IProps> {
   isForm() {
     return this.props.model.dataViewModel instanceof FormViewModel;
   }
+  formModel() {
+    return this.props.model.dataViewModel as FormViewModel;
+  }
+  tableModel() {
+    return this.props.model.dataViewModel as TableViewModel;
+  }
   render() {
     return (
       <div className={this.css().root}>
@@ -26,8 +32,8 @@ export class ExplorerPanel extends React.Component<IProps> {
         <div className={this.css().body}>
           {
             this.isForm() ?
-              <Form model={this.props.model.dataViewModel as FormViewModel}></Form> :
-              <Table model={this.props.model.dataViewModel as TableViewModel}></Table>
+              <Form key={this.formModel().getKey()} model={this.formModel()}></Form> :
+              <Table model={this.tableModel()}></Table>
           }
         </div>
       </div>
