@@ -1,4 +1,3 @@
-// ========================================
 const dbDescription = {
   entities: {
     table: {
@@ -22,7 +21,9 @@ const dbDescription = {
     child1: {
       title: "child table 1",
       attributes: {
-        child_key: {},
+        child_key: {
+          isPrimaryKey: true
+        },
         e_key: {},
         f1: {
           title: "c1 first"
@@ -35,7 +36,9 @@ const dbDescription = {
     child2: {
       title: "child table 2",
       attributes: {
-        child_key: {},
+        child_key: {
+          isPrimaryKey: true
+        },
         e_key: {},
         f1: {
           title: "c2 first"
@@ -48,7 +51,9 @@ const dbDescription = {
     grandchild: {
       title: "grandchild table",
       attributes: {
-        g_child_key: {},
+        g_child_key: {
+          isPrimaryKey: true
+        },
         c_key: {},
         f1: {
           title: "gc first"
@@ -77,39 +82,50 @@ const dbDescription = {
   }]
 };
 
-var explorerViewModel = new JSDataExplorer.ExplorerViewModel(dbDescription, {});
-explorerViewModel.getDataCallback = function (entityId, attributes, options, ready) {
+var db = {};
+db["table"] = [];
+db["child1"] = [];
+db["child2"] = [];
+db["grandchild"] = [];
+
+for (let i = 0; i < 23; i++) {
+  db["table"].push({ key: "table_" + i, data: { table_key: "table_" + i, f1: "table_f1_" + i, f2: "table_f2_" + i, f3: "table_f3_" + i } })
+}
+for (let i = 0; i < 200; i++) {
+  db["child1"].push({ key: "child1_" + i, data: { child_key: "child1_" + i, e_key: "table_" + (i * 17 % 23), f1: "child1_f1_" + i, f2: "child1_f2_" + i } })
+}
+for (let i = 0; i < 100; i++) {
+  db["child2"].push({ key: "child2_" + i, data: { child_key: "child2_" + i, e_key: "table_" + (i * 19 % 23), f1: "child1_f1_" + i, f2: "child1_f2_" + i } })
+}
+for (let i = 0; i < 3000; i++) {
+  db["grandchild"].push({ key: "grandchild_" + i, data: { g_child_key: "grandchild_" + i, c_key: "child1_" + (i * 1371 % 200), f1: "grandchild_f1_" + i, f2: "grandchild_f2_" + i } })
+}
+console.log(db);
+
+function getData(entityId, attributes, options, ready) {
   console.log(entityId, attributes, options);
-  if (options.limit > 1) {
-    if (entityId == "table")
-      ready([
-        { key: 1, data: { table_key: 1, f1: "one", f2: "first" } },
-        { key: 2, data: { table_key: 2, f1: "two", f2: "second" } }
-      ]);
-    if (entityId == "child1" && options.filter.value == "1" && options.filter.type == "EQ" && options.filter.field == "e_key")
-      ready([
-        { key: 1, data: { child_key: 1, e_key: 1, f1: "One", f2: "First" } },
-        { key: 2, data: { child_key: 2, e_key: 1, f1: "Two", f2: "Second" } }
-      ])
-    if (entityId == "child1" && options.filter.value == "2" && options.filter.type == "EQ" && options.filter.field == "e_key")
-      ready([
-        { key: 1, data: { child_key: 3, e_key: 1, f1: "Three", f2: "Third" } },
-        { key: 2, data: { child_key: 4, e_key: 1, f1: "Four", f2: "Fourth" } }
-      ])
 
+  let data = db[entityId];
+  if (options.filter) {
+    if (options.filter.type == "EQ") {
+      data = data.filter(d => d.data[options.filter.field] == options.filter.value);
+    }
   }
-  if (options.limit == 1) {
-    if (options.filter.value == "1" && options.filter.type == "EQ" && options.filter.field == "table_key")
-      ready(
-        [{ key: 1, data: { table_key: 1, f1: "one", f3: "third" } }]
-      );
-    if (options.filter.value == "2" && options.filter.type == "EQ" && options.filter.field == "table_key")
-      ready(
-        [{ key: 2, data: { table_key: 2, f1: "two", f3: "second" } }]
-      );
-  }
+  if (options.offset) data = data.slice(options.offset);
+  if (options.limit) data = data.slice(0, options.limit);
+
+  data = data.map((d) => {
+    var row = { key: d.key, data: {} };
+    attributes.forEach((a) => {
+      row.data[a] = d.data[a];
+    });
+    return row;
+  })
+  ready(data);
 };
-
+// ========================================
+var explorerViewModel = new JSDataExplorer.ExplorerViewModel(dbDescription, {});
+explorerViewModel.getDataCallback = getData;
 
 let element = document.createElement("div");
 element.id = "explorerElement";
