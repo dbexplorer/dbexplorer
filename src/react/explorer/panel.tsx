@@ -28,12 +28,12 @@ export class ExplorerPanel extends React.Component<IProps> {
   render() {
     return (
       <div className={this.css().root}>
-        <div className={this.css().close}>Close</div>
+        <button className={this.css().close}>Close</button>
         <div className={this.css().body}>
           {
             this.isForm() ?
-              <Form key={this.formModel().getKey()} model={this.formModel()}></Form> :
-              <Table model={this.tableModel()}></Table>
+              <Form key={this.props.model.getKey()} model={this.formModel()}></Form> :
+              <Table key={this.props.model.getKey()} model={this.tableModel()}></Table>
           }
         </div>
       </div>

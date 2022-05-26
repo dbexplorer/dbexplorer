@@ -26,7 +26,7 @@ export class FormRelationship extends React.Component<IProps, IState> {
   render() {
     return (
       <div className={this.css().root}>
-        <label className={this.css().label} onClick={this.handleClick}>{this.props.model.getTitle()}</label>
+        <button className={this.css().label} onClick={this.handleClick}>{this.props.model.getTitle()}</button>
       </div>
     );
   }

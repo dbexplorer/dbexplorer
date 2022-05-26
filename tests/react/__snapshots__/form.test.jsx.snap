@@ -47,20 +47,20 @@ exports[`Form HTML test 1`] = `
   <div
     class="jsde-relationship"
   >
-    <label
+    <button
       class="jsde-relationship__label"
     >
       r 1
-    </label>
+    </button>
   </div>
   <div
     class="jsde-relationship"
   >
-    <label
+    <button
       class="jsde-relationship__label"
     >
       r 2
-    </label>
+    </button>
   </div>
 </form>
 `;
@@ -101,10 +101,10 @@ exports[`Form rel HTML test 1`] = `
 <div
   class="jsde-relationship"
 >
-  <label
+  <button
     class="jsde-relationship__label"
   >
     rel_1
-  </label>
+  </button>
 </div>
 `;

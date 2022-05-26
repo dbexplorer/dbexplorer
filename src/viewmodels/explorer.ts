@@ -7,7 +7,10 @@ import { IGetDataFilter, IGetDataOptions } from "../data";
 
 export interface IExplorerOptions { }
 export class ExplorerPanelViewModel {
-  constructor(public dataViewModel: IBaseViewModel) { }
+  constructor(public dataViewModel: IBaseViewModel, private key: string) { }
+  public getKey() {
+    return this.key;
+  }
   css() {
     return {
       root: cssPrefix("panel"),
@@ -39,7 +42,7 @@ export class ExplorerViewModel {
       newOptions.filter = initFilter;
       this.getDataCallback(entityId, attributes, newOptions, ready);
     };
-    const panel = new ExplorerPanelViewModel(tableViewModel);
+    const panel = new ExplorerPanelViewModel(tableViewModel, entityId);
     let panelIndex = this.panels.length;
     if (senderIndex < this.panels.length - 1) this.panels.splice(senderIndex + 1, this.panels.length - 1 - senderIndex);
     this.panels.push(panel);
@@ -71,7 +74,7 @@ export class ExplorerViewModel {
 
         });
     };
-    const panel = new ExplorerPanelViewModel(formViewModel);
+    const panel = new ExplorerPanelViewModel(formViewModel, key.toString());
     let panelIndex = this.panels.length;
     if (senderIndex < this.panels.length - 1) this.panels.splice(senderIndex + 1, this.panels.length - 1 - senderIndex);
     this.panels.push(panel);
