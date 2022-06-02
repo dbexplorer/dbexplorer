@@ -36,7 +36,7 @@ test("Form rel HTML test", () => {
   const { container } = render(<FormRelationship model={relViewModel} />);
   expect(container.firstChild).toMatchSnapshot();
 
-  fireEvent.click(container.querySelector("label"));
+  fireEvent.click(container.querySelector("button"));
   expect(d).toEqual(1);
 });
 
