@@ -1,0 +1,10 @@
+.jsde-explorer {
+    font-family: sans-serif;
+    display: flex;
+}
+.jsde-panel {
+    width: 400px;
+    &:last-child {
+        flex-grow: 1;
+    }
+}

@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TypedocWebpackPlugin = require('typedoc-webpack-plugin')
 /*
  * SplitChunksPlugin is enabled by default and replaced
@@ -36,6 +37,19 @@ module.exports = {
                 test: /\.(ts|tsx)$/,
                 exclude: [/node_modules/],
                 loader: 'ts-loader'
+            },
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    { loader: MiniCssExtractPlugin.loader },
+                    // Creates `style` nodes from JS strings
+                    //"style-loader",
+                    // Translates CSS into CommonJS
+                    "css-loader",
+                    // Compiles Sass to CSS
+                    "sass-loader",
+
+                ],
             }
         ]
     },
@@ -43,14 +57,18 @@ module.exports = {
     output: {
         chunkFilename: '[name].js',
         filename: '[name].js',
-		library: 'JSDataExplorer',
-        libraryTarget:'umd'
+        library: 'JSDataExplorer',
+        libraryTarget: 'umd'
     },
 
     mode: 'development',
     plugins: [
         new CleanWebpackPlugin(),
         //new UglifyJSPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].css'
+        }),
+
         new CopyWebpackPlugin({
             patterns: [
                 {
@@ -64,9 +82,9 @@ module.exports = {
     optimization: {
         splitChunks: false
     },
-	devServer: {
-	  static: ['./demo/react', './dist'],
-      compress: false,
-      port: 8080
+    devServer: {
+        static: ['./demo/react', './dist'],
+        compress: false,
+        port: 8080
     }
 }
