@@ -50,4 +50,7 @@ test("Explorer test", () => {
   expect(container.firstChild).toMatchSnapshot();
   fireEvent.click(container.querySelectorAll("tbody tr")[1]);
   expect(container.firstChild).toMatchSnapshot();
+
+  fireEvent.click(container.querySelectorAll(".jsde-panel__close")[1]);
+  expect(container.firstChild).toMatchSnapshot();
 });

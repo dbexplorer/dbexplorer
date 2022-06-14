@@ -9,9 +9,7 @@ exports[`Explorer test 1`] = `
   >
     <button
       class="jsde-panel__close"
-    >
-      
-    </button>
+    />
     <div
       class="jsde-panel-body"
     >
@@ -101,9 +99,7 @@ exports[`Explorer test 2`] = `
   >
     <button
       class="jsde-panel__close"
-    >
-      
-    </button>
+    />
     <div
       class="jsde-panel-body"
     >
@@ -186,9 +182,7 @@ exports[`Explorer test 2`] = `
   >
     <button
       class="jsde-panel__close"
-    >
-      
-    </button>
+    />
     <div
       class="jsde-panel-body"
     >
@@ -268,9 +262,7 @@ exports[`Explorer test 3`] = `
   >
     <button
       class="jsde-panel__close"
-    >
-      
-    </button>
+    />
     <div
       class="jsde-panel-body"
     >
@@ -353,9 +345,87 @@ exports[`Explorer test 3`] = `
   >
     <button
       class="jsde-panel__close"
+    />
+    <div
+      class="jsde-panel-body"
     >
-      
-    </button>
+      <form
+        action="#"
+        class="jsde-form"
+      >
+        <div
+          class="jsde-field"
+        >
+          <label
+            class="jsde-field__label"
+          >
+            table_key
+          </label>
+          <input
+            class="jsde-field__input"
+            value="2"
+          />
+        </div>
+        <div
+          class="jsde-field"
+        >
+          <label
+            class="jsde-field__label"
+          >
+            first
+          </label>
+          <input
+            class="jsde-field__input"
+            value="two"
+          />
+        </div>
+        <div
+          class="jsde-field"
+        >
+          <label
+            class="jsde-field__label"
+          >
+            third
+          </label>
+          <input
+            class="jsde-field__input"
+            value="second"
+          />
+        </div>
+        <div
+          class="jsde-relationship"
+        >
+          <button
+            class="jsde-relationship__label"
+          >
+            c1 rel
+          </button>
+        </div>
+        <div
+          class="jsde-relationship"
+        >
+          <button
+            class="jsde-relationship__label"
+          >
+            child table 2
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Explorer test 4`] = `
+<div
+  class="jsde-explorer"
+>
+  <div
+    class="jsde-panel"
+  >
+    <button
+      class="jsde-panel__close"
+    />
     <div
       class="jsde-panel-body"
     >
@@ -432,9 +502,7 @@ exports[`Form panel test 1`] = `
 >
   <button
     class="jsde-panel__close"
-  >
-    
-  </button>
+  />
   <div
     class="jsde-panel-body"
   >
@@ -452,9 +520,7 @@ exports[`Table panel test 1`] = `
 >
   <button
     class="jsde-panel__close"
-  >
-    
-  </button>
+  />
   <div
     class="jsde-panel-body"
   >

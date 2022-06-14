@@ -22,6 +22,7 @@ test("Explorer table test", () => {
   explorer.addPanelCallback = (viewModel) => {
     dVM = viewModel.dataViewModel;
   }
+
   explorer.start("table");
   var table = (explorer as any).panels[0].dataViewModel;
   expect(dVM).toEqual(table);
@@ -78,6 +79,7 @@ test("Explorer add form panel test", () => {
   explorer.addPanelCallback = (viewModel) => {
     dVM = viewModel.dataViewModel;
   }
+  explorer.removePanelCallback = () => { };
   explorer.start("table");
   let explorerPanels = (explorer as any).panels;
   expect(explorerPanels.length).toBe(1);
@@ -123,5 +125,9 @@ test("Explorer add form panel test", () => {
   expect(dVM).toEqual(form2);
   form2.reloadData();
   expect(fieldStringsUpdated2).toEqual(["2", "two", "second"]);
+
+  explorerPanels[explorerPanels.length - 1].closeCallback();
+  expect(explorerPanels.length).toBe(1);
+  expect(explorerPanels[0].dataViewModel).toEqual(table);
 
 });

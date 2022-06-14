@@ -16,6 +16,9 @@ export class Explorer extends React.Component<IProps, IState> {
     this.props.model.addPanelCallback = (panelViewModel) => {
       this.setState({ panels: props.model.getPanels().slice() });
     };
+    this.props.model.removePanelCallback = () => {
+      this.setState({ panels: props.model.getPanels().slice() });
+    };
   }
   css() {
     return this.props.model.css()
