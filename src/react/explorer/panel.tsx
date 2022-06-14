@@ -28,7 +28,7 @@ export class ExplorerPanel extends React.Component<IProps> {
   render() {
     return (
       <div className={this.css().root}>
-        <button className={this.css().close}>Close</button>
+        <button className={this.css().close}></button>
         <div className={this.css().body}>
           {
             this.isForm() ?

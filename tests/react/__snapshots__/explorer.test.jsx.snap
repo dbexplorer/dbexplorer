@@ -10,7 +10,7 @@ exports[`Explorer test 1`] = `
     <button
       class="jsde-panel__close"
     >
-      Close
+      
     </button>
     <div
       class="jsde-panel-body"
@@ -102,7 +102,7 @@ exports[`Explorer test 2`] = `
     <button
       class="jsde-panel__close"
     >
-      Close
+      
     </button>
     <div
       class="jsde-panel-body"
@@ -187,7 +187,7 @@ exports[`Explorer test 2`] = `
     <button
       class="jsde-panel__close"
     >
-      Close
+      
     </button>
     <div
       class="jsde-panel-body"
@@ -269,7 +269,7 @@ exports[`Explorer test 3`] = `
     <button
       class="jsde-panel__close"
     >
-      Close
+      
     </button>
     <div
       class="jsde-panel-body"
@@ -354,7 +354,7 @@ exports[`Explorer test 3`] = `
     <button
       class="jsde-panel__close"
     >
-      Close
+      
     </button>
     <div
       class="jsde-panel-body"
@@ -433,7 +433,7 @@ exports[`Form panel test 1`] = `
   <button
     class="jsde-panel__close"
   >
-    Close
+    
   </button>
   <div
     class="jsde-panel-body"
@@ -453,7 +453,7 @@ exports[`Table panel test 1`] = `
   <button
     class="jsde-panel__close"
   >
-    Close
+    
   </button>
   <div
     class="jsde-panel-body"
