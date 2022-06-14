@@ -1,0 +1,22 @@
+.jsde-form {
+    padding: 8px;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 8px
+}
+
+.jsde-field {
+    display: table-row;
+}
+
+.jsde-field__label {
+    display: table-cell;
+}
+
+.jsde-field__input {
+    display: table-cell;
+}
+
+.jsde-relationship {
+    padding: 8px 0;
+}
