@@ -89,7 +89,7 @@ export class ExplorerViewModel {
   }
   private removePanel(viewModel: ExplorerPanelViewModel) {
     const panelIndex = this.panels.indexOf(viewModel);
-    this.panels = this.panels.splice(panelIndex);
+    this.panels.splice(panelIndex);
     this.removePanelCallback();
   }
 

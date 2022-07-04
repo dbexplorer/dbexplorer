@@ -1,5 +1,6 @@
 import { dbDescription } from "../schema_helper";
 import {
+  ExplorerPanelViewModel,
   ExplorerViewModel,
   IExplorerOptions
 } from "../../src/viewmodels/explorer";
@@ -131,3 +132,21 @@ test("Explorer add form panel test", () => {
   expect(explorerPanels[0].dataViewModel).toEqual(table);
 
 });
+
+test("Explorer remove panel test", () => {
+  var explorer = new ExplorerViewModel(dbDescription, {});
+  explorer.removePanelCallback = () => { };
+
+  var panel1 = new ExplorerPanelViewModel(new TableViewModel([]), "e1");
+  var panel2 = new ExplorerPanelViewModel(new TableViewModel([]), "e2");
+  var panel3 = new ExplorerPanelViewModel(new TableViewModel([]), "e3");
+
+  explorer.getPanels().length = 0;
+  explorer.getPanels().push(panel1);
+  explorer.getPanels().push(panel2);
+  explorer.getPanels().push(panel3);
+
+  (explorer as any).removePanel(panel2);
+
+  expect(explorer.getPanels().map(p => p.getKey())).toStrictEqual(["e1"]);
+})

@@ -429,68 +429,78 @@ exports[`Explorer test 4`] = `
     <div
       class="jsde-panel-body"
     >
-      <form
-        action="#"
-        class="jsde-form"
+      <table
+        class="jsde-table"
       >
-        <div
-          class="jsde-field"
+        <thead
+          class="jsde-table-head"
         >
-          <label
-            class="jsde-field__label"
-          >
-            table_key
-          </label>
-          <input
-            class="jsde-field__input"
-            value="2"
-          />
-        </div>
-        <div
-          class="jsde-field"
+          <tr>
+            <th>
+              table_key
+            </th>
+            <th>
+              first
+            </th>
+            <th>
+              second
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="jsde-table-body"
         >
-          <label
-            class="jsde-field__label"
+          <tr
+            class="jsde-table-row"
           >
-            first
-          </label>
-          <input
-            class="jsde-field__input"
-            value="two"
-          />
-        </div>
-        <div
-          class="jsde-field"
+            <td
+              class="jsde-table-cell"
+            >
+              1
+            </td>
+            <td
+              class="jsde-table-cell"
+            >
+              one
+            </td>
+            <td
+              class="jsde-table-cell"
+            >
+              first
+            </td>
+          </tr>
+          <tr
+            class="jsde-table-row"
+          >
+            <td
+              class="jsde-table-cell"
+            >
+              2
+            </td>
+            <td
+              class="jsde-table-cell"
+            >
+              two
+            </td>
+            <td
+              class="jsde-table-cell"
+            >
+              second
+            </td>
+          </tr>
+        </tbody>
+        <tfoot
+          class="jsde-table-foot"
         >
-          <label
-            class="jsde-field__label"
-          >
-            third
-          </label>
-          <input
-            class="jsde-field__input"
-            value="second"
-          />
-        </div>
-        <div
-          class="jsde-relationship"
-        >
-          <button
-            class="jsde-relationship__label"
-          >
-            c1 rel
-          </button>
-        </div>
-        <div
-          class="jsde-relationship"
-        >
-          <button
-            class="jsde-relationship__label"
-          >
-            child table 2
-          </button>
-        </div>
-      </form>
+          <tr>
+            <td>
+              <button>
+                Load more data...
+              </button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
   </div>
 </div>
