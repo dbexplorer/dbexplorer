@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Explorer test: one panel 1`] = `
+<div
+  class="jsde-explorer"
+>
+  <mock-explorer-panel
+    title="table"
+  />
+</div>
+`;
+
+exports[`Explorer test: one panel again 1`] = `
+<div
+  class="jsde-explorer"
+>
+  <mock-explorer-panel
+    title="table"
+  />
+</div>
+`;
+
+exports[`Explorer test: two panels 1`] = `
+<div
+  class="jsde-explorer"
+>
+  <mock-explorer-panel
+    title="table"
+  />
+  <mock-explorer-panel
+    title="123"
+  />
+</div>
+`;

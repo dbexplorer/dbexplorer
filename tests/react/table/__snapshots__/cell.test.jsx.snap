@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table cell test 1`] = `
+<td
+  class="jsde-table-cell"
+>
+  t1
+</td>
+`;
+
+exports[`Table cell test 2`] = `
+<td
+  class="jsde-table-cell"
+>
+  t2
+</td>
+`;

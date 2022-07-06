@@ -13,9 +13,6 @@ export class FormRelationship extends React.Component<IProps, IState> {
     super(props);
     this.handleClick = this.handleClick.bind(this)
     this.state = { text: props.model.getTitle() };
-    props.model.updateCallback = (data: string) => {
-      this.setState({ text: data });
-    };
   }
   css() {
     return this.props.model.css()

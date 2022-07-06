@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table row test 1`] = `
+<tr
+  class="jsde-table-row"
+>
+  <mock-table-cell
+    title="t1"
+  />
+  <mock-table-cell
+    title="t2"
+  />
+</tr>
+`;

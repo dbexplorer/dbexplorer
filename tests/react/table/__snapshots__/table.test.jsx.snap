@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table test 1`] = `
+<table
+  class="jsde-table"
+>
+  <thead
+    class="jsde-table-head"
+  >
+    <tr>
+      <th>
+        f1
+      </th>
+      <th>
+        f2
+      </th>
+      <th>
+        f3
+      </th>
+    </tr>
+  </thead>
+  <tbody
+    class="jsde-table-body"
+  >
+    <mock-table-row
+      title="1"
+    />
+    <mock-table-row
+      title="2"
+    />
+  </tbody>
+  <tfoot
+    class="jsde-table-foot"
+  >
+    <tr>
+      <td>
+        <button>
+          Load more data...
+        </button>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+`;
