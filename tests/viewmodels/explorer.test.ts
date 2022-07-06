@@ -6,6 +6,7 @@ import {
 } from "../../src/viewmodels/explorer";
 import { TableRowViewModel, TableViewModel } from "../../src/viewmodels/table";
 import { FormViewModel } from "../../src/viewmodels/form";
+import { format } from "path";
 
 test("Explorer table test", () => {
   var explorer = new ExplorerViewModel(dbDescription, {});
@@ -60,8 +61,8 @@ test("Explorer add form panel test", () => {
         ])
       if (entityId == "child1" && options.filter.value == "2" && options.filter.type == "EQ" && options.filter.field == "e_key")
         ready([
-          { key: 1, data: { child_key: 3, e_key: 1, f1: "Three", f2: "Third" } },
-          { key: 2, data: { child_key: 4, e_key: 1, f1: "Four", f2: "Fourth" } }
+          { key: 1, data: { child_key: 3, e_key: 2, f1: "Three", f2: "Third" } },
+          { key: 2, data: { child_key: 4, e_key: 2, f1: "Four", f2: "Fourth" } }
         ])
 
     }
@@ -149,4 +150,20 @@ test("Explorer remove panel test", () => {
   (explorer as any).removePanel(panel2);
 
   expect(explorer.getPanels().map(p => p.getKey())).toStrictEqual(["e1"]);
+})
+
+test("Explore empty row", () => {
+  var explorer = new ExplorerViewModel(dbDescription, {});
+  explorer.getDataCallback = (entityId, attributes, options, ready) => {
+    ready([]);
+  }
+  explorer.addPanelCallback = () => { }
+  explorer.removePanelCallback = () => { };
+  explorer.start("table");
+  (explorer.getPanels()[0].dataViewModel as TableViewModel).exploreRowCallback(new TableRowViewModel(["a", "b", "c"], "a"));
+  var form = explorer.getPanels()[1].dataViewModel as FormViewModel;
+  var fieldStringsUpdated: string[] = [];
+  form.fields.map(f => f.updateCallback = (text) => { fieldStringsUpdated.push(text) });
+  form.reloadData();
+  expect(fieldStringsUpdated).toEqual(["", "", ""]);
 })
