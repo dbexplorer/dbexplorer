@@ -132,6 +132,24 @@ test("Explorer add form panel test", () => {
   expect(explorerPanels.length).toBe(1);
   expect(explorerPanels[0].dataViewModel).toEqual(table);
 
+
+  table.exploreRowCallback(table.rows[1]);
+  expect(explorerPanels.length).toBe(2);
+  form = explorerPanels[1].dataViewModel as FormViewModel;
+  form.exploreRelationshipCallback(form.rels[0]);
+  expect(explorerPanels.length).toBe(3);
+  explorerPanels[explorerPanels.length - 1].closeCallback();
+  expect(explorerPanels.length).toBe(2);
+
+
+  table.exploreRowCallback(table.rows[1]);
+  expect(explorerPanels.length).toBe(2);
+  form = explorerPanels[1].dataViewModel as FormViewModel;
+  form.exploreRelationshipCallback(form.rels[0]);
+  expect(explorerPanels.length).toBe(3);
+  expect((explorerPanels[2].dataViewModel as TableViewModel).headerViewModel.captionsViewModel.getCells().map(c => c.getText())).toEqual(["child_key", "e_key", "c1 first", "c1 second"]);
+  form.exploreRelationshipCallback(form.rels[1]);
+  expect(explorerPanels.length).toBe(3);
 });
 
 test("Explorer remove panel test", () => {
@@ -167,3 +185,4 @@ test("Explore empty row", () => {
   form.reloadData();
   expect(fieldStringsUpdated).toEqual(["", "", ""]);
 })
+
