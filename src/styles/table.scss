@@ -1,3 +1,14 @@
+.jsde-table-head {
+    color: white;
+    background-color: black;
+}
+
+.jsde-table-row {
+    &:hover {
+        background-color: gray;
+    }
+}
+
 .jsde-table-cell {
     padding: 8px;
 }

@@ -62,6 +62,7 @@ test("Form test", () => {
 
   form.reloadData();
   expect(d).toEqual(["1", "one", "first"]);
+  expect(form.getKey()).toBe(1);
 });
 test("Form relationships test", () => {
   var form = new FormViewModel([

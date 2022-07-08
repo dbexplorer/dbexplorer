@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form panel test 1`] = `
+<div
+  class="jsde-panel"
+>
+  <button
+    class="jsde-panel__close"
+  />
+  <div
+    class="jsde-panel-body"
+  >
+    <mock-form />
+  </div>
+</div>
+`;
+
+exports[`Table panel test 1`] = `
+<div
+  class="jsde-panel"
+>
+  <button
+    class="jsde-panel__close"
+  />
+  <div
+    class="jsde-panel-body"
+  >
+    <mock-table />
+  </div>
+</div>
+`;

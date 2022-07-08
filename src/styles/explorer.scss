@@ -1,10 +1,29 @@
 .jsde-explorer {
     font-family: sans-serif;
     display: flex;
+    gap: 16px;
 }
 .jsde-panel {
     width: 400px;
     &:last-child {
         flex-grow: 1;
     }
+    border: 1px solid;
+    position: relative;
+}
+.jsde-panel__close {
+    position: absolute;
+    margin: 4px;
+    width: 24px;
+    height: 24px;
+    right: 0;
+    top: 0;
+    padding: 0;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    &::after {
+        content: '\2715';
+    }
+    
 }

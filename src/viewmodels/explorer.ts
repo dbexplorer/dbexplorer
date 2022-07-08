@@ -18,6 +18,7 @@ export class ExplorerPanelViewModel {
       body: cssPrefix("panel-body"),
     };
   }
+  public closeCallback: () => void;
 }
 export class ExplorerViewModel {
   private panels: ExplorerPanelViewModel[] = [];
@@ -43,10 +44,11 @@ export class ExplorerViewModel {
       this.getDataCallback(entityId, attributes, newOptions, ready);
     };
     const panel = new ExplorerPanelViewModel(tableViewModel, entityId);
+    if (senderIndex < this.panels.length - 1) this.panels.splice(senderIndex + 1, this.panels.length);
     let panelIndex = this.panels.length;
-    if (senderIndex < this.panels.length - 1) this.panels.splice(senderIndex + 1, this.panels.length - 1 - senderIndex);
     this.panels.push(panel);
     this.addPanelCallback(panel);
+    panel.closeCallback = () => { this.removePanel(panel) };
 
     tableViewModel.exploreRowCallback = (row) => {
       this.addFormPanel(entityId, row.getKey(), panelIndex);
@@ -75,14 +77,20 @@ export class ExplorerViewModel {
         });
     };
     const panel = new ExplorerPanelViewModel(formViewModel, key.toString());
-    let panelIndex = this.panels.length;
     if (senderIndex < this.panels.length - 1) this.panels.splice(senderIndex + 1, this.panels.length - 1 - senderIndex);
+    let panelIndex = this.panels.length;
     this.panels.push(panel);
     this.addPanelCallback(panel);
+    panel.closeCallback = () => { this.removePanel(panel) };
 
     formViewModel.exploreRelationshipCallback = (rel) => {
       this.addTablePanel(rel.getEntityId(), { type: "EQ", field: rel.getKeyField(), value: key }, panelIndex);
     }
+  }
+  private removePanel(viewModel: ExplorerPanelViewModel) {
+    const panelIndex = this.panels.indexOf(viewModel);
+    this.panels.splice(panelIndex);
+    this.removePanelCallback();
   }
 
   public getDataCallback: (
@@ -96,6 +104,7 @@ export class ExplorerViewModel {
     return this.panels;
   }
   public addPanelCallback: (viewModel: ExplorerPanelViewModel) => void;
+  public removePanelCallback: () => void;
 
   public start(entityId: string) {
     this.panels = [];

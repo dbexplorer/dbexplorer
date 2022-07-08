@@ -1,10 +1,12 @@
 import { dbDescription } from "../schema_helper";
 import {
+  ExplorerPanelViewModel,
   ExplorerViewModel,
   IExplorerOptions
 } from "../../src/viewmodels/explorer";
 import { TableRowViewModel, TableViewModel } from "../../src/viewmodels/table";
 import { FormViewModel } from "../../src/viewmodels/form";
+import { format } from "path";
 
 test("Explorer table test", () => {
   var explorer = new ExplorerViewModel(dbDescription, {});
@@ -22,6 +24,7 @@ test("Explorer table test", () => {
   explorer.addPanelCallback = (viewModel) => {
     dVM = viewModel.dataViewModel;
   }
+
   explorer.start("table");
   var table = (explorer as any).panels[0].dataViewModel;
   expect(dVM).toEqual(table);
@@ -58,8 +61,8 @@ test("Explorer add form panel test", () => {
         ])
       if (entityId == "child1" && options.filter.value == "2" && options.filter.type == "EQ" && options.filter.field == "e_key")
         ready([
-          { key: 1, data: { child_key: 3, e_key: 1, f1: "Three", f2: "Third" } },
-          { key: 2, data: { child_key: 4, e_key: 1, f1: "Four", f2: "Fourth" } }
+          { key: 1, data: { child_key: 3, e_key: 2, f1: "Three", f2: "Third" } },
+          { key: 2, data: { child_key: 4, e_key: 2, f1: "Four", f2: "Fourth" } }
         ])
 
     }
@@ -78,6 +81,7 @@ test("Explorer add form panel test", () => {
   explorer.addPanelCallback = (viewModel) => {
     dVM = viewModel.dataViewModel;
   }
+  explorer.removePanelCallback = () => { };
   explorer.start("table");
   let explorerPanels = (explorer as any).panels;
   expect(explorerPanels.length).toBe(1);
@@ -124,4 +128,61 @@ test("Explorer add form panel test", () => {
   form2.reloadData();
   expect(fieldStringsUpdated2).toEqual(["2", "two", "second"]);
 
+  explorerPanels[explorerPanels.length - 1].closeCallback();
+  expect(explorerPanels.length).toBe(1);
+  expect(explorerPanels[0].dataViewModel).toEqual(table);
+
+
+  table.exploreRowCallback(table.rows[1]);
+  expect(explorerPanels.length).toBe(2);
+  form = explorerPanels[1].dataViewModel as FormViewModel;
+  form.exploreRelationshipCallback(form.rels[0]);
+  expect(explorerPanels.length).toBe(3);
+  explorerPanels[explorerPanels.length - 1].closeCallback();
+  expect(explorerPanels.length).toBe(2);
+
+
+  table.exploreRowCallback(table.rows[1]);
+  expect(explorerPanels.length).toBe(2);
+  form = explorerPanels[1].dataViewModel as FormViewModel;
+  form.exploreRelationshipCallback(form.rels[0]);
+  expect(explorerPanels.length).toBe(3);
+  expect((explorerPanels[2].dataViewModel as TableViewModel).headerViewModel.captionsViewModel.getCells().map(c => c.getText())).toEqual(["child_key", "e_key", "c1 first", "c1 second"]);
+  form.exploreRelationshipCallback(form.rels[1]);
+  expect(explorerPanels.length).toBe(3);
 });
+
+test("Explorer remove panel test", () => {
+  var explorer = new ExplorerViewModel(dbDescription, {});
+  explorer.removePanelCallback = () => { };
+
+  var panel1 = new ExplorerPanelViewModel(new TableViewModel([]), "e1");
+  var panel2 = new ExplorerPanelViewModel(new TableViewModel([]), "e2");
+  var panel3 = new ExplorerPanelViewModel(new TableViewModel([]), "e3");
+
+  explorer.getPanels().length = 0;
+  explorer.getPanels().push(panel1);
+  explorer.getPanels().push(panel2);
+  explorer.getPanels().push(panel3);
+
+  (explorer as any).removePanel(panel2);
+
+  expect(explorer.getPanels().map(p => p.getKey())).toStrictEqual(["e1"]);
+})
+
+test("Explore empty row", () => {
+  var explorer = new ExplorerViewModel(dbDescription, {});
+  explorer.getDataCallback = (entityId, attributes, options, ready) => {
+    ready([]);
+  }
+  explorer.addPanelCallback = () => { }
+  explorer.removePanelCallback = () => { };
+  explorer.start("table");
+  (explorer.getPanels()[0].dataViewModel as TableViewModel).exploreRowCallback(new TableRowViewModel(["a", "b", "c"], "a"));
+  var form = explorer.getPanels()[1].dataViewModel as FormViewModel;
+  var fieldStringsUpdated: string[] = [];
+  form.fields.map(f => f.updateCallback = (text) => { fieldStringsUpdated.push(text) });
+  form.reloadData();
+  expect(fieldStringsUpdated).toEqual(["", "", ""]);
+})
+

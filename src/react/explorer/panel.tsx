@@ -12,6 +12,7 @@ interface IProps {
 export class ExplorerPanel extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
+    this.handleCloseClick = this.handleCloseClick.bind(this);
   }
   css() {
     return this.props.model.css()
@@ -25,10 +26,13 @@ export class ExplorerPanel extends React.Component<IProps> {
   tableModel() {
     return this.props.model.dataViewModel as TableViewModel;
   }
+  handleCloseClick(e: any) {
+    this.props.model.closeCallback();
+  }
   render() {
     return (
       <div className={this.css().root}>
-        <button className={this.css().close}>Close</button>
+        <button className={this.css().close} onClick={this.handleCloseClick}></button>
         <div className={this.css().body}>
           {
             this.isForm() ?

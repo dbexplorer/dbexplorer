@@ -66,3 +66,22 @@ test("First table test", () => {
     ["12", "two10", "second10"]
   ]);
 });
+
+test("Table explore row", () => {
+  var table = new TableViewModel([]);
+  table.getDataCallback = (options, ready) => {
+    ready([
+      { key: 1, data: {} },
+      { key: 2, data: {} }
+    ]);
+  };
+  var d = "";
+  table.addRowsCallback = () => { };
+  table.exploreRowCallback = (row) => {
+    d = row.getKey();
+  }
+  table.loadData();
+  table.rows[0].exploreCallback();
+  expect(d).toBe(table.rows[0].getKey());
+});
+
