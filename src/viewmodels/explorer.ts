@@ -44,8 +44,8 @@ export class ExplorerViewModel {
       this.getDataCallback(entityId, attributes, newOptions, ready);
     };
     const panel = new ExplorerPanelViewModel(tableViewModel, entityId);
+    if (senderIndex < this.panels.length - 1) this.panels.splice(senderIndex + 1, this.panels.length);
     let panelIndex = this.panels.length;
-    if (senderIndex < this.panels.length) this.panels.splice(senderIndex + 1, this.panels.length);
     this.panels.push(panel);
     this.addPanelCallback(panel);
     panel.closeCallback = () => { this.removePanel(panel) };
@@ -77,8 +77,8 @@ export class ExplorerViewModel {
         });
     };
     const panel = new ExplorerPanelViewModel(formViewModel, key.toString());
-    let panelIndex = this.panels.length;
     if (senderIndex < this.panels.length - 1) this.panels.splice(senderIndex + 1, this.panels.length - 1 - senderIndex);
+    let panelIndex = this.panels.length;
     this.panels.push(panel);
     this.addPanelCallback(panel);
     panel.closeCallback = () => { this.removePanel(panel) };
