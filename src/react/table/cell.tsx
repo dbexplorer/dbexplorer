@@ -1,27 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { TableCellViewModel } from '../../viewmodels/table';
 
-interface IProps {
-  model: TableCellViewModel;
-}
+export function TableCell({ model }: { model: TableCellViewModel }) {
+  const [text, setText] = useState(model.getText());
 
-interface IState {
-  text: string;
-}
-export class TableCell extends React.Component<IProps, IState> {
-  constructor(props: any) {
-    super(props);
-    this.state = { text: props.model.getText() };
-    props.model.updateCallback = (data: string) => {
-      this.setState({ text: data });
-    };
-  }
-  css() {
-    return this.props.model.css()
-  }
-  render() {
-    return (
-      <td className={this.css().root}>{this.state.text}</td>
-    );
-  }
+  model.updateCallback = setText;
+
+  return <td className={model.css().root}>{text}</td>;
 }

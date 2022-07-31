@@ -1,47 +1,30 @@
-import React from 'react';
-import { TableRowViewModel, TableViewModel } from '../../viewmodels/table';
+import React, { useEffect, useState } from 'react';
+import { TableViewModel } from '../../viewmodels/table';
 import { TableRow } from './row';
 
-interface IProps {
-  model: TableViewModel;
-}
+export function Table({ model }: { model: TableViewModel }) {
+  const [rows, setRows] = useState(model.rows);
+  model.addRowsCallback = setRows;
+  const css = model.css();
 
-interface IState {
-  rows: TableRowViewModel[];
-}
-export class Table extends React.Component<IProps, IState> {
-  constructor(props: any) {
-    super(props);
-    this.state = { rows: props.model.rows };
-    this.props.model.addRowsCallback = (data: []) => {
-      this.setState({ rows: this.props.model.rows });
-    };
-    this.handleLoadMoreClick = this.handleLoadMoreClick.bind(this);
-  }
-  css() {
-    return this.props.model.css()
-  }
-  getHeaderCells() {
-    return this.props.model.headerViewModel.captionsViewModel.getCells();
-  }
-  handleLoadMoreClick() {
-    this.props.model.loadData();
-  }
+  const headerCells = model.headerViewModel.captionsViewModel.getCells();
 
-  componentDidMount() {
-    this.props.model.loadData();
+  function handleLoadMoreClick() {
+    model.loadData();
   }
-  render() {
-    return (
-      <table className={this.css().root}>
-        <thead className={this.css().head}><tr>{this.getHeaderCells().map((cell, index) => <th key={index}>{cell.getText()}</th>)}</tr></thead>
-        <tbody className={this.css().body}>
-          {
-            this.state.rows.map((row, index) => <TableRow key={index} model={row} />)
-          }
-        </tbody>
-        <tfoot className={this.css().foot}><tr><td><button onClick={this.handleLoadMoreClick}>Load more data...</button></td></tr></tfoot>
-      </table>
-    );
-  }
+  useEffect(() => {
+    model.loadData();
+  }, [])
+
+  return (
+    <table className={css.root}>
+      <thead className={css.head}><tr>{headerCells.map((cell, index) => <th key={index}>{cell.getText()}</th>)}</tr></thead>
+      <tbody className={css.body}>
+        {
+          rows.map((row, index) => <TableRow key={index} model={row} />)
+        }
+      </tbody>
+      <tfoot className={css.foot}><tr><td><button onClick={handleLoadMoreClick}>Load more data...</button></td></tr></tfoot>
+    </table>
+  );
 }
