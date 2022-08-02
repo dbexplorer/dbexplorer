@@ -1,33 +1,23 @@
-import React from 'react';
-import { ExplorerPanelViewModel, ExplorerViewModel } from '../../viewmodels/explorer';
+import React, { useState, useEffect } from 'react';
+import { ExplorerViewModel } from '../../viewmodels/explorer';
 import { ExplorerPanel } from '../explorer/panel';
 
+export function Explorer({ model }: { model: ExplorerViewModel }) {
+  const [panels, setPanels] = useState(model.getPanels());
+  useEffect(() => {
+    model.start();
+  }, [])
 
-interface IProps {
-  model: ExplorerViewModel;
-}
-interface IState {
-  panels: ExplorerPanelViewModel[];
-}
-export class Explorer extends React.Component<IProps, IState> {
-  constructor(props: any) {
-    super(props);
-    this.state = { panels: props.model.getPanels() };
-    this.props.model.addPanelCallback = (panelViewModel) => {
-      this.setState({ panels: props.model.getPanels().slice() });
-    };
-    this.props.model.removePanelCallback = () => {
-      this.setState({ panels: props.model.getPanels().slice() });
-    };
-  }
-  css() {
-    return this.props.model.css()
-  }
-  render() {
-    return (
-      <div className={this.css().root}>
-        {this.state.panels.map((row, index) => <ExplorerPanel key={index} model={row} />)}
-      </div>
-    );
-  }
+  model.addPanelCallback = () => {
+    setPanels([...model.getPanels()]);
+  };
+  model.removePanelCallback = () => {
+    setPanels([...model.getPanels()]);
+  };
+  const css = model.css();
+  return (
+    <div className={css.root}>
+      {panels.map((row, index) => <ExplorerPanel key={index} model={row} />)}
+    </div>
+  );
 }

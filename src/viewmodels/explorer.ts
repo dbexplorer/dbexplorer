@@ -25,6 +25,7 @@ export class ExplorerViewModel {
   private description: DataBaseDescription;
   constructor(
     dataBaseDescription: IDataBase,
+    private rootEntity: string,
     private options: IExplorerOptions
   ) {
     this.description = new DataBaseDescription(dataBaseDescription);
@@ -106,8 +107,8 @@ export class ExplorerViewModel {
   public addPanelCallback: (viewModel: ExplorerPanelViewModel) => void;
   public removePanelCallback: () => void;
 
-  public start(entityId: string) {
+  public start() {
     this.panels = [];
-    this.addTablePanel(entityId, null, -1);
+    this.addTablePanel(this.rootEntity, null, -1);
   }
 }

@@ -13,12 +13,11 @@ jest.mock("../../../src/react/explorer/panel", () => ({
   }
 }));
 test("Explorer test", () => {
-  var explorerViewModel = new ExplorerViewModel(dbDescription, {});
+  var explorerViewModel = new ExplorerViewModel(dbDescription, "table", {});
   explorerViewModel.getDataCallback = (entityId, attributes, options, ready) => {
     ready([]);
   };
   const { container } = render(<Explorer model={explorerViewModel} />);
-  act(() => explorerViewModel.start("table"));
   expect(container.firstChild).toMatchSnapshot("one panel");
 
   const panel = new ExplorerPanelViewModel(null, "123");

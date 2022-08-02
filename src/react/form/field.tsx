@@ -1,34 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FormStringFieldViewModel } from '../../viewmodels/form';
 
-interface IProps {
-  model: FormStringFieldViewModel;
-}
+export function FormInputField({ model }: { model: FormStringFieldViewModel }) {
+  const [text, setText] = useState(model.getText());
+  model.updateCallback = setText;
 
-interface IState {
-  text: string;
-}
-export class FormInputField extends React.Component<IProps, IState> {
-  constructor(props: any) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this)
-    this.state = { text: props.model.getText() };
-    props.model.updateCallback = (data: string) => {
-      this.setState({ text: data });
-    };
+  const css = model.css();
+
+  function handleChange(e: any) {
+    model.setText(e.target.value);
   }
-  css() {
-    return this.props.model.css()
-  }
-  handleChange(e: any) {
-    this.props.model.setText(e.target.value);
-  }
-  render() {
-    return (
-      <div className={this.css().root}>
-        <label className={this.css().label}>{this.props.model.getTitle()}</label>
-        <input className={this.css().input} value={this.state.text || ""} onChange={this.handleChange}></input>
-      </div>
-    );
-  }
+  return (
+    <div className={css.root}>
+      <label className={css.label}>{model.getTitle()}</label>
+      <input className={css.input} value={text || ""} onChange={handleChange}></input>
+    </div>
+  );
 }

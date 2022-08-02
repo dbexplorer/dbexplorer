@@ -9,7 +9,7 @@ import { FormViewModel } from "../../src/viewmodels/form";
 import { format } from "path";
 
 test("Explorer table test", () => {
-  var explorer = new ExplorerViewModel(dbDescription, {});
+  var explorer = new ExplorerViewModel(dbDescription, "table", {});
 
   var actualEntityId, actualAttributes;
   explorer.getDataCallback = (entityId, attributes, options, ready) => {
@@ -25,7 +25,7 @@ test("Explorer table test", () => {
     dVM = viewModel.dataViewModel;
   }
 
-  explorer.start("table");
+  explorer.start();
   var table = (explorer as any).panels[0].dataViewModel;
   expect(dVM).toEqual(table);
   var d;
@@ -43,7 +43,7 @@ test("Explorer table test", () => {
 
 
 test("Explorer add form panel test", () => {
-  var explorer = new ExplorerViewModel(dbDescription, {});
+  var explorer = new ExplorerViewModel(dbDescription, "table", {});
   var actualEntityId, actualAttributes;
   explorer.getDataCallback = (entityId, attributes, options, ready) => {
     actualEntityId = entityId;
@@ -82,7 +82,7 @@ test("Explorer add form panel test", () => {
     dVM = viewModel.dataViewModel;
   }
   explorer.removePanelCallback = () => { };
-  explorer.start("table");
+  explorer.start();
   let explorerPanels = (explorer as any).panels;
   expect(explorerPanels.length).toBe(1);
   var table = explorerPanels[0].dataViewModel as TableViewModel;
@@ -171,13 +171,13 @@ test("Explorer remove panel test", () => {
 })
 
 test("Explore empty row", () => {
-  var explorer = new ExplorerViewModel(dbDescription, {});
+  var explorer = new ExplorerViewModel(dbDescription, "table", {});
   explorer.getDataCallback = (entityId, attributes, options, ready) => {
     ready([]);
   }
   explorer.addPanelCallback = () => { }
   explorer.removePanelCallback = () => { };
-  explorer.start("table");
+  explorer.start();
   (explorer.getPanels()[0].dataViewModel as TableViewModel).exploreRowCallback(new TableRowViewModel(["a", "b", "c"], "a"));
   var form = explorer.getPanels()[1].dataViewModel as FormViewModel;
   var fieldStringsUpdated: string[] = [];
