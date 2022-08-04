@@ -18,6 +18,22 @@ test("Field test", () => {
   expect(field.getTitle()).toEqual("field 1");
 });
 
+test("Field has reference test", () => {
+  var field0 = new FormStringFieldViewModel({
+    name: "f0",
+    title: "field 0"
+  });
+
+  var field = new FormStringFieldViewModel({
+    name: "f1",
+    title: "field 1",
+    hasReference: true
+  });
+  expect(field0.hasReference()).toBeFalsy();
+  expect(field.hasReference()).toBeTruthy();
+
+});
+
 test("Field test update", () => {
   var field = new FormStringFieldViewModel({
     name: "f1",

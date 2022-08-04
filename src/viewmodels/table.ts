@@ -54,6 +54,7 @@ export class TableHeaderViewModel {
 export class TableColumnDescription {
   name: string;
   title?: string;
+  hasReference?: boolean;
 }
 
 export class TableViewModel {

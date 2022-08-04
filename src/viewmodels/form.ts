@@ -6,6 +6,13 @@ export class FormRelationshipDescription {
   title: string;
   entity: string;
   key: string | string[];
+
+}
+
+export class FormFieldDescription {
+  name: string;
+  title?: string;
+  hasReference?: boolean;
 }
 export class FormStringFieldViewModel {
   getName() {
@@ -24,6 +31,9 @@ export class FormStringFieldViewModel {
       this.updateCallback(this.text);
     }
   }
+  hasReference() {
+    return !!this.columnDescription.hasReference;
+  }
   constructor(
     private columnDescription: TableColumnDescription,
     private text: string = null
@@ -36,6 +46,7 @@ export class FormStringFieldViewModel {
     };
   }
   updateCallback: (data: string) => any;
+  exploreCallback: () => void;
 }
 
 export class FormRelationshipViewModel {
@@ -66,7 +77,15 @@ export class FormViewModel implements IBaseViewModel {
   rels: FormRelationshipViewModel[] = [];
   constructor(private fieldsDescription: TableColumnDescription[], private relDescriptions: FormRelationshipDescription[], private key: any) {
     this.fields = fieldsDescription.map(
-      (field) => new FormStringFieldViewModel(field)
+      (fld) => {
+        const field = new FormStringFieldViewModel(fld);
+        if (fld.hasReference) {
+          field.exploreCallback = () => {
+            this.exploreFieldCallback(field);
+          }
+        }
+        return field;
+      }
     );
     if (relDescriptions) {
       this.rels = relDescriptions.map(
@@ -98,4 +117,5 @@ export class FormViewModel implements IBaseViewModel {
   }
   getDataCallback: (ready: any) => void;
   exploreRelationshipCallback: (row: FormRelationshipViewModel) => any;
+  exploreFieldCallback: (row: FormStringFieldViewModel) => any;
 }

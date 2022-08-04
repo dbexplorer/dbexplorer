@@ -87,6 +87,9 @@ export class ExplorerViewModel {
     formViewModel.exploreRelationshipCallback = (rel) => {
       this.addTablePanel(rel.getEntityId(), { type: "EQ", field: rel.getKeyField(), value: key }, panelIndex);
     }
+    formViewModel.exploreFieldCallback = (field) => {
+      this.addFormPanel(field.getEntityId(), { type: "EQ", field: rel.getKeyField(), value: key }, panelIndex);
+    }
   }
   private removePanel(viewModel: ExplorerPanelViewModel) {
     const panelIndex = this.panels.indexOf(viewModel);
