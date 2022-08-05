@@ -10,10 +10,15 @@ export function FormInputField({ model }: { model: FormStringFieldViewModel }) {
   function handleChange(e: any) {
     model.setText(e.target.value);
   }
+
+  function handleRefClick(e: any) {
+    model.exploreCallback();
+  }
   return (
     <div className={css.root}>
       <label className={css.label}>{model.getTitle()}</label>
       <input className={css.input} value={text || ""} onChange={handleChange}></input>
+      {model.hasReference() ? <button className={css.ref} onClick={handleRefClick}></button> : null}
     </div>
   );
 }

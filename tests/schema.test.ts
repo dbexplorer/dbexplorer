@@ -37,6 +37,29 @@ test("Database Schema tests  - fields", () => {
   ]);
 });
 
+test("Database Schema tests  - fields with references", () => {
+  const desc = new DataBaseDescription(dbDescription);
+  expect(desc.getFormFields("child1")).toEqual([
+    {
+      name: "child_key",
+      title: "child_key"
+    },
+    {
+      name: "e_key",
+      title: "e_key",
+      hasReference: true
+    },
+    {
+      name: "f1",
+      title: "c1 first"
+    },
+    {
+      name: "f2",
+      title: "c1 second"
+    }
+  ]);
+});
+
 test("Database Schema tests  - relationships", () => {
   const desc = new DataBaseDescription(dbDescription);
   expect(desc.getDownRelationships("table")).toEqual([{

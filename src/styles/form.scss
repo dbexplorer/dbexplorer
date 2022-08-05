@@ -16,6 +16,11 @@
 .jsde-field__input {
     display: table-cell;
 }
+.jsde-field__ref {
+    &::after {
+        content: '\2192';
+    }
+}
 
 .jsde-relationship {
     padding: 8px 0;

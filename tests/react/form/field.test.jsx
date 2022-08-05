@@ -21,3 +21,17 @@ test("Form field HTML test", () => {
   fireEvent.change(container.querySelector("input"), { target: { value: 't2' } })
   expect(fieldViewModel.getText()).toEqual("t2");
 });
+
+test("Form field with reference", () => {
+  var fieldViewModel = new FormStringFieldViewModel({
+    name: "f1",
+    title: "field_1",
+    hasReference: true
+  });
+  let fieldExplored = false;
+  fieldViewModel.exploreCallback = () => { fieldExplored = true };
+  const { container } = render(<FormInputField model={fieldViewModel} />);
+  expect(container.firstChild).toMatchSnapshot("field with ref");
+  fireEvent.click(container.querySelector("button"));
+  expect(fieldExplored).toBeTruthy();
+});

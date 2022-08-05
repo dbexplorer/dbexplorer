@@ -55,7 +55,18 @@ export class DataBaseDescription {
     const attributes = this.database.entities[entityId].attributes;
     for (let col in attributes) {
       if (!attributes[col].hideInForm) {
-        fields.push({ name: col, title: attributes[col].title || col });
+        fields.push(
+          this.database.relationships.filter(rel => rel.child == entityId && rel.childKey == col).length > 0 ?
+            {
+              name: col,
+              title: attributes[col].title || col,
+              hasReference: true
+            } :
+            {
+              name: col,
+              title: attributes[col].title || col
+            }
+        );
       }
     }
     return fields;

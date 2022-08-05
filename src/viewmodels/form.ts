@@ -43,6 +43,7 @@ export class FormStringFieldViewModel {
       root: cssPrefix("field"),
       label: cssPrefix("field__label"),
       input: cssPrefix("field__input"),
+      ref: cssPrefix("field__ref"),
     };
   }
   updateCallback: (data: string) => any = () => { };

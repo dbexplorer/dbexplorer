@@ -31,3 +31,22 @@ exports[`Form field HTML test: field with data 1`] = `
   />
 </div>
 `;
+
+exports[`Form field with reference: field with ref 1`] = `
+<div
+  class="jsde-field"
+>
+  <label
+    class="jsde-field__label"
+  >
+    field_1
+  </label>
+  <input
+    class="jsde-field__input"
+    value=""
+  />
+  <button
+    class="jsde-field__ref"
+  />
+</div>
+`;
