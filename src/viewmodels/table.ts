@@ -16,7 +16,7 @@ export class TableCellViewModel {
   css() {
     return { root: cssPrefix("table-cell") };
   }
-  updateCallback: (data: string) => any;
+  updateCallback: (data: string) => any = () => { };
 }
 export class TableRowViewModel {
   private cells: TableCellViewModel[];

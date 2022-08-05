@@ -15,6 +15,7 @@ test("First table cell test", () => {
 
 test("Table row test", () => {
   var row = new TableRowViewModel(["a", "b", "c"], "a");
+  row.setCellsText(["0", "1", "2"]);
   var d = [];
   row.getCells().map((cell) => cell.updateCallback = (data) => { d.push(data) })
   row.setCellsText(["e", "f", "g"]);

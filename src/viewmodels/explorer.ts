@@ -59,6 +59,7 @@ export class ExplorerViewModel {
   private addFormPanel(entityId: string, key: string | string[], senderIndex: number) {
     const fields = this.description.getFormFields(entityId);
     const rels = this.description.getDownRelationships(entityId);
+    const fieldRels = this.description.getUpRelationships(entityId);
     const attributes = fields.map((field) => field.name);
     const formkey = this.description.getPrimaryKey(entityId);
     let formViewModel = new FormViewModel(fields, rels, key);
@@ -88,7 +89,8 @@ export class ExplorerViewModel {
       this.addTablePanel(rel.getEntityId(), { type: "EQ", field: rel.getKeyField(), value: key }, panelIndex);
     }
     formViewModel.exploreFieldCallback = (field) => {
-      this.addFormPanel(field.getEntityId(), { type: "EQ", field: rel.getKeyField(), value: key }, panelIndex);
+      let entityId = fieldRels.filter(r => r.key == field.getName())[0].entity;
+      this.addFormPanel(entityId, field.getText(), panelIndex);
     }
   }
   private removePanel(viewModel: ExplorerPanelViewModel) {

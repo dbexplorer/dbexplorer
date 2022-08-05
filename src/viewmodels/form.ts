@@ -45,7 +45,7 @@ export class FormStringFieldViewModel {
       input: cssPrefix("field__input"),
     };
   }
-  updateCallback: (data: string) => any;
+  updateCallback: (data: string) => any = () => { };
   exploreCallback: () => void;
 }
 
@@ -68,7 +68,6 @@ export class FormRelationshipViewModel {
       label: cssPrefix("relationship__label"),
     };
   }
-  updateCallback: (data: string) => any;
   exploreCallback: () => void;
 }
 

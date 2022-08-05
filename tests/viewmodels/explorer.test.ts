@@ -5,7 +5,7 @@ import {
   IExplorerOptions
 } from "../../src/viewmodels/explorer";
 import { TableRowViewModel, TableViewModel } from "../../src/viewmodels/table";
-import { FormViewModel } from "../../src/viewmodels/form";
+import { FormStringFieldViewModel, FormViewModel } from "../../src/viewmodels/form";
 import { format } from "path";
 
 test("Explorer table test", () => {
@@ -45,7 +45,7 @@ test("Explorer table test", () => {
 test("Explorer add form panel test", () => {
   var explorer = new ExplorerViewModel(dbDescription, "table", {});
   var actualEntityId, actualAttributes;
-  explorer.getDataCallback = (entityId, attributes, options, ready) => {
+  explorer.getDataCallback = (entityId, attributes, options = {}, ready) => {
     actualEntityId = entityId;
     actualAttributes = attributes;
     if (options.limit == 2) {
@@ -54,12 +54,12 @@ test("Explorer add form panel test", () => {
           { key: 1, data: { table_key: 1, f1: "one", f2: "first" } },
           { key: 2, data: { table_key: 2, f1: "two", f2: "second" } }
         ]);
-      if (entityId == "child1" && options.filter.value == "1" && options.filter.type == "EQ" && options.filter.field == "e_key")
+      if (entityId == "child1" && options?.filter?.value == "1" && options?.filter?.type == "EQ" && options?.filter?.field == "e_key")
         ready([
           { key: 1, data: { child_key: 1, e_key: 1, f1: "One", f2: "First" } },
           { key: 2, data: { child_key: 2, e_key: 1, f1: "Two", f2: "Second" } }
         ])
-      if (entityId == "child1" && options.filter.value == "2" && options.filter.type == "EQ" && options.filter.field == "e_key")
+      if (entityId == "child1" && options?.filter?.value == "2" && options?.filter?.type == "EQ" && options?.filter?.field == "e_key")
         ready([
           { key: 1, data: { child_key: 3, e_key: 2, f1: "Three", f2: "Third" } },
           { key: 2, data: { child_key: 4, e_key: 2, f1: "Four", f2: "Fourth" } }
@@ -67,11 +67,11 @@ test("Explorer add form panel test", () => {
 
     }
     if (options.limit == 1) {
-      if (options.filter.value == "1" && options.filter.type == "EQ" && options.filter.field == "table_key")
+      if (options?.filter?.value == "1" && options?.filter?.type == "EQ" && options?.filter?.field == "table_key")
         ready(
           [{ key: 1, data: { table_key: 1, f1: "one", f3: "third" } }],
         );
-      if (options.filter.value == "2" && options.filter.type == "EQ" && options.filter.field == "table_key")
+      if (options?.filter?.value == "2" && options?.filter?.type == "EQ" && options?.filter?.field == "table_key")
         ready(
           [{ key: 2, data: { table_key: 2, f1: "two", f3: "second" } }],
         );
@@ -153,7 +153,7 @@ test("Explorer add form panel test", () => {
 });
 
 test("Explorer remove panel test", () => {
-  var explorer = new ExplorerViewModel(dbDescription, {});
+  var explorer = new ExplorerViewModel(dbDescription, "table", {});
   explorer.removePanelCallback = () => { };
 
   var panel1 = new ExplorerPanelViewModel(new TableViewModel([]), "e1");
@@ -186,3 +186,21 @@ test("Explore empty row", () => {
   expect(fieldStringsUpdated).toEqual(["", "", ""]);
 })
 
+test("Explore reference field row", () => {
+  var explorer = new ExplorerViewModel(dbDescription, "child1", {});
+  explorer.getDataCallback = (entityId, attributes, options, ready) => {
+    ready([{ key: 1, data: { child_key: 1, e_key: 1, f1: "One", f2: "First" } }]);
+  }
+  explorer.addPanelCallback = () => { }
+  explorer.removePanelCallback = () => { };
+  explorer.start();
+
+  (explorer.getPanels()[0].dataViewModel as TableViewModel).exploreRowCallback(new TableRowViewModel(["a", "b", "c"], "a"));
+  var form = explorer.getPanels()[1].dataViewModel as FormViewModel;
+  form.reloadData();
+
+  const field = new FormStringFieldViewModel({ name: "e_key" });
+  field.setText("1");
+  (explorer.getPanels()[1].dataViewModel as FormViewModel).exploreFieldCallback(field);
+  expect(explorer.getPanels().length).toBe(3);
+})

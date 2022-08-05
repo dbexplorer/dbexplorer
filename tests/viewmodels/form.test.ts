@@ -80,6 +80,32 @@ test("Form test", () => {
   expect(d).toEqual(["1", "one", "first"]);
   expect(form.getKey()).toBe(1);
 });
+
+test("Form test references", () => {
+  var form = new FormViewModel([
+    {
+      name: "f1",
+      title: "field_1"
+    },
+    {
+      name: "f2",
+      title: "field_2",
+      hasReference: true
+    }
+  ], [], 1);
+  form.getDataCallback = (ready) => {
+    ready({ f1: 1, f2: "one" });
+  };
+  var d: string[] = [];
+  form.fields.forEach((field) => field.updateCallback = (text) => { });
+
+  form.reloadData();
+  var explored = false;
+  form.exploreFieldCallback = () => { explored = true };
+  form.fields[1].exploreCallback();
+  expect(explored).toBeTruthy;
+});
+
 test("Form relationships test", () => {
   var form = new FormViewModel([
     {

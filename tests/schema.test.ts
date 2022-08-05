@@ -60,3 +60,18 @@ test("Database Schema tests  - relationships", () => {
 
   expect(desc.getDownRelationships("grandchild")).toEqual([]);
 });
+
+test("Database Schema tests  - up relationships", () => {
+  const desc = new DataBaseDescription(dbDescription);
+  expect(desc.getUpRelationships("table")).toEqual([]);
+
+  expect(desc.getUpRelationships("child1")).toEqual([{
+    entity: "table",
+    key: "e_key"
+  }]);
+
+  expect(desc.getUpRelationships("child2")).toEqual([{
+    entity: "table",
+    key: "e_key"
+  }]);
+});

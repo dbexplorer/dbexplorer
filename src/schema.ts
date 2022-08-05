@@ -65,11 +65,9 @@ export class DataBaseDescription {
       .filter(rel => rel.parent == entityId)
       .map(rel => <any>{ entity: rel.child, key: rel.childKey, title: rel.title || this.database.entities[rel.child].title });
   }
-  /*
   public getUpRelationships(entityId: string) {
     return this.database.relationships
       .filter(rel => rel.child == entityId)
-      .map(rel => <any> { entity: rel.parent, key: rel.childKey, title: rel.title || this.database.entities[rel.child].title });
+      .map(rel => <any>{ entity: rel.parent, key: rel.childKey });
   }
-  */
 }
