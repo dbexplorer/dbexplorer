@@ -57,7 +57,13 @@ test("table test - load more", () => {
     }
   };
   const { container } = render(<Table model={tableViewModel} />);
+  var oldCallback = tableViewModel.addRowsCallback;
+  var rows = [];
+  tableViewModel.addRowsCallback = (data) => {
+    rows = [...data];
+  };
   expect(tableViewModel.rows.map(r => r.getKey())).toEqual([1, 2]);
   fireEvent.click(container.querySelector("tfoot button"));
   expect(tableViewModel.rows.map(r => r.getKey())).toEqual([1, 2, 5, 6]);
+  expect(rows.map(r => r.getKey())).toEqual([1, 2, 5, 6]);
 });

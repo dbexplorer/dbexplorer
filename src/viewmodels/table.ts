@@ -80,7 +80,7 @@ export class TableViewModel {
           }
         )
         this.rows = this.rows.concat(rows);
-        this.addRowsCallback(rows);
+        this.addRowsCallback(this.rows);
       }
     );
   }
