@@ -1,4 +1,4 @@
-var explorerViewModel = new JSDataExplorer.ExplorerViewModel(dbDescription, "customers", {});
+var explorerViewModel = new JSDataExplorer.ExplorerViewModel(dbDescription, "employees", {});
 explorerViewModel.getDataCallback = getData;
 
 let element = document.createElement("div");
