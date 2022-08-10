@@ -97,17 +97,19 @@ const dbDescription = {
       }
     },
     products: {
-      productCode: {
-        isPrimaryKey
-      },
-      productName: {},
-      productLine: {},
-      productScale: {},
-      productVendor: {},
-      productDescription: {},
-      quantityInStock: {},
-      buyPrice: {},
-      MSRP: {}
+      attributes: {
+        productCode: {
+          isPrimaryKey: true
+        },
+        productName: {},
+        productLine: {},
+        productScale: {},
+        productVendor: {},
+        productDescription: {},
+        quantityInStock: {},
+        buyPrice: {},
+        MSRP: {}
+      }
     }
 
   },
