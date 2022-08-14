@@ -36,7 +36,8 @@ test("Form panel test", () => {
 });
 
 test("Close panel test", () => {
-  var panelViewModel = new ExplorerPanelViewModel(null);
+  var formViewModel = new FormViewModel([]);
+  var panelViewModel = new ExplorerPanelViewModel(formViewModel);
   var d = "";
   panelViewModel.closeCallback = () => { d = "closed" };
   const { container } = render(<ExplorerPanel model={panelViewModel} />);

@@ -11,11 +11,15 @@ export class ExplorerPanelViewModel {
   public getKey() {
     return this.key;
   }
+  public getHeader() {
+
+  }
   css() {
     return {
       root: cssPrefix("panel"),
       close: cssPrefix("panel__close"),
       body: cssPrefix("panel-body"),
+      header: cssPrefix("panel__header")
     };
   }
   public closeCallback: () => void;

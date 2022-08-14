@@ -5,9 +5,6 @@
 }
 .jsde-panel {
     width: 400px;
-    &:last-child {
-        flex-grow: 1;
-    }
     border: 1px solid;
     position: relative;
     overflow-x: clip;
@@ -26,5 +23,9 @@
     &::after {
         content: '\2715';
     }
-    
+}
+.jsde-panel__header {
+    margin: 4px;
+    height: 24px;
+    font-size: 24px;
 }

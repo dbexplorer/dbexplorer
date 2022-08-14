@@ -18,6 +18,7 @@ export function ExplorerPanel({ model }: { model: ExplorerPanelViewModel }) {
   return (
     <div className={css.root}>
       <button className={css.close} onClick={handleCloseClick}></button>
+      <div className={css.header}>{model.dataViewModel.getTitle()}</div>
       <div className={css.body}>
         {
           isForm ?

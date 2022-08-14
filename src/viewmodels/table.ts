@@ -55,6 +55,7 @@ export class TableColumnDescription {
   name: string;
   title?: string;
   hasReference?: boolean;
+  isMain?: boolean;
 }
 
 export class TableViewModel {
@@ -94,12 +95,15 @@ export class TableViewModel {
     };
   }
   getDataCallback: (options: IGetDataOptions, ready: any) => void;
-  constructor(columns: TableColumnDescription[]) {
+  constructor(columns: TableColumnDescription[], private title = "Table") {
     this.columns = columns;
     this.headerViewModel = new TableHeaderViewModel(
       columns.map((col) => col.title || col.name)
     );
     this.rows = [];
+  }
+  getTitle() {
+    return this.title;
   }
   addRowsCallback: (rows: TableRowViewModel[]) => any;
   exploreRowCallback: (row: TableRowViewModel) => any;

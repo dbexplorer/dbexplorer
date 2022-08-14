@@ -1,1 +1,3 @@
-export interface IBaseViewModel { }
+export interface IBaseViewModel {
+    getTitle(): string;
+}
