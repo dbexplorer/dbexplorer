@@ -191,7 +191,7 @@ test("Explore reference field row", () => {
   explorer.getDataCallback = (entityId, attributes, options, ready) => {
     ready([{ key: 1, data: { child_key: 1, e_key: 1, f1: "One", f2: "First" } }]);
   }
-  explorer.addPanelCallback = () => { }
+  explorer.addPanelCallback = () => { };
   explorer.removePanelCallback = () => { };
   explorer.start();
 
@@ -203,4 +203,13 @@ test("Explore reference field row", () => {
   field.setText("1");
   (explorer.getPanels()[1].dataViewModel as FormViewModel).exploreFieldCallback(field);
   expect(explorer.getPanels().length).toBe(3);
+})
+
+test("Explorer add form panel test", () => {
+  var explorer = new ExplorerViewModel(dbDescription, "child1", {});
+  explorer.addPanelCallback = () => { };
+  explorer.start();
+  (explorer.getPanels()[0].dataViewModel as TableViewModel).exploreRowCallback(new TableRowViewModel(["a", "b", "c"], "a"));
+  expect(explorer.getPanels()[0].getHeader()).toBe("child table 1");
+  expect(explorer.getPanels()[1].getHeader()).toBe("child table 1");
 })

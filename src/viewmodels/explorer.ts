@@ -12,7 +12,7 @@ export class ExplorerPanelViewModel {
     return this.key;
   }
   public getHeader() {
-
+    return this.dataViewModel.getTitle();
   }
   css() {
     return {
@@ -42,7 +42,7 @@ export class ExplorerViewModel {
   private addTablePanel(entityId: string, initFilter: IGetDataFilter, senderIndex: number) {
     const columns = this.description.getTableColumns(entityId);
     const attributes = columns.map((col) => col.name);
-    let tableViewModel = new TableViewModel(columns);
+    let tableViewModel = new TableViewModel(columns, this.description.getTableTitle(entityId));
     tableViewModel.getDataCallback = (options, ready) => {
       let newOptions = { ...options };
       newOptions.filter = initFilter;
@@ -66,7 +66,7 @@ export class ExplorerViewModel {
     const fieldRels = this.description.getUpRelationships(entityId);
     const attributes = fields.map((field) => field.name);
     const formkey = this.description.getPrimaryKey(entityId);
-    let formViewModel = new FormViewModel(fields, rels, key);
+    let formViewModel = new FormViewModel(fields, rels, key, this.description.getTableTitle(entityId));
     formViewModel.getDataCallback = (ready) => {
       this.getDataCallback(
         entityId,

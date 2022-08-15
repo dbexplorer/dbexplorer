@@ -1,4 +1,9 @@
 .jsde-panel {
+    &:first-child {
+        .jsde-panel__close {
+            display: none;
+        }
+    }
     &:last-child {
         flex-grow: 1;
     }

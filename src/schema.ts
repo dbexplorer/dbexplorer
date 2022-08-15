@@ -40,6 +40,9 @@ export class DataBaseDescription {
     }
     return columns.length == 1 ? columns[0] : columns;
   }
+  public getTableTitle(entityId: string) {
+    return this.database.entities[entityId].title || entityId;
+  }
   public getTableColumns(entityId: string) {
     let columns = [];
     const attributes = this.database.entities[entityId].attributes;
@@ -74,7 +77,7 @@ export class DataBaseDescription {
   public getDownRelationships(entityId: string) {
     return this.database.relationships
       .filter(rel => rel.parent == entityId)
-      .map(rel => <any>{ entity: rel.child, key: rel.childKey, title: rel.title || this.database.entities[rel.child].title });
+      .map(rel => <any>{ entity: rel.child, key: rel.childKey, title: rel.title || this.getTableTitle(rel.child) });
   }
   public getUpRelationships(entityId: string) {
     return this.database.relationships

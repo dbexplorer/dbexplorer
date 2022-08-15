@@ -44,3 +44,23 @@ test("Close panel test", () => {
   fireEvent.click(container.querySelector(".jsde-panel__close"));
   expect(d).toEqual("closed");
 });
+
+test("Table panel with title test", () => {
+  var tableViewModel = new TableViewModel([], "Table title");
+  var panelViewModel = new ExplorerPanelViewModel(tableViewModel);
+  tableViewModel.getDataCallback = (options, ready) => {
+    ready([]);
+  };
+  const { container } = render(<ExplorerPanel model={panelViewModel} />);
+  expect(container.firstChild).toMatchSnapshot();
+});
+
+test("Form panel with title test", () => {
+  var formViewModel = new FormViewModel([], [], null, "Form title");
+  var panelViewModel = new ExplorerPanelViewModel(formViewModel);
+  formViewModel.getDataCallback = (ready) => {
+    ready([{}]);
+  };
+  const { container } = render(<ExplorerPanel model={panelViewModel} />);
+  expect(container.firstChild).toMatchSnapshot();
+});
