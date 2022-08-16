@@ -8,14 +8,20 @@ import {
 
 jest.mock("../../../src/react/table/cell", () => ({
   TableCell: (props) => {
-    return <mock-table-cell title={props.model.getText()} />;
+    return <td className={"mock-table-cell"} title={props.model.getText()} />;
   }
 }));
 
 test("Table row test", () => {
   var tableRowViewModel = new TableRowViewModel(["t1", "t2"], "t1");
+  const table = document.createElement("table");
+  const tbody = document.createElement("tbody");
+  document.body.appendChild(table)
+  table.appendChild(tbody);
 
-  const { container } = render(<TableRow model={tableRowViewModel} />);
+  const { container } = render(<TableRow model={tableRowViewModel} />, {
+    container: tbody
+  });
   expect(container.firstChild).toMatchSnapshot();
 });
 
@@ -25,7 +31,13 @@ test("Table test - row click", () => {
   tableRowViewModel.exploreCallback = () => {
     d = "clicked";
   }
-  const { container } = render(<TableRow model={tableRowViewModel} />);
+  const table = document.createElement("table");
+  const tbody = document.createElement("tbody");
+  document.body.appendChild(table)
+  table.appendChild(tbody);
+  const { container } = render(<TableRow model={tableRowViewModel} />, {
+    container: tbody,
+  });
 
   fireEvent.click(container.querySelector("tr"));
   expect(d).toEqual("clicked");

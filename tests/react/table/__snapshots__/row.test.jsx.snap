@@ -4,10 +4,12 @@ exports[`Table row test 1`] = `
 <tr
   class="jsde-table-row"
 >
-  <mock-table-cell
+  <td
+    class="mock-table-cell"
     title="t1"
   />
-  <mock-table-cell
+  <td
+    class="mock-table-cell"
     title="t2"
   />
 </tr>

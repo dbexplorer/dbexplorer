@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react'
 import { TableViewModel } from "../../../src/viewmodels/table";
 jest.mock("../../../src/react/table/row", () => ({
   TableRow: (props) => {
-    return <mock-table-row title={props.model.getKey()} />;
+    return <tr className={"mock-table-row"} title={props.model.getKey()} />;
   }
 }));
 test("Table test", () => {

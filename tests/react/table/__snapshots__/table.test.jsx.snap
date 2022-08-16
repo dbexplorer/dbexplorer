@@ -22,10 +22,12 @@ exports[`Table test 1`] = `
   <tbody
     class="jsde-table-body"
   >
-    <mock-table-row
+    <tr
+      class="mock-table-row"
       title="1"
     />
-    <mock-table-row
+    <tr
+      class="mock-table-row"
       title="2"
     />
   </tbody>
