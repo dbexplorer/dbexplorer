@@ -68,20 +68,25 @@ export class TableViewModel {
       { limit: this.dataPartRowCount, offset: this.dataOffset },
       (data: any) => {
         this.dataOffset += this.dataPartRowCount;
-        const rows = data.map(
-          (rowData: any) => {
-            const row = new TableRowViewModel(
-              this.columns.map((col) => rowData.data[col.name].toString()),
-              rowData.key
-            )
-            row.exploreCallback = () => {
-              this.exploreRowCallback(row);
+        if (data.length > 0) {
+          const rows = data.map(
+            (rowData: any) => {
+              const row = new TableRowViewModel(
+                this.columns.map((col) => rowData.data[col.name].toString()),
+                rowData.key
+              )
+              row.exploreCallback = () => {
+                this.exploreRowCallback(row);
+              }
+              return row;
             }
-            return row;
-          }
-        )
-        this.rows = this.rows.concat(rows);
-        this.addRowsCallback(this.rows);
+          )
+          this.rows = this.rows.concat(rows);
+          this.addRowsCallback(this.rows);
+        }
+        else {
+          this.loadMoreVisibleCallback(false);
+        }
       }
     );
   }
@@ -106,5 +111,6 @@ export class TableViewModel {
     return this.title;
   }
   addRowsCallback: (rows: TableRowViewModel[]) => any;
+  loadMoreVisibleCallback: (visible: boolean) => any;
   exploreRowCallback: (row: TableRowViewModel) => any;
 }

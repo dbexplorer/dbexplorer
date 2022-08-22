@@ -4,7 +4,9 @@ import { TableRow } from './row';
 
 export function Table({ model }: { model: TableViewModel }) {
   const [rows, setRows] = useState(model.rows);
+  const [loadMoreVisible, setLoadMoreVisible] = useState(true);
   model.addRowsCallback = setRows;
+  model.loadMoreVisibleCallback = setLoadMoreVisible;
   const css = model.css();
 
   const headerCells = model.headerViewModel.captionsViewModel.getCells();
@@ -24,7 +26,7 @@ export function Table({ model }: { model: TableViewModel }) {
           rows.map((row, index) => <TableRow key={index} model={row} />)
         }
       </tbody>
-      <tfoot className={css.foot}><tr><td><button onClick={handleLoadMoreClick}>Load more data...</button></td></tr></tfoot>
+      {loadMoreVisible ? <tfoot className={css.foot}><tr><td><button onClick={handleLoadMoreClick}>Load more data...</button></td></tr></tfoot> : null}
     </table>
   );
 }
