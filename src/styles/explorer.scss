@@ -2,11 +2,20 @@
     font-family: sans-serif;
     display: flex;
     gap: 16px;
+    height: 100%;
 }
 .jsde-panel {
     border: 1px solid;
     position: relative;
     overflow-x: clip;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.jsde-panel-body {
+    overflow-y: scroll;
+    flex-grow: 1;
+    height: 0;
 }
 .jsde-panel__close {
     position: absolute;
@@ -27,4 +36,6 @@
     margin: 4px;
     height: 24px;
     font-size: 24px;
+    position: sticky;
+    top: 0;
 }

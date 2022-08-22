@@ -43,6 +43,7 @@ export class ExplorerViewModel {
     const columns = this.description.getTableColumns(entityId);
     const attributes = columns.map((col) => col.name);
     let tableViewModel = new TableViewModel(columns, this.description.getTableTitle(entityId));
+    tableViewModel.dataPartRowCount = 20;
     tableViewModel.getDataCallback = (options, ready) => {
       let newOptions = { ...options };
       newOptions.filter = initFilter;
