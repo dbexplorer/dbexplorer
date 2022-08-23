@@ -34,13 +34,17 @@ export class TableRowViewModel {
       data.map((s, idx) => this.cells[idx].setText(s));
     }
   }
+  setExplored(explored: boolean) {
+    this.updateCssCallback(explored ? this.css().root + " " + this.css().rootExplored : this.css().root);
+  }
   css() {
-    return { root: cssPrefix("table-row") };
+    return { root: cssPrefix("table-row"), rootExplored: cssPrefix("table-row--explored") };
   }
   constructor(data: string[], private key: string | string[]) {
     this.setCellsText(data);
   }
-  updateCallback: (data: TableCellViewModel[]) => any;
+  updateDataCallback: (data: TableCellViewModel[]) => any;
+  updateCssCallback: (css: string) => any;
   exploreCallback: () => void;
 }
 
@@ -61,6 +65,7 @@ export class TableColumnDescription {
 export class TableViewModel {
   private columns: TableColumnDescription[];
   private dataOffset: number = 0;
+  private exploredRow: TableRowViewModel = null;
   dataPartRowCount: number = 10;
   headerViewModel: TableHeaderViewModel;
   loadData() {
@@ -76,6 +81,9 @@ export class TableViewModel {
                 rowData.key
               )
               row.exploreCallback = () => {
+                this.exploredRow?.setExplored(false);
+                this.exploredRow = row;
+                this.exploredRow.setExplored(true);
                 this.exploreRowCallback(row);
               }
               return row;

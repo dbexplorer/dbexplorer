@@ -82,8 +82,20 @@ test("Table explore row", () => {
     d = row.getKey();
   }
   table.loadData();
+  var row0css = "", row1css = "";
+  table.rows.map(r => r.css = () => ({ root: "r", rootExplored: "re" }));
+
+  table.rows[0].updateCssCallback = css => row0css = css;
+  table.rows[1].updateCssCallback = css => row1css = css;
+
   table.rows[0].exploreCallback();
   expect(d).toBe(table.rows[0].getKey());
+
+  expect(row0css).toBe("r re");
+  table.rows[1].exploreCallback();
+  expect(row0css).toBe("r");
+  expect(row1css).toBe("r re");
+
 });
 
 test("Table hide loadmore", () => {

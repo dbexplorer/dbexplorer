@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Table row test - update css 1`] = `
+<tr
+  class="new-class"
+>
+  <td
+    class="mock-table-cell"
+    title="t1"
+  />
+  <td
+    class="mock-table-cell"
+    title="t2"
+  />
+</tr>
+`;
+
 exports[`Table row test 1`] = `
 <tr
   class="jsde-table-row"
