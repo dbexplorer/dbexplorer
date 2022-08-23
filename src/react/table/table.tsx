@@ -22,10 +22,11 @@ export function Table({ model }: { model: TableViewModel }) {
   useEffect(() => {
     model.loadData();
     const observer = new IntersectionObserver(observerCallback);
-    if (footerRef.current) observer.observe(footerRef.current);
-    return () => {
-      if (footerRef.current) observer.unobserve(footerRef.current);
-    }
+    /*if (footerRef.current) */observer.observe(footerRef.current);
+    // TODO: check if we need unobserve
+    // return () => {
+    //   if (footerRef.current) observer.unobserve(footerRef.current);
+    // }
   }, [footerRef]);
 
   return (
@@ -36,7 +37,8 @@ export function Table({ model }: { model: TableViewModel }) {
           rows.map((row, index) => <TableRow key={index} model={row} />)
         }
       </tbody>
-      {loadMoreVisible ? <tfoot ref={footerRef} className={css.foot}><tr><td><button onClick={handleLoadMoreClick}>Load more data...</button></td></tr></tfoot> : null}
+
+      {loadMoreVisible ? <tfoot ref={footerRef} className={css.foot}><tr><td><button onClick={handleLoadMoreClick}>Load more data...</button></td></tr>       </tfoot> : null}
     </table>
   );
 }

@@ -86,3 +86,21 @@ test("Table explore row", () => {
   expect(d).toBe(table.rows[0].getKey());
 });
 
+test("Table hide loadmore", () => {
+  var table = new TableViewModel([]);
+  table.getDataCallback = (options, ready) => {
+    let offset = options.offset;
+    ready((offset < 2) ? [
+      { key: 1, data: {} },
+      { key: 2, data: {} }
+    ] : []);
+  };
+  var vis: boolean = true;
+  table.addRowsCallback = () => { };
+  table.loadMoreVisibleCallback = visible => vis = visible;
+  table.loadData();
+  expect(vis).toBeTruthy();
+  table.loadData();
+  expect(vis).toBeFalsy();
+
+});
