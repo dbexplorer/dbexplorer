@@ -7,6 +7,10 @@ jest.mock("../../../src/react/table/row", () => ({
     return <tr className={"mock-table-row"} title={props.model.getKey()} />;
   }
 }));
+const intersectionObserverMock = () => ({
+  observe: () => null
+})
+window.IntersectionObserver = jest.fn().mockImplementation(intersectionObserverMock);
 test("Table test", () => {
   var tableViewModel = new TableViewModel([
     {
