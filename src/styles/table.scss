@@ -1,9 +1,8 @@
-.jsde-table {
-    height: 100%;
-}
 .jsde-table-head {
     color: white;
     background-color: black;
+    position: sticky;
+    top: 0;
 }
 
 .jsde-table-row {
