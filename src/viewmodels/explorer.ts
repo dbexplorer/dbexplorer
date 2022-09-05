@@ -8,6 +8,7 @@ import { IGetDataFilter, IGetDataOptions } from "../data";
 export interface IExplorerOptions { }
 export class ExplorerPanelViewModel {
   constructor(public dataViewModel: IBaseViewModel, private key: string) { }
+  public extraDataViewModel: IBaseViewModel;
   public getKey() {
     return this.key;
   }
@@ -23,6 +24,7 @@ export class ExplorerPanelViewModel {
     };
   }
   public closeCallback: () => void;
+  public setExtraDataKeyCallback: (key: string) => void = () => { };
 }
 export class ExplorerViewModel {
   private panels: ExplorerPanelViewModel[] = [];
@@ -57,11 +59,23 @@ export class ExplorerViewModel {
     panel.closeCallback = () => { this.removePanel(panel) };
 
     tableViewModel.exploreRowCallback = (row) => {
-      this.addFormPanel(entityId, row.getKey(), panelIndex);
+      panel.extraDataViewModel = this.createFormViewModel(entityId, row.getKey(), panelIndex);
+      panel.setExtraDataKeyCallback(row.getKey());
     }
   }
 
   private addFormPanel(entityId: string, key: string | string[], senderIndex: number) {
+    let formViewModel = this.createFormViewModel(entityId, key, senderIndex);
+
+    const panel = new ExplorerPanelViewModel(formViewModel, key.toString());
+    if (senderIndex < this.panels.length - 1) this.panels.splice(senderIndex + 1, this.panels.length - 1 - senderIndex);
+    let panelIndex = this.panels.length;
+    this.panels.push(panel);
+    this.addPanelCallback(panel);
+    panel.closeCallback = () => { this.removePanel(panel) };
+  }
+
+  private createFormViewModel(entityId: string, key: string | string[], senderIndex: number) {
     const fields = this.description.getFormFields(entityId);
     const rels = this.description.getDownRelationships(entityId);
     const fieldRels = this.description.getUpRelationships(entityId);
@@ -75,29 +89,25 @@ export class ExplorerViewModel {
         { limit: 1, offset: 0, filter: { type: "EQ", field: formkey, value: key } },
         (result) => {
           if (result.length == 1) {
-            ready(result[0].data)
+            ready(result[0].data);
           }
           else {
-            ready({})
+            ready({});
           }
 
         });
     };
-    const panel = new ExplorerPanelViewModel(formViewModel, key.toString());
-    if (senderIndex < this.panels.length - 1) this.panels.splice(senderIndex + 1, this.panels.length - 1 - senderIndex);
-    let panelIndex = this.panels.length;
-    this.panels.push(panel);
-    this.addPanelCallback(panel);
-    panel.closeCallback = () => { this.removePanel(panel) };
 
     formViewModel.exploreRelationshipCallback = (rel) => {
-      this.addTablePanel(rel.getEntityId(), { type: "EQ", field: rel.getKeyField(), value: key }, panelIndex);
-    }
+      this.addTablePanel(rel.getEntityId(), { type: "EQ", field: rel.getKeyField(), value: key }, senderIndex + 1);
+    };
     formViewModel.exploreFieldCallback = (field) => {
       let entityId = fieldRels.filter(r => r.key == field.getName())[0].entity;
-      this.addFormPanel(entityId, field.getText(), panelIndex);
-    }
+      this.addFormPanel(entityId, field.getText(), senderIndex + 1);
+    };
+    return formViewModel;
   }
+
   private removePanel(viewModel: ExplorerPanelViewModel) {
     const panelIndex = this.panels.indexOf(viewModel);
     this.panels.splice(panelIndex);

@@ -7,20 +7,18 @@
     &:last-child {
         flex-grow: 1;
     }
-    &:not(:last-child){
-        .jsde-table {
-            .jsde-table-row {
-                .jsde-table-cell {
-                    &:not(:first-child){
-                        display: none;
-                    }
+    .jsde-table:not(:only-child) {
+        .jsde-table-row {
+            .jsde-table-cell {
+                &:not(:first-child){
+                    display: none;
                 }
             }
-            .jsde-table-head {
-                th {
-                    &:not(:first-child){
-                        display: none;
-                    }
+        }
+        .jsde-table-head {
+            th {
+                &:not(:first-child){
+                    display: none;
                 }
             }
         }
