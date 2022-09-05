@@ -116,3 +116,24 @@ test("Table hide loadmore", () => {
   expect(vis).toBeFalsy();
 
 });
+
+test("Table css", () => {
+  var cell = new TableCellViewModel();
+  expect(cell.css()).toEqual({
+    "root": "jsde-table-cell"
+  });
+
+  var row = new TableRowViewModel([], "");
+  expect(row.css()).toEqual({
+    "root": "jsde-table-row",
+    "rootExplored": "jsde-table-row--explored"
+  });
+
+  var table = new TableViewModel([]);
+  expect(table.css()).toEqual({
+    "body": "jsde-table-body",
+    "foot": "jsde-table-foot",
+    "head": "jsde-table-head",
+    "root": "jsde-table",
+  });
+});

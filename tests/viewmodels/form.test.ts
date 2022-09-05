@@ -1,4 +1,5 @@
 import {
+  FormRelationshipViewModel,
   FormStringFieldViewModel,
   FormViewModel
 } from "../../src/viewmodels/form";
@@ -66,6 +67,9 @@ test("Form test", () => {
       title: "field_3"
     }
   ], [], 1);
+
+  expect(form.getTitle()).toEqual("Form");
+
   form.getDataCallback = (ready) => {
     ready({ f1: 1, f2: "one", f3: "first" });
   };
@@ -106,6 +110,7 @@ test("Form test references", () => {
   expect(explored).toBeTruthy;
 });
 
+
 test("Form relationships test", () => {
   var form = new FormViewModel([
     {
@@ -133,7 +138,29 @@ test("Form relationships test", () => {
     ready({ f1: 1 });
   };
   form.reloadData();
-  expect(form.rels.map(r => r.getTitle())).toEqual(["r 1", "r 2"]);
+  expect(form.rels.map(r => r.getTitle() + "|" + r.getEntityId() + "|" + r.getKeyField()))
+    .toEqual(["r 1|child1|e_key", "r 2|child2|e_key"]);
   form.rels[1].exploreCallback();
   expect(r.getTitle()).toEqual("r 2");
+});
+
+test("Form css", () => {
+  var field = new FormStringFieldViewModel({ name: "field_name" });
+  expect(field.css()).toEqual({
+    "input": "jsde-field__input",
+    "label": "jsde-field__label",
+    "ref": "jsde-field__ref",
+    "root": "jsde-field",
+  });
+
+  var rel = new FormRelationshipViewModel({ title: "rel_title", entity: "entyty_name", key: "key_value" });
+  expect(rel.css()).toEqual({
+    "label": "jsde-relationship__label",
+    "root": "jsde-relationship",
+  });
+
+  var table = new FormViewModel([], [], "key_value");
+  expect(table.css()).toEqual({
+    "root": "jsde-form",
+  });
 });

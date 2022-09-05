@@ -102,3 +102,18 @@ test("Explorer add form panel test", () => {
   (explorer.getPanels()[0].dataViewModel as TableViewModel).exploreRowCallback(new TableRowViewModel(["a", "b", "c"], "a"));
   expect(explorer.getPanels()[0].getHeader()).toBe("child table 1");
 })
+
+test("Explorer css", () => {
+  var panel = new ExplorerPanelViewModel(new TableViewModel([]), "");
+  expect(panel.css()).toEqual({
+    "body": "jsde-panel-body",
+    "close": "jsde-panel__close",
+    "header": "jsde-panel__header",
+    "root": "jsde-panel",
+  });
+
+  var row = new ExplorerViewModel(dbDescription, "t1", {});
+  expect(row.css()).toEqual({
+    "root": "jsde-explorer",
+  });
+});
