@@ -16,9 +16,9 @@ export function FormInputField({ model }: { model: FormStringFieldViewModel }) {
   }
   return (
     <div className={css.root}>
-      <label className={css.label}>{model.getTitle()}</label>
+      {model.hasReference() ? <label className={css.ref} onClick={handleRefClick}>{model.getTitle()}</label> :
+        <label className={css.label}>{model.getTitle()}</label>}
       <input className={css.input} value={text || ""} onChange={handleChange}></input>
-      {model.hasReference() ? <button className={css.ref} onClick={handleRefClick}></button> : null}
     </div>
   );
 }

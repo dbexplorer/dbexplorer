@@ -37,16 +37,13 @@ exports[`Form field with reference: field with ref 1`] = `
   class="jsde-field"
 >
   <label
-    class="jsde-field__label"
+    class="jsde-field__label jsde-field__label--ref"
   >
     field_1
   </label>
   <input
     class="jsde-field__input"
     value=""
-  />
-  <button
-    class="jsde-field__ref"
   />
 </div>
 `;

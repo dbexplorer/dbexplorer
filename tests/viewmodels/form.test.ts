@@ -149,7 +149,7 @@ test("Form css", () => {
   expect(field.css()).toEqual({
     "input": "jsde-field__input",
     "label": "jsde-field__label",
-    "ref": "jsde-field__ref",
+    "ref": "jsde-field__label jsde-field__label--ref",
     "root": "jsde-field",
   });
 

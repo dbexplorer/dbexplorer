@@ -32,6 +32,6 @@ test("Form field with reference", () => {
   fieldViewModel.exploreCallback = () => { fieldExplored = true };
   const { container } = render(<FormInputField model={fieldViewModel} />);
   expect(container.firstChild).toMatchSnapshot("field with ref");
-  fireEvent.click(container.querySelector("button"));
+  fireEvent.click(container.querySelector("label"));
   expect(fieldExplored).toBeTruthy();
 });
