@@ -79,7 +79,7 @@ test("Explore empty row", () => {
 test("Explore reference field row", () => {
   var explorer = new ExplorerViewModel(dbDescription, "child1", {});
   explorer.getDataCallback = (entityId, attributes, options, ready) => {
-    ready([{ key: 1, data: { child_key: 1, e_key: 1, f1: "One", f2: "First" } }]);
+
   }
   explorer.addPanelCallback = () => { };
   explorer.removePanelCallback = () => { };
@@ -90,9 +90,12 @@ test("Explore reference field row", () => {
   form.reloadData();
 
   const field = new FormStringFieldViewModel({ name: "e_key" });
-  field.setText("1");
+  field.setText("555");
   (explorer.getPanels()[0].extraDataViewModel as FormViewModel).exploreFieldCallback(field);
   expect(explorer.getPanels().length).toBe(2);
+
+  expect((explorer.getPanels()[0].dataViewModel as TableViewModel).getTitle()).toBe("table");
+  expect((explorer.getPanels()[1].dataViewModel as TableViewModel).getTitle()).toBe("child table 1");
 })
 
 test("Explorer add form panel test", () => {

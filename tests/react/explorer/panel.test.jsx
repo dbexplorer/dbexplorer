@@ -46,7 +46,7 @@ test("Close panel test", () => {
 });
 
 test("Table panel with title test", () => {
-  var tableViewModel = new TableViewModel([], "Table title");
+  var tableViewModel = new TableViewModel([], undefined, "Table title");
   var panelViewModel = new ExplorerPanelViewModel(tableViewModel);
   tableViewModel.getDataCallback = (options, ready) => {
     ready([]);

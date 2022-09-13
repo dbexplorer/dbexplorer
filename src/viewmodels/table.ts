@@ -69,8 +69,9 @@ export class TableViewModel {
   dataPartRowCount: number = 10;
   headerViewModel: TableHeaderViewModel;
   loadData() {
+    const options = { limit: this.dataPartRowCount, offset: this.dataOffset };
     this.getDataCallback(
-      { limit: this.dataPartRowCount, offset: this.dataOffset },
+      options,
       (data: any) => {
         this.dataOffset += this.dataPartRowCount;
         if (data.length > 0) {
@@ -108,12 +109,15 @@ export class TableViewModel {
     };
   }
   getDataCallback: (options: IGetDataOptions, ready: any) => void;
-  constructor(columns: TableColumnDescription[], private title = "Table") {
+  constructor(columns: TableColumnDescription[], private key: any = undefined, private title = "Table") {
     this.columns = columns;
     this.headerViewModel = new TableHeaderViewModel(
       columns.map((col) => col.title || col.name)
     );
     this.rows = [];
+  }
+  getKey() {
+    return this.key;
   }
   getTitle() {
     return this.title;

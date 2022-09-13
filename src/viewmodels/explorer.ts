@@ -41,10 +41,10 @@ export class ExplorerViewModel {
       root: cssPrefix("explorer"),
     };
   }
-  private addTablePanel(entityId: string, initFilter: IGetDataFilter, senderIndex: number) {
+  private addTablePanel(entityId: string, initFilter: IGetDataFilter, senderIndex: number, back: boolean = false) {
     const columns = this.description.getTableColumns(entityId);
     const attributes = columns.map((col) => col.name);
-    let tableViewModel = new TableViewModel(columns, this.description.getTableTitle(entityId));
+    let tableViewModel = new TableViewModel(columns, undefined, this.description.getTableTitle(entityId));
     tableViewModel.dataPartRowCount = 20;
     tableViewModel.getDataCallback = (options, ready) => {
       let newOptions = { ...options };
@@ -52,9 +52,16 @@ export class ExplorerViewModel {
       this.getDataCallback(entityId, attributes, newOptions, ready);
     };
     const panel = new ExplorerPanelViewModel(tableViewModel, entityId);
-    if (senderIndex < this.panels.length - 1) this.panels.splice(senderIndex + 1, this.panels.length);
-    let panelIndex = this.panels.length;
-    this.panels.push(panel);
+    let panelIndex: number = null;
+    if (!back) {
+      if (senderIndex < this.panels.length - 1) this.panels.splice(senderIndex + 1, this.panels.length);
+      panelIndex = this.panels.length;
+      this.panels.push(panel);
+    }
+    else {
+      this.panels.unshift(panel);
+      panelIndex = senderIndex;
+    }
     this.addPanelCallback(panel);
     panel.closeCallback = () => { this.removePanel(panel) };
 
@@ -62,17 +69,6 @@ export class ExplorerViewModel {
       panel.extraDataViewModel = this.createFormViewModel(entityId, row.getKey(), panelIndex);
       panel.setExtraDataKeyCallback(row.getKey());
     }
-  }
-
-  private addFormPanel(entityId: string, key: string | string[], senderIndex: number) {
-    let formViewModel = this.createFormViewModel(entityId, key, senderIndex);
-
-    const panel = new ExplorerPanelViewModel(formViewModel, key.toString());
-    if (senderIndex < this.panels.length - 1) this.panels.splice(senderIndex + 1, this.panels.length - 1 - senderIndex);
-    let panelIndex = this.panels.length;
-    this.panels.push(panel);
-    this.addPanelCallback(panel);
-    panel.closeCallback = () => { this.removePanel(panel) };
   }
 
   private createFormViewModel(entityId: string, key: string | string[], senderIndex: number) {
@@ -102,8 +98,9 @@ export class ExplorerViewModel {
       this.addTablePanel(rel.getEntityId(), { type: "EQ", field: rel.getKeyField(), value: key }, senderIndex + 1);
     };
     formViewModel.exploreFieldCallback = (field) => {
-      let entityId = fieldRels.filter(r => r.key == field.getName())[0].entity;
-      this.addFormPanel(entityId, field.getText(), senderIndex + 1);
+      const entityId = fieldRels.filter(r => r.key == field.getName())[0].entity;
+      const primaryKey = this.description.getPrimaryKey(entityId);
+      this.addTablePanel(entityId, { type: "EQ", field: primaryKey, value: field.getText() }, senderIndex, true);
     };
     return formViewModel;
   }

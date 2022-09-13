@@ -117,6 +117,11 @@ test("Table hide loadmore", () => {
 
 });
 
+test("Table load key", () => {
+  var table = new TableViewModel([], 123);
+  expect(table.getKey()).toBe(123);
+});
+
 test("Table css", () => {
   var cell = new TableCellViewModel();
   expect(cell.css()).toEqual({
