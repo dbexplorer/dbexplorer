@@ -7,6 +7,7 @@ import {
 import { TableRowViewModel, TableViewModel } from "../../src/viewmodels/table";
 import { FormStringFieldViewModel, FormViewModel } from "../../src/viewmodels/form";
 import { format } from "path";
+import { IGetDataOptions } from "../../src/data";
 
 test("Explorer table test", () => {
   var explorer = new ExplorerViewModel(dbDescription, "table", {});
@@ -39,6 +40,8 @@ test("Explorer table test", () => {
     ["1", "one", "first"],
     ["2", "two", "second"]
   ]);
+
+  expect(explorer.getPanels().map(p => p.getKey())).toEqual(["table0"])
 });
 
 
@@ -104,6 +107,23 @@ test("Explorer add form panel test", () => {
   explorer.start();
   (explorer.getPanels()[0].dataViewModel as TableViewModel).exploreRowCallback(new TableRowViewModel(["a", "b", "c"], "a"));
   expect(explorer.getPanels()[0].getHeader()).toBe("child table 1");
+})
+
+test("Explorer add table panel with init key", () => {
+  var explorer = new ExplorerViewModel(dbDescription, "table", {});
+  explorer.addPanelCallback = () => { };
+  var optLog = new Array<IGetDataOptions>();
+  explorer.getDataCallback = (entityId, attributes, options, ready) => {
+    ready([
+      { key: "777", data: { table_key: "777", f1: "one", f2: "first" } }
+    ]);
+  }
+  explorer.start("777");
+  expect(explorer.getPanels().length).toBe(1);
+  expect(!!explorer.getPanels()[0].dataViewModel).toBeTruthy();
+  (explorer.getPanels()[0].dataViewModel as TableViewModel).addRowsCallback = () => { };
+  (explorer.getPanels()[0].dataViewModel as TableViewModel).loadData();
+  expect(!!explorer.getPanels()[0].extraDataViewModel).toBeTruthy();
 })
 
 test("Explorer css", () => {

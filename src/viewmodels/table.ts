@@ -69,7 +69,7 @@ export class TableViewModel {
   dataPartRowCount: number = 10;
   headerViewModel: TableHeaderViewModel;
   loadData() {
-    const options = { limit: this.dataPartRowCount, offset: this.dataOffset };
+    const options = { limit: this.dataPartRowCount, offset: this.dataOffset, key: this.key };
     this.getDataCallback(
       options,
       (data: any) => {
@@ -81,6 +81,10 @@ export class TableViewModel {
                 this.columns.map((col) => rowData.data[col.name].toString()),
                 rowData.key
               )
+              if (rowData.key == this.key) {
+                this.exploredRow = row;
+                this.exploreRowCallback(row);
+              }
               row.exploreCallback = () => {
                 this.exploredRow?.setExplored(false);
                 this.exploredRow = row;

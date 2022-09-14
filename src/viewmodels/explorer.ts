@@ -27,6 +27,7 @@ export class ExplorerPanelViewModel {
   public setExtraDataKeyCallback: (key: string) => void = () => { };
 }
 export class ExplorerViewModel {
+  private sequence = 0;
   private panels: ExplorerPanelViewModel[] = [];
   private description: DataBaseDescription;
   constructor(
@@ -41,17 +42,17 @@ export class ExplorerViewModel {
       root: cssPrefix("explorer"),
     };
   }
-  private addTablePanel(entityId: string, initFilter: IGetDataFilter, senderIndex: number, back: boolean = false) {
+  private addTablePanel(entityId: string, initKey: any, initFilter: IGetDataFilter, senderIndex: number, back: boolean = false) {
     const columns = this.description.getTableColumns(entityId);
     const attributes = columns.map((col) => col.name);
-    let tableViewModel = new TableViewModel(columns, undefined, this.description.getTableTitle(entityId));
+    let tableViewModel = new TableViewModel(columns, initKey, this.description.getTableTitle(entityId));
     tableViewModel.dataPartRowCount = 20;
     tableViewModel.getDataCallback = (options, ready) => {
       let newOptions = { ...options };
       newOptions.filter = initFilter;
       this.getDataCallback(entityId, attributes, newOptions, ready);
     };
-    const panel = new ExplorerPanelViewModel(tableViewModel, entityId);
+    const panel = new ExplorerPanelViewModel(tableViewModel, entityId + this.sequence++);
     let panelIndex: number = null;
     if (!back) {
       if (senderIndex < this.panels.length - 1) this.panels.splice(senderIndex + 1, this.panels.length);
@@ -95,12 +96,11 @@ export class ExplorerViewModel {
     };
 
     formViewModel.exploreRelationshipCallback = (rel) => {
-      this.addTablePanel(rel.getEntityId(), { type: "EQ", field: rel.getKeyField(), value: key }, senderIndex + 1);
+      this.addTablePanel(rel.getEntityId(), null, { type: "EQ", field: rel.getKeyField(), value: key }, senderIndex + 1);
     };
     formViewModel.exploreFieldCallback = (field) => {
       const entityId = fieldRels.filter(r => r.key == field.getName())[0].entity;
-      const primaryKey = this.description.getPrimaryKey(entityId);
-      this.addTablePanel(entityId, { type: "EQ", field: primaryKey, value: field.getText() }, senderIndex, true);
+      this.addTablePanel(entityId, field.getText(), null, senderIndex, true);
     };
     return formViewModel;
   }
@@ -124,8 +124,8 @@ export class ExplorerViewModel {
   public addPanelCallback: (viewModel: ExplorerPanelViewModel) => void;
   public removePanelCallback: () => void;
 
-  public start() {
+  public start(initKey: any = null) {
     this.panels = [];
-    this.addTablePanel(this.rootEntity, null, -1);
+    this.addTablePanel(this.rootEntity, initKey, null, -1);
   }
 }

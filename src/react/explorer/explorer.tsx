@@ -17,7 +17,7 @@ export function Explorer({ model }: { model: ExplorerViewModel }) {
   const css = model.css();
   return (
     <div className={css.root}>
-      {panels.map((row, index) => <ExplorerPanel key={index} model={row} />)}
+      {panels.map((panel, index) => <ExplorerPanel key={panel.getKey()} model={panel} />)}
     </div>
   );
 }
