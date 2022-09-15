@@ -1,5 +1,5 @@
 .jsde-panel {
-    &:first-child {
+    &:only-child {
         .jsde-panel__close {
             display: none;
         }
