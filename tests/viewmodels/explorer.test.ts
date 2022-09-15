@@ -63,7 +63,7 @@ test("Explorer remove panel test", () => {
   expect(explorer.getPanels().map(p => p.getKey())).toStrictEqual(["e1"]);
 })
 
-test("Explore empty row", () => {
+test("Explore row", () => {
   var explorer = new ExplorerViewModel(dbDescription, "table", {});
   explorer.getDataCallback = (entityId, attributes, options, ready) => {
     ready([]);
@@ -77,6 +77,24 @@ test("Explore empty row", () => {
   form.fields.map(f => f.updateCallback = (text) => { fieldStringsUpdated.push(text) });
   form.reloadData();
   expect(fieldStringsUpdated).toEqual(["", "", ""]);
+})
+
+test("Explore empty row", () => {
+  var explorer = new ExplorerViewModel(dbDescription, "table", {});
+  explorer.getDataCallback = (entityId, attributes, options, ready) => {
+    ready([
+      { key: "777", data: { table_key: "777", f1: "one", f2: "first", f3: "prima" } }
+    ]);
+  }
+  explorer.addPanelCallback = () => { }
+  explorer.removePanelCallback = () => { };
+  explorer.start();
+  (explorer.getPanels()[0].dataViewModel as TableViewModel).exploreRowCallback(new TableRowViewModel(["a", "b", "c"], "a"));
+  var form = explorer.getPanels()[0].extraDataViewModel as FormViewModel;
+  var fieldStringsUpdated: string[] = [];
+  form.fields.map(f => f.updateCallback = (text) => { fieldStringsUpdated.push(text) });
+  form.reloadData();
+  expect(fieldStringsUpdated).toEqual(["777", "one", "prima"]);
 })
 
 test("Explore reference field row", () => {
