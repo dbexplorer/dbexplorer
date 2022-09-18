@@ -2,6 +2,7 @@ import React from 'react';
 import { Table } from "../../../src/react/table/table";
 import { render, fireEvent } from '@testing-library/react'
 import { TableViewModel } from "../../../src/viewmodels/table";
+import { act } from 'react-test-renderer';
 jest.mock("../../../src/react/table/row", () => ({
   TableRow: (props) => {
     return <tr className={"mock-table-row"} title={props.model.getKey()} />;
@@ -109,11 +110,17 @@ test("table test - load more without click", () => {
   };
   window.IntersectionObserver = jest.fn().mockImplementation(intersectionObserverMockMore);
   const { container, unmount } = render(<Table model={tableViewModel} />);
-  observerCallback([{ isIntersecting: true }]);
+  act(() => {
+    observerCallback([{ isIntersecting: true }]);
+  });
   expect(tableViewModel.rows.map(r => r.getKey())).toEqual([1, 2, 5, 6]);
-  observerCallback([{ isIntersecting: true }]);
+  act(() => {
+    observerCallback([{ isIntersecting: true }]);
+  });
   expect(tableViewModel.rows.map(r => r.getKey())).toEqual([1, 2, 5, 6, 9, 10]);
-  observerCallback([{ isIntersecting: false }]);
+  act(() => {
+    observerCallback([{ isIntersecting: false }]);
+  });
   expect(tableViewModel.rows.map(r => r.getKey())).toEqual([1, 2, 5, 6, 9, 10]);
   //expect(unobserved).toBeFalsy();
   //unmount();

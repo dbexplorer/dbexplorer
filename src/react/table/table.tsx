@@ -37,8 +37,7 @@ export function Table({ model }: { model: TableViewModel }) {
           rows.map((row, index) => <TableRow key={index} model={row} />)
         }
       </tbody>
-
-      {loadMoreVisible ? <tfoot ref={footerRef} className={css.foot}><tr><td><button onClick={handleLoadMoreClick}>Load more data...</button></td></tr>       </tfoot> : null}
+      {loadMoreVisible ? <tfoot ref={footerRef} className={css.foot}><tr><td><button onClick={handleLoadMoreClick}>Load more data...</button></td></tr></tfoot> : null}
     </table>
   );
 }

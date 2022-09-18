@@ -56,7 +56,6 @@ exports[`Table test 1`] = `
         </button>
       </td>
     </tr>
-           
   </tfoot>
 </table>
 `;
