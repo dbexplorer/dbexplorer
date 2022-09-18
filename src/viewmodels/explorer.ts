@@ -7,7 +7,7 @@ import { IGetDataFilter, IGetDataOptions } from "../data";
 
 export interface IExplorerOptions { }
 export class ExplorerPanelViewModel {
-  constructor(public dataViewModel: IBaseViewModel, private key: string) { }
+  constructor(public dataViewModel: TableViewModel, private key: string) { }
   public extraDataViewModel: IBaseViewModel;
   public getKey() {
     return this.key;
@@ -24,6 +24,8 @@ export class ExplorerPanelViewModel {
     };
   }
   public closeCallback: () => void;
+  public closeLeftCallback: () => void;
+  public closeRightCallback: () => void;
   public setExtraDataKeyCallback: (key: string) => void = () => { };
 }
 export class ExplorerViewModel {
@@ -42,7 +44,16 @@ export class ExplorerViewModel {
       root: cssPrefix("explorer"),
     };
   }
-  private addTablePanel(entityId: string, initKey: any, initFilter: IGetDataFilter, sender: ExplorerPanelViewModel, back: boolean = false) {
+
+  private createTablePanel(tableViewModel: TableViewModel, key: string) {
+    const panel = new ExplorerPanelViewModel(tableViewModel, key);
+    panel.closeCallback = () => { this.removePanel(panel, "this") };
+    panel.closeRightCallback = () => { this.removePanel(panel, "after") };
+    panel.closeLeftCallback = () => { this.removePanel(panel, "before") };
+    return panel;
+  }
+
+  private addTablePanel(entityId: string, initKey: any, initFilter: IGetDataFilter, back: boolean = false) {
     const columns = this.description.getTableColumns(entityId);
     const attributes = columns.map((col) => col.name);
     let tableViewModel = new TableViewModel(columns, initKey, this.description.getTableTitle(entityId));
@@ -52,18 +63,15 @@ export class ExplorerViewModel {
       newOptions.filter = initFilter;
       this.getDataCallback(entityId, attributes, newOptions, ready);
     };
-    const panel = new ExplorerPanelViewModel(tableViewModel, entityId + this.sequence++);
-    let senderIndex: number = this.panels.indexOf(sender);
+    const panel = this.createTablePanel(tableViewModel, entityId + this.sequence++);
     if (!back) {
-      if (senderIndex < this.panels.length - 1) this.panels.splice(senderIndex + 1, this.panels.length);
       this.panels.push(panel);
     }
     else {
-      if (senderIndex > 0) this.panels.splice(0, senderIndex);
       this.panels.unshift(panel);
     }
     this.addPanelCallback(panel);
-    panel.closeCallback = () => { this.removePanel(panel) };
+
 
     tableViewModel.exploreRowCallback = (row) => {
       panel.extraDataViewModel = this.createFormViewModel(entityId, row.getKey(), panel);
@@ -95,18 +103,25 @@ export class ExplorerViewModel {
     };
 
     formViewModel.exploreRelationshipCallback = (rel) => {
-      this.addTablePanel(rel.getEntityId(), null, { type: "EQ", field: rel.getKeyField(), value: key }, sender);
+      this.removePanel(sender, "after");
+      this.addTablePanel(rel.getEntityId(), null, { type: "EQ", field: rel.getKeyField(), value: key });
     };
     formViewModel.exploreFieldCallback = (field) => {
       const entityId = fieldRels.filter(r => r.key == field.getName())[0].entity;
-      this.addTablePanel(entityId, field.getText(), null, sender, true);
+      this.removePanel(sender, "before");
+      this.addTablePanel(entityId, field.getText(), null, true);
     };
     return formViewModel;
   }
 
-  private removePanel(viewModel: ExplorerPanelViewModel) {
+  private removePanel(viewModel: ExplorerPanelViewModel, option: "this" | "after" | "before") {
     const panelIndex = this.panels.indexOf(viewModel);
-    this.panels.splice(panelIndex);
+    switch (option) {
+      case "this": this.panels.splice(panelIndex); break;
+      case "after": this.panels.splice(panelIndex + 1); break;
+      case "before": this.panels.splice(0, panelIndex); break;
+    }
+
     this.removePanelCallback();
   }
 

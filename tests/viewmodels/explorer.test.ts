@@ -49,18 +49,27 @@ test("Explorer remove panel test", () => {
   var explorer = new ExplorerViewModel(dbDescription, "table", {});
   explorer.removePanelCallback = () => { };
 
-  var panel1 = new ExplorerPanelViewModel(new TableViewModel([]), "e1");
-  var panel2 = new ExplorerPanelViewModel(new TableViewModel([]), "e2");
-  var panel3 = new ExplorerPanelViewModel(new TableViewModel([]), "e3");
+  var panel1 = (<any>explorer).createTablePanel(new TableViewModel([]), "e1");
+  var panel2 = (<any>explorer).createTablePanel(new TableViewModel([]), "e2");
+  var panel3 = (<any>explorer).createTablePanel(new TableViewModel([]), "e3");
+
 
   explorer.getPanels().length = 0;
-  explorer.getPanels().push(panel1);
-  explorer.getPanels().push(panel2);
-  explorer.getPanels().push(panel3);
+  explorer.getPanels().push(panel1, panel2, panel3);
+  expect(explorer.getPanels().map(p => p.getKey())).toStrictEqual(["e1", "e2", "e3"]);
 
-  (explorer as any).removePanel(panel2);
-
+  panel2.closeCallback();
   expect(explorer.getPanels().map(p => p.getKey())).toStrictEqual(["e1"]);
+
+  explorer.getPanels().length = 0;
+  explorer.getPanels().push(panel1, panel2, panel3);
+  panel2.closeRightCallback();
+  expect(explorer.getPanels().map(p => p.getKey())).toStrictEqual(["e1", "e2"]);
+
+  explorer.getPanels().length = 0;
+  explorer.getPanels().push(panel1, panel2, panel3);
+  panel2.closeLeftCallback();
+  expect(explorer.getPanels().map(p => p.getKey())).toStrictEqual(["e2", "e3"]);
 })
 
 test("Explore row", () => {
@@ -77,6 +86,26 @@ test("Explore row", () => {
   form.fields.map(f => f.updateCallback = (text) => { fieldStringsUpdated.push(text) });
   form.reloadData();
   expect(fieldStringsUpdated).toEqual(["", "", ""]);
+})
+
+test("Explore relationship", () => {
+  var explorer = new ExplorerViewModel(dbDescription, "table", {});
+  var lastOptions;
+  explorer.getDataCallback = (entityId, attributes, options, ready) => {
+    lastOptions = options;
+    //ready([]);
+  }
+  explorer.addPanelCallback = () => { }
+  explorer.removePanelCallback = () => { };
+  explorer.start();
+  (explorer.getPanels()[0].dataViewModel as TableViewModel).exploreRowCallback(new TableRowViewModel(["a", "b", "c"], "a"));
+  var form = explorer.getPanels()[0].extraDataViewModel as FormViewModel;
+  form.rels[0].exploreCallback();
+  explorer.getPanels()[1].dataViewModel.loadData();
+  expect(explorer.getPanels().length).toEqual(2);
+  expect(explorer.getPanels()[1].dataViewModel.getKey()).toBeNull();
+  expect(explorer.getPanels()[1].dataViewModel.getTitle()).toBe("child table 1");
+  expect(lastOptions.filter).toEqual({ type: "EQ", field: "e_key", value: "a" });
 })
 
 test("Explore empty row", () => {
