@@ -17,22 +17,13 @@ export function ExplorerPanel({ model }: { model: ExplorerPanelViewModel }) {
     model.closeCallback();
   }
 
-  function renderTableOrForm(viewModel: IBaseViewModel, key: string) {
-    if (viewModel instanceof FormViewModel) {
-      return <Form key={key} model={viewModel as FormViewModel}></Form>
-    }
-    else {
-      return <Table key={key} model={viewModel as TableViewModel}></Table>
-    }
-  }
-
   return (
     <div className={css.root}>
       <button className={css.close} onClick={handleCloseClick}></button>
       <div className={css.header}>{model.dataViewModel.getTitle()}</div>
       <div className={css.body}>
-        {renderTableOrForm(model.dataViewModel, model.getKey())}
-        {extraDataKey ? renderTableOrForm(model.extraDataViewModel, extraDataKey) : null}
+        {<Table key={model.getKey()} model={model.dataViewModel as TableViewModel}></Table>}
+        {extraDataKey ? <Form key={extraDataKey} model={model.extraDataViewModel as FormViewModel}></Form> : null}
       </div>
     </div>
   );

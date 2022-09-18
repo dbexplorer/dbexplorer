@@ -1,9 +1,10 @@
 import React from 'react';
-import { TableViewModel } from "../../../src/viewmodels/table";
+import { TableRowViewModel, TableViewModel } from "../../../src/viewmodels/table";
 import { ExplorerPanelViewModel } from "../../../src/viewmodels/explorer";
 import { ExplorerPanel } from "../../../src/react/explorer/panel"
 import { FormViewModel } from "../../../src/viewmodels/form";
 import { render, fireEvent } from '@testing-library/react'
+import { act } from 'react-dom/test-utils';
 
 jest.mock("../../../src/react/table/table", () => ({
   Table: () => {
@@ -25,13 +26,20 @@ test("Table panel test", () => {
   expect(container.firstChild).toMatchSnapshot();
 });
 
-test("Form panel test", () => {
-  var formViewModel = new FormViewModel([]);
-  var panelViewModel = new ExplorerPanelViewModel(formViewModel);
-  formViewModel.getDataCallback = (ready) => {
-    ready([{}]);
-  };
+test("Table + form panel test", () => {
+  var tableViewModel = new TableViewModel([]);
+  var panelViewModel = new ExplorerPanelViewModel(tableViewModel);
+
   const { container } = render(<ExplorerPanel model={panelViewModel} />);
+
+  act(() => {
+    panelViewModel.extraDataViewModel = new FormViewModel([]);
+    panelViewModel.setExtraDataKeyCallback("123");
+
+    tableViewModel.getDataCallback = (options, ready) => {
+      ready([]);
+    };
+  })
   expect(container.firstChild).toMatchSnapshot();
 });
 
