@@ -70,6 +70,7 @@ export class TableViewModel {
   dataPartRowCount: number = 10;
   headerViewModel: TableHeaderViewModel;
   loadData(back = false) {
+    if (this.key) this.loadBackVisibleCallback(true);
     const options = { limit: this.dataPartRowCount, offset: back ? this.dataBackOffset : this.dataOffset, key: this.key, back: back };
     this.getDataCallback(
       options,
@@ -109,7 +110,7 @@ export class TableViewModel {
           this.addRowsCallback(this.rows);
         }
         else {
-          this.loadMoreVisibleCallback(false);
+          if (back) this.loadBackVisibleCallback(false); else this.loadMoreVisibleCallback(false);
         }
       }
     );
@@ -139,5 +140,6 @@ export class TableViewModel {
   }
   addRowsCallback: (rows: TableRowViewModel[]) => any;
   loadMoreVisibleCallback: (visible: boolean) => any;
+  loadBackVisibleCallback: (visible: boolean) => any = () => { };
   exploreRowCallback: (row: TableRowViewModel) => any;
 }

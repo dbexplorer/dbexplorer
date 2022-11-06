@@ -180,7 +180,7 @@ console.log(db);
 function getData(entityId, attributes, options, ready) {
   console.log(entityId, attributes, options);
 
-  let data = db[entityId];
+  let data = db[entityId].slice();
 
   if (options.back) {
     data = data.reverse();
@@ -194,7 +194,7 @@ function getData(entityId, attributes, options, ready) {
     })
     */
     if (options.back) {
-      data = data.filter(d => d.data[options.from.key] > options.from.value);
+      data = data.filter(d => d.data[options.from.key] < options.from.value);
     }
     else {
       data = data.filter(d => d.data[options.from.key] >= options.from.value);
