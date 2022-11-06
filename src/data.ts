@@ -4,6 +4,7 @@ export interface IGetDataFilter {
   value: string | string[] | string[][];
 }
 export interface IGetDataOptions {
+  back?: boolean;
   limit?: number;
   offset?: number;
   from?: any;

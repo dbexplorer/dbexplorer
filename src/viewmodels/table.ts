@@ -65,15 +65,21 @@ export class TableColumnDescription {
 export class TableViewModel {
   private columns: TableColumnDescription[];
   private dataOffset: number = 0;
+  private dataBackOffset: number = 0;
   private exploredRow: TableRowViewModel = null;
   dataPartRowCount: number = 10;
   headerViewModel: TableHeaderViewModel;
-  loadData() {
-    const options = { limit: this.dataPartRowCount, offset: this.dataOffset, key: this.key };
+  loadData(back = false) {
+    const options = { limit: this.dataPartRowCount, offset: back ? this.dataBackOffset : this.dataOffset, key: this.key, back: back };
     this.getDataCallback(
       options,
       (data: any) => {
-        this.dataOffset += this.dataPartRowCount;
+        if (back) {
+          this.dataBackOffset += this.dataPartRowCount;
+        }
+        else {
+          this.dataOffset += this.dataPartRowCount;
+        }
         if (data.length > 0) {
           const rows = data.map(
             (rowData: any) => {
@@ -94,7 +100,12 @@ export class TableViewModel {
               return row;
             }
           )
-          this.rows = this.rows.concat(rows);
+          if (back) {
+            this.rows = rows.reverse().concat(this.rows);
+          }
+          else {
+            this.rows = this.rows.concat(rows);
+          }
           this.addRowsCallback(this.rows);
         }
         else {

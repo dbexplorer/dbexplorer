@@ -1,4 +1,5 @@
 import {
+  DataLoadDirection,
   TableCellViewModel,
   TableRowViewModel,
   TableViewModel
@@ -67,6 +68,62 @@ test("First table test", () => {
     ["12", "two10", "second10"]
   ]);
 });
+
+test("From/Back load table test", () => {
+  var table = new TableViewModel([
+    {
+      name: "f1"
+    },
+    {
+      name: "f2"
+    },
+    {
+      name: "f3"
+    }
+  ], 10);
+
+  table.dataPartRowCount = 2;
+  table.getDataCallback = (options, ready) => {
+    let offset = options.offset || 0;
+    if (options.back) {
+      ready([
+        { key: 1, data: { f1: 9 - offset, f2: "-one" + offset, f3: "-first" + offset } },
+        { key: 2, data: { f1: 8 - offset, f2: "-two" + offset, f3: "-second" + offset } }
+      ]);
+    }
+    else {
+      ready([
+        { key: 1, data: { f1: 10 + offset, f2: "one" + offset, f3: "first" + offset } },
+        { key: 2, data: { f1: 11 + offset, f2: "two" + offset, f3: "second" + offset } }
+      ]);
+    }
+  };
+  var d: string[][];
+  table.addRowsCallback = (data: TableRowViewModel[]) => {
+    d = data.map((row) => row.getCells().map((cell) => cell.getText()));
+  };
+  table.loadData();
+  table.loadData(true);
+  expect(d).toEqual([
+    ["8", "-two0", "-second0"],
+    ["9", "-one0", "-first0"],
+    ["10", "one0", "first0"],
+    ["11", "two0", "second0"]
+  ]);
+  table.loadData();
+  table.loadData(true);
+  expect(d).toEqual([
+    ["6", "-two2", "-second2"],
+    ["7", "-one2", "-first2"],
+    ["8", "-two0", "-second0"],
+    ["9", "-one0", "-first0"],
+    ["10", "one0", "first0"],
+    ["11", "two0", "second0"],
+    ["12", "one2", "first2"],
+    ["13", "two2", "second2"]
+  ]);
+});
+
 
 test("Table explore row", () => {
   var table = new TableViewModel([]);

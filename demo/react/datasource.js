@@ -181,6 +181,11 @@ function getData(entityId, attributes, options, ready) {
   console.log(entityId, attributes, options);
 
   let data = db[entityId];
+
+  if (options.back) {
+    data = data.reverse();
+  }
+
   if (options.from) {
     /*
     data = data.sort((a, b) => {
@@ -188,7 +193,12 @@ function getData(entityId, attributes, options, ready) {
       if(a[options.from.key] > b[options.from.key]) return 1;
     })
     */
-    data = data.filter(d => d.data[options.from.key] >= options.from.value);
+    if (options.back) {
+      data = data.filter(d => d.data[options.from.key] > options.from.value);
+    }
+    else {
+      data = data.filter(d => d.data[options.from.key] >= options.from.value);
+    }
   }
   if (options.filter) {
     if (options.filter.type == "EQ") {
