@@ -6,6 +6,6 @@ export interface IGetDataFilter {
 export interface IGetDataOptions {
   limit?: number;
   offset?: number;
-  from?: number;
+  from?: any;
   filter?: IGetDataFilter;
 }

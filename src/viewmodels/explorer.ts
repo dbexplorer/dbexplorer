@@ -61,6 +61,7 @@ export class ExplorerViewModel {
     tableViewModel.getDataCallback = (options, ready) => {
       let newOptions = { ...options };
       newOptions.filter = initFilter;
+      newOptions.from = (<any>options).key && { key: this.description.getPrimaryKey(entityId), value: (<any>options).key };
       this.getDataCallback(entityId, attributes, newOptions, ready);
     };
     const panel = this.createTablePanel(tableViewModel, entityId + this.sequence++);

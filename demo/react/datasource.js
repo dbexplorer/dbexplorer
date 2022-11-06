@@ -181,6 +181,15 @@ function getData(entityId, attributes, options, ready) {
   console.log(entityId, attributes, options);
 
   let data = db[entityId];
+  if (options.from) {
+    /*
+    data = data.sort((a, b) => {
+      if(a[options.from.key] < b[options.from.key]) return -1;
+      if(a[options.from.key] > b[options.from.key]) return 1;
+    })
+    */
+    data = data.filter(d => d.data[options.from.key] >= options.from.value);
+  }
   if (options.filter) {
     if (options.filter.type == "EQ") {
       data = data.filter(d => d.data[options.filter.field] == options.filter.value);
