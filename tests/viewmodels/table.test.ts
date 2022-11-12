@@ -83,19 +83,26 @@ test("From/Back load table test", () => {
   ], 10);
 
   table.dataPartRowCount = 2;
+  table.exploreRowCallback = () => { };
   table.getDataCallback = (options, ready) => {
     let offset = options.offset || 0;
     if (options.back) {
-      ready([
-        { key: 1, data: { f1: 9 - offset, f2: "-one" + offset, f3: "-first" + offset } },
-        { key: 2, data: { f1: 8 - offset, f2: "-two" + offset, f3: "-second" + offset } }
-      ]);
+      if (offset > 2) ready([])
+      else {
+        ready([
+          { key: 9 - offset, data: { f1: 9 - offset, f2: "-one" + offset, f3: "-first" + offset } },
+          { key: 8 - offset, data: { f1: 8 - offset, f2: "-two" + offset, f3: "-second" + offset } }
+        ]);
+      }
     }
     else {
-      ready([
-        { key: 1, data: { f1: 10 + offset, f2: "one" + offset, f3: "first" + offset } },
-        { key: 2, data: { f1: 11 + offset, f2: "two" + offset, f3: "second" + offset } }
-      ]);
+      if (offset > 2) ready([])
+      else {
+        ready([
+          { key: 10 + offset, data: { f1: 10 + offset, f2: "one" + offset, f3: "first" + offset } },
+          { key: 11 + offset, data: { f1: 11 + offset, f2: "two" + offset, f3: "second" + offset } }
+        ]);
+      }
     }
   };
   var d: string[][];
@@ -103,7 +110,9 @@ test("From/Back load table test", () => {
     d = data.map((row) => row.getCells().map((cell) => cell.getText()));
   };
   table.loadData();
+  expect(table.getCurrentRowIndex()).toEqual(1);
   table.loadData(true);
+  expect(table.getCurrentRowIndex()).toEqual(3);
   expect(d).toEqual([
     ["8", "-two0", "-second0"],
     ["9", "-one0", "-first0"],
@@ -111,7 +120,9 @@ test("From/Back load table test", () => {
     ["11", "two0", "second0"]
   ]);
   table.loadData();
+  expect(table.getCurrentRowIndex()).toEqual(3);
   table.loadData(true);
+  expect(table.getCurrentRowIndex()).toEqual(5);
   expect(d).toEqual([
     ["6", "-two2", "-second2"],
     ["7", "-one2", "-first2"],
@@ -122,6 +133,8 @@ test("From/Back load table test", () => {
     ["12", "one2", "first2"],
     ["13", "two2", "second2"]
   ]);
+  table.loadData(true);
+  expect(table.getCurrentRowIndex()).toEqual(4);
 });
 
 

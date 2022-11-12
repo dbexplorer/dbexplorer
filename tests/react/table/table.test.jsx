@@ -8,10 +8,21 @@ jest.mock("../../../src/react/table/row", () => ({
     return <tr className={"mock-table-row"} title={props.model.getKey()} />;
   }
 }));
-const intersectionObserverMock = (callback) => ({
-  observe: () => null
-})
-window.IntersectionObserver = jest.fn().mockImplementation(intersectionObserverMock);
+
+var old_observer = window.IntersectionObserver;
+var observerCallback = {};
+const intersectionObserverMockMore = (callback) => {
+  return {
+    observe: (element) => observerCallback[element.parentElement.tagName] = callback,
+    unobserve: () => null
+  }
+};
+function callAllObservers() {
+  act(() => Object.keys(observerCallback).forEach(k => observerCallback[k]([{ isIntersecting: true }])));
+}
+window.IntersectionObserver = jest.fn().mockImplementation(intersectionObserverMockMore);
+
+
 test("Table test", () => {
   var tableViewModel = new TableViewModel([
     {
@@ -27,7 +38,7 @@ test("Table test", () => {
   tableViewModel.dataPartRowCount = 2;
   tableViewModel.getDataCallback = (options, ready) => {
     let offset = options.offset;
-    if (options.limit === 2) {
+    if (options.limit === 2 && !options.back) {
       ready([
         { key: 1 + offset * 2, data: { f1: 1 + offset * 2, f2: "one", f3: "first" } },
         { key: 2 + offset * 2, data: { f1: 2 + offset * 2, f2: "two", f3: "second" } }
@@ -36,6 +47,8 @@ test("Table test", () => {
   };
 
   const { container } = render(<Table model={tableViewModel} />);
+  callAllObservers();
+
   expect(container.querySelector("tbody").childElementCount).toEqual(2);
   expect(container.firstChild).toMatchSnapshot();
 });
@@ -48,6 +61,7 @@ test("Table test - no load more", () => {
   };
 
   const { container } = render(<Table model={tableViewModel} />);
+  callAllObservers();
   expect(container.firstChild).toMatchSnapshot();
 });
 
@@ -66,7 +80,7 @@ test("table test - load more", () => {
   tableViewModel.dataPartRowCount = 2;
   tableViewModel.getDataCallback = (options, ready) => {
     let offset = options.offset;
-    if (options.limit === 2) {
+    if (options.limit === 2 && !options.back) {
       ready([
         { key: 1 + offset * 2, data: { f1: 1 + offset * 2, f2: "one", f3: "first" } },
         { key: 2 + offset * 2, data: { f1: 2 + offset * 2, f2: "two", f3: "second" } }
@@ -74,6 +88,7 @@ test("table test - load more", () => {
     }
   };
   const { container } = render(<Table model={tableViewModel} />);
+  callAllObservers();
   var oldCallback = tableViewModel.addRowsCallback;
   var rows = [];
   tableViewModel.addRowsCallback = (data) => {
@@ -90,6 +105,10 @@ test("table test - load more without click", () => {
   tableViewModel.dataPartRowCount = 2;
   tableViewModel.getDataCallback = (options, ready) => {
     let offset = options.offset;
+    if (options.back) {
+      ready([]);
+      return;
+    }
     if (options.limit === 2) {
       ready(offset < 6 ? [
         { key: 1 + offset * 2, data: {} },
@@ -98,32 +117,21 @@ test("table test - load more without click", () => {
     }
   };
 
-  var old_observer = window.IntersectionObserver;
-  var unobserved = false;
-  var observerCallback;
-  const intersectionObserverMockMore = (callback) => {
-    observerCallback = callback;
-    return {
-      observe: () => null,
-      unobserve: () => null
-    }
-  };
-  window.IntersectionObserver = jest.fn().mockImplementation(intersectionObserverMockMore);
   const { container, unmount } = render(<Table model={tableViewModel} />);
+  callAllObservers();
   act(() => {
-    observerCallback([{ isIntersecting: true }]);
+    observerCallback["TFOOT"]([{ isIntersecting: true }]);
   });
   expect(tableViewModel.rows.map(r => r.getKey())).toEqual([1, 2, 5, 6]);
   act(() => {
-    observerCallback([{ isIntersecting: true }]);
+    observerCallback["TFOOT"]([{ isIntersecting: true }]);
   });
   expect(tableViewModel.rows.map(r => r.getKey())).toEqual([1, 2, 5, 6, 9, 10]);
   act(() => {
-    observerCallback([{ isIntersecting: false }]);
+    observerCallback["TFOOT"]([{ isIntersecting: false }]);
   });
   expect(tableViewModel.rows.map(r => r.getKey())).toEqual([1, 2, 5, 6, 9, 10]);
   //expect(unobserved).toBeFalsy();
   //unmount();
   //expect(unobserved).toBeTruthy();
-  window.IntersectionObserver = old_observer;
 });

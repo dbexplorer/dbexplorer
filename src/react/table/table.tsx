@@ -5,7 +5,7 @@ import { TableRow } from './row';
 export function Table({ model }: { model: TableViewModel }) {
   const [rows, setRows] = useState(model.rows);
   const [loadMoreVisible, setLoadMoreVisible] = useState(true);
-  const [loadBackVisible, setLoadBackVisible] = useState(false);
+  const [loadBackVisible, setLoadBackVisible] = useState(true);
   model.addRowsCallback = setRows;
   model.loadMoreVisibleCallback = setLoadMoreVisible;
   model.loadBackVisibleCallback = setLoadBackVisible;
@@ -13,6 +13,7 @@ export function Table({ model }: { model: TableViewModel }) {
 
 
   const headerCells = model.headerViewModel.captionsViewModel.getCells();
+  const tableBodyRef = useRef(null);
   const footerRef = useRef(null);
   const loadBackRef = useRef(null);
 
@@ -30,33 +31,32 @@ export function Table({ model }: { model: TableViewModel }) {
     const [entry] = entries;
     if (entry.isIntersecting) model.loadData(true);
   }
+
   useEffect(() => {
-    model.loadData();
     const observer = new IntersectionObserver(observerCallback);
-    /*if (footerRef.current) */observer.observe(footerRef.current);
+    const observer2 = new IntersectionObserver(observerBackCallback);
+    if (footerRef.current) observer.observe(footerRef.current);
     // TODO: check if we need unobserve
     // return () => {
     //   if (footerRef.current) observer.unobserve(footerRef.current);
     // }
-  }, [footerRef]);
-
-  useEffect(() => {
-    if (loadBackVisible) {
-      const observer = new IntersectionObserver(observerBackCallback);
-      observer.observe(loadBackRef.current);
+    if (loadBackRef.current) observer2.observe(loadBackRef.current);
+    if (model.getKey()) {
+      const currentRowIndex = model.getCurrentRowIndex();
+      if (currentRowIndex >= 0) tableBodyRef.current.childNodes[currentRowIndex].scrollIntoView({ block: "center" });
     }
-  }, [loadBackRef]);
+  }, [footerRef, loadBackRef, rows]);
 
   return (
     <table className={css.root}>
       <thead className={css.head}><tr>{headerCells.map((cell, index) => <th key={index}>{cell.getText()}</th>)}</tr></thead>
-      <tbody className={css.body}>
+      <tbody ref={tableBodyRef} className={css.body}>
         {loadBackVisible ? <tr ref={loadBackRef} ><td><button onClick={handleLoadBackClick}>Load more data...</button></td></tr> : null}
         {
           rows.map((row, index) => <TableRow key={row.getKey()} model={row} />)
         }
       </tbody>
-      {loadMoreVisible ? <tfoot ref={footerRef} className={css.foot}><tr><td><button onClick={handleLoadMoreClick}>Load more data...</button></td></tr></tfoot> : null}
+      {loadMoreVisible ? <tfoot className={css.foot}><tr ref={footerRef} ><td><button onClick={handleLoadMoreClick}>Load more data...</button></td></tr></tfoot> : null}
     </table>
   );
 }
