@@ -209,6 +209,8 @@ test("Table css", () => {
     "body": "jsde-table-body",
     "foot": "jsde-table-foot",
     "head": "jsde-table-head",
+    "loadingBottom": "jsde-table-loading-bottom",
+    "loadingTop": "jsde-table-loading-top",
     "root": "jsde-table",
   });
 });

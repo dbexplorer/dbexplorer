@@ -45,15 +45,61 @@ exports[`Table test 1`] = `
       class="mock-table-row"
       title="2"
     />
-  </tbody>
-  <tfoot
-    class="jsde-table-foot"
-  >
-    <tr>
+    <tr
+      class="jsde-table-loading-bottom"
+    >
       <td>
         Loading...
       </td>
     </tr>
-  </tfoot>
+  </tbody>
+</table>
+`;
+
+exports[`Table test with key 1`] = `
+<table
+  class="jsde-table"
+>
+  <thead
+    class="jsde-table-head"
+  >
+    <tr>
+      <th>
+        f1
+      </th>
+      <th>
+        f2
+      </th>
+      <th>
+        f3
+      </th>
+    </tr>
+  </thead>
+  <tbody
+    class="jsde-table-body"
+  >
+    <tr
+      class="jsde-table-loading-top"
+    >
+      <td>
+        Loading...
+      </td>
+    </tr>
+    <tr
+      class="mock-table-row"
+      title="1"
+    />
+    <tr
+      class="mock-table-row"
+      title="2"
+    />
+    <tr
+      class="jsde-table-loading-bottom"
+    >
+      <td>
+        Loading...
+      </td>
+    </tr>
+  </tbody>
 </table>
 `;

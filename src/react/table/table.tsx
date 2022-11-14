@@ -45,12 +45,12 @@ export function Table({ model }: { model: TableViewModel }) {
     <table className={css.root}>
       <thead className={css.head}><tr>{headerCells.map((cell, index) => <th key={index}>{cell.getText()}</th>)}</tr></thead>
       <tbody ref={tableBodyRef} className={css.body}>
-        {loadBackVisible ? <tr ref={loadBackRef} ><td>Loading...</td></tr> : null}
+        {loadBackVisible ? <tr ref={loadBackRef} className={css.loadingTop}><td>Loading...</td></tr> : null}
         {
           rows.map((row, index) => <TableRow key={row.getKey()} model={row} />)
         }
+        {loadMoreVisible ? <tr ref={footerRef} className={css.loadingBottom}><td>Loading...</td></tr> : null}
       </tbody>
-      {loadMoreVisible ? <tfoot className={css.foot}><tr ref={footerRef} ><td>Loading...</td></tr></tfoot> : null}
     </table>
   );
 }

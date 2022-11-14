@@ -127,6 +127,8 @@ export class TableViewModel {
       head: cssPrefix("table-head"),
       body: cssPrefix("table-body"),
       foot: cssPrefix("table-foot"),
+      loadingTop: cssPrefix("table-loading-top"),
+      loadingBottom: cssPrefix("table-loading-bottom"),
     };
   }
   getDataCallback: (options: IGetDataOptions, ready: any) => void;

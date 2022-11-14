@@ -13,7 +13,7 @@ var old_observer = window.IntersectionObserver;
 var observerCallback = {};
 const intersectionObserverMockMore = (callback) => {
   return {
-    observe: (element) => observerCallback[element.parentElement.tagName] = callback,
+    observe: (element) => observerCallback[element.className] = callback,
     unobserve: () => null
   }
 };
@@ -49,9 +49,74 @@ test("Table test", () => {
   const { container } = render(<Table model={tableViewModel} />);
   callAllObservers();
 
-  expect(container.querySelector("tbody").childElementCount).toEqual(2);
+  expect(container.querySelector("tbody").childElementCount).toEqual(3);
   expect(container.firstChild).toMatchSnapshot();
 });
+
+test("Table test with key", () => {
+  var tableViewModel = new TableViewModel([
+    {
+      name: "f1"
+    },
+    {
+      name: "f2"
+    },
+    {
+      name: "f3"
+    }
+  ], 2);
+  tableViewModel.dataPartRowCount = 2;
+  tableViewModel.exploreRowCallback = () => { };
+  tableViewModel.getDataCallback = (options, ready) => {
+    let offset = options.offset;
+    if (options.limit === 2 && !options.back) {
+      ready([
+        { key: 1 + offset * 2, data: { f1: 1 + offset * 2, f2: "one", f3: "first" } },
+        { key: 2 + offset * 2, data: { f1: 2 + offset * 2, f2: "two", f3: "second" } }
+      ]);
+    }
+  };
+
+  let obj = null;
+  window.HTMLElement.prototype.scrollIntoView = function () { obj = this };
+  const { container } = render(<Table model={tableViewModel} />);
+  callAllObservers();
+
+  expect(container.firstChild).toMatchSnapshot();
+  expect(obj.title).toEqual("2");
+});
+
+test("Table test with incorrect key", () => {
+  var tableViewModel = new TableViewModel([
+    {
+      name: "f1"
+    },
+    {
+      name: "f2"
+    },
+    {
+      name: "f3"
+    }
+  ], 2222);
+  tableViewModel.dataPartRowCount = 2;
+  tableViewModel.exploreRowCallback = () => { };
+  tableViewModel.getDataCallback = (options, ready) => {
+    let offset = options.offset;
+    if (options.limit === 2 && !options.back) {
+      ready([
+        { key: 1 + offset * 2, data: { f1: 1 + offset * 2, f2: "one", f3: "first" } },
+        { key: 2 + offset * 2, data: { f1: 2 + offset * 2, f2: "two", f3: "second" } }
+      ]);
+    }
+  };
+
+  let obj = null;
+  window.HTMLElement.prototype.scrollIntoView = function () { obj = this };
+  const { container } = render(<Table model={tableViewModel} />);
+  callAllObservers();
+  expect(obj).toBeNull();
+});
+
 
 test("Table test - no load more", () => {
   var tableViewModel = new TableViewModel([]);
@@ -63,41 +128,6 @@ test("Table test - no load more", () => {
   const { container } = render(<Table model={tableViewModel} />);
   callAllObservers();
   expect(container.firstChild).toMatchSnapshot();
-});
-
-test("table test - load more", () => {
-  var tableViewModel = new TableViewModel([
-    {
-      name: "f1"
-    },
-    {
-      name: "f2"
-    },
-    {
-      name: "f3"
-    }
-  ]);
-  tableViewModel.dataPartRowCount = 2;
-  tableViewModel.getDataCallback = (options, ready) => {
-    let offset = options.offset;
-    if (options.limit === 2 && !options.back) {
-      ready([
-        { key: 1 + offset * 2, data: { f1: 1 + offset * 2, f2: "one", f3: "first" } },
-        { key: 2 + offset * 2, data: { f1: 2 + offset * 2, f2: "two", f3: "second" } }
-      ]);
-    }
-  };
-  const { container } = render(<Table model={tableViewModel} />);
-  callAllObservers();
-  var oldCallback = tableViewModel.addRowsCallback;
-  var rows = [];
-  tableViewModel.addRowsCallback = (data) => {
-    rows = [...data];
-  };
-  expect(tableViewModel.rows.map(r => r.getKey())).toEqual([1, 2]);
-  fireEvent.click(container.querySelector("tfoot button"));
-  expect(tableViewModel.rows.map(r => r.getKey())).toEqual([1, 2, 5, 6]);
-  expect(rows.map(r => r.getKey())).toEqual([1, 2, 5, 6]);
 });
 
 test("table test - load more without click", () => {
@@ -120,15 +150,15 @@ test("table test - load more without click", () => {
   const { container, unmount } = render(<Table model={tableViewModel} />);
   callAllObservers();
   act(() => {
-    observerCallback["TFOOT"]([{ isIntersecting: true }]);
+    observerCallback["jsde-table-loading-bottom"]([{ isIntersecting: true }]);
   });
   expect(tableViewModel.rows.map(r => r.getKey())).toEqual([1, 2, 5, 6]);
   act(() => {
-    observerCallback["TFOOT"]([{ isIntersecting: true }]);
+    observerCallback["jsde-table-loading-bottom"]([{ isIntersecting: true }]);
   });
   expect(tableViewModel.rows.map(r => r.getKey())).toEqual([1, 2, 5, 6, 9, 10]);
   act(() => {
-    observerCallback["TFOOT"]([{ isIntersecting: false }]);
+    observerCallback["jsde-table-loading-bottom"]([{ isIntersecting: false }]);
   });
   expect(tableViewModel.rows.map(r => r.getKey())).toEqual([1, 2, 5, 6, 9, 10]);
   //expect(unobserved).toBeFalsy();
