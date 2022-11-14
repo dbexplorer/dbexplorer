@@ -51,9 +51,7 @@ exports[`Table test 1`] = `
   >
     <tr>
       <td>
-        <button>
-          Load more data...
-        </button>
+        Loading...
       </td>
     </tr>
   </tfoot>

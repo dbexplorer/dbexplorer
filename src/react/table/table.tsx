@@ -17,12 +17,6 @@ export function Table({ model }: { model: TableViewModel }) {
   const footerRef = useRef(null);
   const loadBackRef = useRef(null);
 
-  function handleLoadMoreClick(): void {
-    model.loadData();
-  }
-  function handleLoadBackClick(): void {
-    model.loadData(true);
-  }
   function observerCallback(entries: IntersectionObserverEntry[]) {
     const [entry] = entries;
     if (entry.isIntersecting) model.loadData();
@@ -51,12 +45,12 @@ export function Table({ model }: { model: TableViewModel }) {
     <table className={css.root}>
       <thead className={css.head}><tr>{headerCells.map((cell, index) => <th key={index}>{cell.getText()}</th>)}</tr></thead>
       <tbody ref={tableBodyRef} className={css.body}>
-        {loadBackVisible ? <tr ref={loadBackRef} ><td><button onClick={handleLoadBackClick}>Load more data...</button></td></tr> : null}
+        {loadBackVisible ? <tr ref={loadBackRef} ><td>Loading...</td></tr> : null}
         {
           rows.map((row, index) => <TableRow key={row.getKey()} model={row} />)
         }
       </tbody>
-      {loadMoreVisible ? <tfoot className={css.foot}><tr ref={footerRef} ><td><button onClick={handleLoadMoreClick}>Load more data...</button></td></tr></tfoot> : null}
+      {loadMoreVisible ? <tfoot className={css.foot}><tr ref={footerRef} ><td>Loading...</td></tr></tfoot> : null}
     </table>
   );
 }
