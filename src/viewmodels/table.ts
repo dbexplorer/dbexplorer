@@ -20,6 +20,7 @@ export class TableCellViewModel {
 }
 export class TableRowViewModel {
   private cells: TableCellViewModel[];
+  private explored: boolean;
   getKey() {
     return this.key as string;
   }
@@ -34,11 +35,20 @@ export class TableRowViewModel {
       data.map((s, idx) => this.cells[idx].setText(s));
     }
   }
-  setExplored(explored: boolean) {
-    this.updateCssCallback(explored ? this.css().root + " " + this.css().rootExplored : this.css().root);
+  setExplored(explored: boolean, needUpdate: boolean = true) {
+    this.explored = explored;
+    if (needUpdate) this.updateCssCallback(this.css().root);
+  }
+
+  cssModifiers() {
+    return {
+      root: {
+        explored: "--explored"
+      }
+    };
   }
   css() {
-    return { root: cssPrefix("table-row"), rootExplored: cssPrefix("table-row--explored") };
+    return { root: cssPrefix("table-row") + (this.explored ? " " + cssPrefix("table-row") + this.cssModifiers().root.explored : "") };
   }
   constructor(data: string[], private key: string | string[]) {
     this.setCellsText(data);
@@ -94,6 +104,7 @@ export class TableViewModel {
               )
               if (rowData.key == this.key) {
                 this.exploredRow = row;
+                this.exploredRow.setExplored(true, false);
                 this.exploreRowCallback(row);
               }
               row.exploreCallback = () => {

@@ -153,7 +153,7 @@ test("Table explore row", () => {
   }
   table.loadData();
   var row0css = "", row1css = "";
-  table.rows.map(r => r.css = () => ({ root: "r", rootExplored: "re" }));
+  //table.rows.map(r => r.css = () => ({ root: "r", rootExplored: "re" }));
 
   table.rows[0].updateCssCallback = css => row0css = css;
   table.rows[1].updateCssCallback = css => row1css = css;
@@ -161,10 +161,10 @@ test("Table explore row", () => {
   table.rows[0].exploreCallback();
   expect(d).toBe(table.rows[0].getKey());
 
-  expect(row0css).toBe("r re");
+  expect(row0css).toBe("jsde-table-row jsde-table-row--explored");
   table.rows[1].exploreCallback();
-  expect(row0css).toBe("r");
-  expect(row1css).toBe("r re");
+  expect(row0css).toBe("jsde-table-row");
+  expect(row1css).toBe("jsde-table-row jsde-table-row--explored");
 
 });
 
@@ -201,7 +201,6 @@ test("Table css", () => {
   var row = new TableRowViewModel([], "");
   expect(row.css()).toEqual({
     "root": "jsde-table-row",
-    "rootExplored": "jsde-table-row--explored"
   });
 
   var table = new TableViewModel([]);

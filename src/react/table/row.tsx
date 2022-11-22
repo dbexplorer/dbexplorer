@@ -10,6 +10,6 @@ export function TableRow({ model }: { model: TableRowViewModel }) {
     return model.exploreCallback();
   }
   return (
-    <><tr className={rootCss} onClick={handleClick}>{model.getCells().map((cell, index) => <TableCell key={index} model={cell} />)}</tr></>
+    <tr className={rootCss} onClick={handleClick}>{model.getCells().map((cell, index) => <TableCell key={index} model={cell} />)}</tr>
   );
 }
