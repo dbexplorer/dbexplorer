@@ -2,7 +2,9 @@
     padding: 8px;
     display: table;
     border-collapse: separate;
-    border-spacing: 8px
+    border-spacing: 8px;
+    position: sticky;
+    top: 0;
 }
 
 .jsde-field {
