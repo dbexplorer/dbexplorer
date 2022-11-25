@@ -109,9 +109,10 @@ export class TableViewModel {
               }
               row.exploreCallback = () => {
                 this.exploredRow?.setExplored(false);
-                this.exploredRow = row;
-                this.exploredRow.setExplored(true);
-                this.exploreRowCallback(row);
+                const newExploredRow = (this.exploredRow !== row) ? row : null;
+                this.exploredRow = newExploredRow;
+                this.exploredRow?.setExplored(true);
+                this.exploreRowCallback(newExploredRow);
               }
               return row;
             }

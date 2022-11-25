@@ -173,6 +173,14 @@ test("Explorer add table panel with init key", () => {
   expect(!!explorer.getPanels()[0].extraDataViewModel).toBeTruthy();
 })
 
+test("Panel form close", () => {
+  var panel = new ExplorerPanelViewModel(new TableViewModel([]), "");
+  var newKey = "123";
+  panel.setExtraDataKeyCallback = (key) => { newKey = key }
+  panel.hideForm();
+  expect(newKey).toBeNull();
+})
+
 test("Explorer css", () => {
   var panel = new ExplorerPanelViewModel(new TableViewModel([]), "");
   expect(panel.css()).toEqual({

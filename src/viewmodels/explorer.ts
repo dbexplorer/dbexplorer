@@ -24,6 +24,9 @@ export class ExplorerPanelViewModel {
     };
   }
   public closeCallback: () => void;
+  public hideForm() {
+    this.setExtraDataKeyCallback(null);
+  };
   public closeLeftCallback: () => void;
   public closeRightCallback: () => void;
   public setExtraDataKeyCallback: (key: string) => void = () => { };
@@ -75,8 +78,15 @@ export class ExplorerViewModel {
 
 
     tableViewModel.exploreRowCallback = (row) => {
-      panel.extraDataViewModel = this.createFormViewModel(entityId, row.getKey(), panel);
-      panel.setExtraDataKeyCallback(row.getKey());
+      if (row) {
+        panel.extraDataViewModel = this.createFormViewModel(entityId, row.getKey(), panel);
+        panel.setExtraDataKeyCallback(row.getKey());
+      }
+      else {
+        panel.extraDataViewModel = null;
+        panel.setExtraDataKeyCallback(null);
+        this.removePanel(panel, "after");
+      }
     }
   }
 
