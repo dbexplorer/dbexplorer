@@ -29,6 +29,7 @@ export class ExplorerPanelViewModel {
   public setExtraDataKeyCallback: (key: string) => void = () => { };
 }
 export class ExplorerViewModel {
+  static readonly maxPanelsCount = 2;
   private sequence = 0;
   private panels: ExplorerPanelViewModel[] = [];
   private description: DataBaseDescription;
@@ -66,9 +67,11 @@ export class ExplorerViewModel {
     };
     const panel = this.createTablePanel(tableViewModel, entityId + this.sequence++);
     if (!back) {
+      if (this.panels.length == ExplorerViewModel.maxPanelsCount) this.panels.splice(0, 1);
       this.panels.push(panel);
     }
     else {
+      if (this.panels.length == ExplorerViewModel.maxPanelsCount) this.panels.splice(this.panels.length - 1, 1);
       this.panels.unshift(panel);
     }
     this.addPanelCallback(panel);

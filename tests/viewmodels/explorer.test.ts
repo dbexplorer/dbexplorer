@@ -108,6 +108,35 @@ test("Explore relationship", () => {
   expect(lastOptions.filter).toEqual({ type: "EQ", field: "e_key", value: "a" });
 })
 
+test("Explore relationships and panels count", () => {
+  var explorer = new ExplorerViewModel(dbDescription, "table", {});
+  explorer.getDataCallback = (entityId, attributes, options, ready) => { }
+  explorer.addPanelCallback = () => { }
+  explorer.removePanelCallback = () => { };
+  explorer.start();
+
+  (explorer.getPanels()[0].dataViewModel as TableViewModel).exploreRowCallback(new TableRowViewModel(["a", "b", "c"], "a"));
+  var form = explorer.getPanels()[0].extraDataViewModel as FormViewModel;
+  form.rels[0].exploreCallback();
+  expect(explorer.getPanels().length).toEqual(2);
+  explorer.getPanels()[1].dataViewModel.loadData();
+  expect(explorer.getPanels()[1].dataViewModel.getTitle()).toBe("child table 1");
+
+  (explorer.getPanels()[1].dataViewModel as TableViewModel).exploreRowCallback(new TableRowViewModel(["a", "b", "c"], "a"));
+  form = explorer.getPanels()[1].extraDataViewModel as FormViewModel;
+  form.rels[0].exploreCallback();
+  expect(explorer.getPanels().length).toEqual(2);
+  expect(explorer.getPanels()[0].dataViewModel.getTitle()).toBe("child table 1");
+  expect(explorer.getPanels()[1].dataViewModel.getTitle()).toBe("grandchild table");
+
+  const field = new FormStringFieldViewModel({ name: "e_key" });
+  field.setText("555");
+  (explorer.getPanels()[0].extraDataViewModel as FormViewModel).exploreFieldCallback(field);
+  expect(explorer.getPanels().length).toEqual(2);
+  expect(explorer.getPanels()[0].dataViewModel.getTitle()).toBe("table");
+  expect(explorer.getPanels()[1].dataViewModel.getTitle()).toBe("child table 1");
+})
+
 test("Explore empty row", () => {
   var explorer = new ExplorerViewModel(dbDescription, "table", {});
   explorer.getDataCallback = (entityId, attributes, options, ready) => {
