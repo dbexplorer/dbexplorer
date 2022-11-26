@@ -162,6 +162,12 @@ export class TableViewModel {
     if (index >= 0 && this.loadBackVisible) index++;
     return index;
   }
+  getLoadBackVisible(): any {
+    return true;
+  }
+  getLoadMoreVisible(): any {
+    return true;
+  }
   addRowsCallback: (rows: TableRowViewModel[]) => any;
   loadMoreVisibleCallback: (visible: boolean) => any;
   loadBackVisibleCallback: (visible: boolean) => any = () => { };

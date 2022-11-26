@@ -174,11 +174,29 @@ test("Explorer add table panel with init key", () => {
 })
 
 test("Panel form close", () => {
-  var panel = new ExplorerPanelViewModel(new TableViewModel([]), "");
-  var newKey = "123";
-  panel.setExtraDataKeyCallback = (key) => { newKey = key }
-  panel.hideForm();
-  expect(newKey).toBeNull();
+  var explorer = new ExplorerViewModel(dbDescription, "table", {});
+  explorer.addPanelCallback = () => { };
+  explorer.removePanelCallback = () => { };
+  explorer.getDataCallback = (entityId, attributes, options, ready) => {
+    ready([
+      { key: "777", data: { table_key: "777", f1: "one", f2: "first" } }
+    ]);
+  }
+  explorer.start();
+  var panel = explorer.getPanels()[0];
+  var extraKey = "";
+  panel.setExtraDataKeyCallback = (key) => { extraKey = key };
+  var table = panel.dataViewModel as TableViewModel;
+  table.addRowsCallback = () => { };
+
+  table.loadData();
+  table.rows[0].updateCssCallback = () => { };
+  table.rows[0].exploreCallback();
+  expect(!!(panel.extraDataViewModel as FormViewModel)).toBeTruthy();
+  expect(extraKey).toEqual("777");
+  table.rows[0].exploreCallback();
+  expect(!!(panel.extraDataViewModel as FormViewModel)).toBeFalsy();
+  expect(extraKey).toEqual(null);
 })
 
 test("Explorer css", () => {

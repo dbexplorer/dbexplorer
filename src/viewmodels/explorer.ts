@@ -24,9 +24,6 @@ export class ExplorerPanelViewModel {
     };
   }
   public closeCallback: () => void;
-  public hideForm() {
-    this.setExtraDataKeyCallback(null);
-  };
   public closeLeftCallback: () => void;
   public closeRightCallback: () => void;
   public setExtraDataKeyCallback: (key: string) => void = () => { };

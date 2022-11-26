@@ -4,13 +4,12 @@ import { TableRow } from './row';
 
 export function Table({ model }: { model: TableViewModel }) {
   const [rows, setRows] = useState(model.rows);
-  const [loadMoreVisible, setLoadMoreVisible] = useState(true);
-  const [loadBackVisible, setLoadBackVisible] = useState(true);
+  const [loadMoreVisible, setLoadMoreVisible] = useState(model.getLoadMoreVisible());
+  const [loadBackVisible, setLoadBackVisible] = useState(model.getLoadBackVisible());
   model.addRowsCallback = setRows;
   model.loadMoreVisibleCallback = setLoadMoreVisible;
   model.loadBackVisibleCallback = setLoadBackVisible;
   const css = model.css();
-
 
   const headerCells = model.headerViewModel.captionsViewModel.getCells();
   const tableBodyRef = useRef(null);
@@ -21,6 +20,7 @@ export function Table({ model }: { model: TableViewModel }) {
     const [entry] = entries;
     if (entry.isIntersecting) model.loadData();
   }
+
   function observerBackCallback(entries: IntersectionObserverEntry[]) {
     const [entry] = entries;
     if (entry.isIntersecting) model.loadData(true);
@@ -29,12 +29,16 @@ export function Table({ model }: { model: TableViewModel }) {
   useEffect(() => {
     const observer = new IntersectionObserver(observerCallback);
     const observer2 = new IntersectionObserver(observerBackCallback);
-    if (footerRef.current) observer.observe(footerRef.current);
+    if (footerRef.current) {
+      observer.observe(footerRef.current);
+    }
     // TODO: check if we need unobserve
     // return () => {
     //   if (footerRef.current) observer.unobserve(footerRef.current);
     // }
-    if (loadBackRef.current) observer2.observe(loadBackRef.current);
+    if (loadBackRef.current) {
+      observer2.observe(loadBackRef.current);
+    }
     if (model.getKey()) {
       const currentRowIndex = model.getCurrentRowIndex();
       if (currentRowIndex >= 0) tableBodyRef.current.childNodes[currentRowIndex].scrollIntoView({ block: "center" });

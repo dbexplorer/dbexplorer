@@ -15,6 +15,21 @@ exports[`Table test - no load more 1`] = `
 </table>
 `;
 
+exports[`Table test - no load more absolutely 1`] = `
+<table
+  class="jsde-table"
+>
+  <thead
+    class="jsde-table-head"
+  >
+    <tr />
+  </thead>
+  <tbody
+    class="jsde-table-body"
+  />
+</table>
+`;
+
 exports[`Table test 1`] = `
 <table
   class="jsde-table"

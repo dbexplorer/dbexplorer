@@ -130,6 +130,19 @@ test("Table test - no load more", () => {
   expect(container.firstChild).toMatchSnapshot();
 });
 
+test("Table test - no load more absolutely", () => {
+  var tableViewModel = new TableViewModel([]);
+  tableViewModel.dataPartRowCount = 2;
+  tableViewModel.getDataCallback = (options, ready) => {
+    ready([]);
+  };
+  tableViewModel.getLoadBackVisible = () => false;
+  tableViewModel.getLoadMoreVisible = () => false;
+
+  const { container } = render(<Table model={tableViewModel} />);
+  expect(container.firstChild).toMatchSnapshot();
+});
+
 test("table test - load more without click", () => {
   var tableViewModel = new TableViewModel([]);
   tableViewModel.dataPartRowCount = 2;
