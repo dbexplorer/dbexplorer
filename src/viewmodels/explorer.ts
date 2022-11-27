@@ -9,6 +9,7 @@ export interface IExplorerOptions { }
 export class ExplorerPanelViewModel {
   constructor(public dataViewModel: TableViewModel, private key: string) { }
   public extraDataViewModel: IBaseViewModel;
+  public exploredRelationshipEntityId: string;
   public getKey() {
     return this.key;
   }
@@ -81,6 +82,11 @@ export class ExplorerViewModel {
       if (row) {
         panel.extraDataViewModel = this.createFormViewModel(entityId, row.getKey(), panel);
         panel.setExtraDataKeyCallback(row.getKey());
+        const exploredRelationship = (panel.extraDataViewModel as FormViewModel).rels.find(r => r.getEntityId() == panel.exploredRelationshipEntityId);
+        if (exploredRelationship) {
+          this.removePanel(panel, "after");
+          this.addTablePanel(exploredRelationship.getEntityId(), null, { type: "EQ", field: exploredRelationship.getKeyField(), value: row.getKey() })
+        }
       }
       else {
         panel.extraDataViewModel = null;
@@ -88,6 +94,7 @@ export class ExplorerViewModel {
         this.removePanel(panel, "after");
       }
     }
+    return panel;
   }
 
   private createFormViewModel(entityId: string, key: string | string[], sender: ExplorerPanelViewModel) {
@@ -116,11 +123,13 @@ export class ExplorerViewModel {
     formViewModel.exploreRelationshipCallback = (rel) => {
       this.removePanel(sender, "after");
       this.addTablePanel(rel.getEntityId(), null, { type: "EQ", field: rel.getKeyField(), value: key });
+      sender.exploredRelationshipEntityId = rel.getEntityId();
     };
     formViewModel.exploreFieldCallback = (field) => {
-      const entityId = fieldRels.filter(r => r.key == field.getName())[0].entity;
+      const parentEntityId = fieldRels.find(r => r.key == field.getName()).entity;
       this.removePanel(sender, "before");
-      this.addTablePanel(entityId, field.getText(), null, true);
+      const newPanel = this.addTablePanel(parentEntityId, field.getText(), null, true);
+      newPanel.exploredRelationshipEntityId = entityId;
     };
     return formViewModel;
   }

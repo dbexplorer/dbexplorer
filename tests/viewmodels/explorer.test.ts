@@ -106,6 +106,15 @@ test("Explore relationship", () => {
   expect(explorer.getPanels()[1].dataViewModel.getKey()).toBeNull();
   expect(explorer.getPanels()[1].dataViewModel.getTitle()).toBe("child table 1");
   expect(lastOptions.filter).toEqual({ type: "EQ", field: "e_key", value: "a" });
+
+  (explorer.getPanels()[0].dataViewModel as TableViewModel).exploreRowCallback(new TableRowViewModel(["a", "b", "c"], "b"));
+  var form = explorer.getPanels()[0].extraDataViewModel as FormViewModel;
+  form.rels[0].exploreCallback();
+  explorer.getPanels()[1].dataViewModel.loadData();
+  expect(explorer.getPanels().length).toEqual(2);
+  expect(explorer.getPanels()[1].dataViewModel.getKey()).toBeNull();
+  expect(explorer.getPanels()[1].dataViewModel.getTitle()).toBe("child table 1");
+  expect(lastOptions.filter).toEqual({ type: "EQ", field: "e_key", value: "b" });
 })
 
 test("Explore relationships and panels count", () => {
