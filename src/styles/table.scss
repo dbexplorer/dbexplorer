@@ -1,3 +1,7 @@
+.jsde-table {
+    height: 0;
+}
+
 .jsde-table-head {
     color: white;
     background-color: black;
@@ -17,4 +21,5 @@
 
 .jsde-table-cell {
     padding: 8px;
+    white-space: nowrap;
 }
