@@ -163,6 +163,7 @@ test("table test - load more without click", () => {
   const { container, unmount } = render(<Table model={tableViewModel} />);
   callAllObservers();
   act(() => {
+    observerCallback["jsde-table-loading-top"]([{ isIntersecting: false }]);
     observerCallback["jsde-table-loading-bottom"]([{ isIntersecting: true }]);
   });
   expect(tableViewModel.rows.map(r => r.getKey())).toEqual([1, 2, 5, 6]);
