@@ -17,15 +17,7 @@ const TypedocWebpackPlugin = require('typedoc-webpack-plugin')
  *
  */
 
-/*
- * We've enabled UglifyJSPlugin for you! This minifies your app
- * in order to load faster and run less javascript.
- *
- * https://github.com/webpack-contrib/uglifyjs-webpack-plugin
- *
- */
-
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = {
     entry: {
@@ -64,7 +56,6 @@ module.exports = {
     mode: 'development',
     plugins: [
         new CleanWebpackPlugin(),
-        //new UglifyJSPlugin(),
         new MiniCssExtractPlugin({
             filename: '[name].css'
         }),

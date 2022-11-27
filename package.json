@@ -35,7 +35,6 @@
     "typedoc": "latest",
     "typedoc-webpack-plugin": "latest",
     "typescript": "latest",
-    "uglifyjs-webpack-plugin": "latest",
     "webpack": "^5.73.0",
     "webpack-cli": "latest",
     "wepack-cli": "latest"
