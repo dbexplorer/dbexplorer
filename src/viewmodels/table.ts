@@ -86,6 +86,12 @@ export class TableViewModel {
   }
   loadData(back = false) {
     const options = { limit: this.dataPartRowCount, offset: back ? this.dataBackOffset : this.dataOffset, key: this.key, back: back };
+
+    if (back && !this.key) {
+      this.setLoadBackVisible(false);
+      return;
+    }
+
     this.getDataCallback(
       options,
       (data: any) => {
