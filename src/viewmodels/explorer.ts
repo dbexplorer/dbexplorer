@@ -137,7 +137,7 @@ export class ExplorerViewModel {
   private removePanel(viewModel: ExplorerPanelViewModel, option: "this" | "after" | "before") {
     const panelIndex = this.panels.indexOf(viewModel);
     switch (option) {
-      case "this": this.panels.splice(panelIndex); break;
+      case "this": this.panels.splice(panelIndex, 1); break;
       case "after": this.panels.splice(panelIndex + 1); break;
       case "before": this.panels.splice(0, panelIndex); break;
     }

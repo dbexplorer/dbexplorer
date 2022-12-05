@@ -55,11 +55,17 @@ test("Explorer remove panel test", () => {
 
 
   explorer.getPanels().length = 0;
-  explorer.getPanels().push(panel1, panel2, panel3);
-  expect(explorer.getPanels().map(p => p.getKey())).toStrictEqual(["e1", "e2", "e3"]);
-
+  explorer.getPanels().push(panel1, panel2);
+  expect(explorer.getPanels().map(p => p.getKey())).toStrictEqual(["e1", "e2"]);
   panel2.closeCallback();
   expect(explorer.getPanels().map(p => p.getKey())).toStrictEqual(["e1"]);
+
+  explorer.getPanels().length = 0;
+  explorer.getPanels().push(panel1, panel2);
+  expect(explorer.getPanels().map(p => p.getKey())).toStrictEqual(["e1", "e2"]);
+  panel1.closeCallback();
+  expect(explorer.getPanels().map(p => p.getKey())).toStrictEqual(["e2"]);
+
 
   explorer.getPanels().length = 0;
   explorer.getPanels().push(panel1, panel2, panel3);
