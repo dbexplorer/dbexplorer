@@ -20,6 +20,9 @@ const TypedocWebpackPlugin = require('typedoc-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = {
+    entry: {
+        jsdataexplorer: './src/index.ts'
+    },
 
     module: {
         rules: [
