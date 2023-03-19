@@ -1,5 +1,7 @@
 var explorerViewModel = new JSDataExplorer.ExplorerViewModel(dbDescription, "orders", {});
-explorerViewModel.getDataCallback = getData;
+explorerViewModel.getDataCallback = (entityId, attributes, newOptions, ready) => {
+    JSDBMock.JSDBMock.Instance.getData(entityId, attributes, newOptions).then(ready)
+};
 
 let element = document.createElement("div");
 element.id = "explorerElement";

@@ -67,6 +67,10 @@ module.exports = {
                 {
                     from: './src/package.json',
                     to: '../dist/package.json'
+                },
+                {
+                    from: './node_modules/jsdbmock/jsdbmock.js',
+                    to: '../dist/jsdbmock.js'
                 }
             ]
         })
