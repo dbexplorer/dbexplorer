@@ -46,12 +46,13 @@ module.exports = {
             }
         ]
     },
-    resolve: { extensions: ['.ts', '.tsx'] },
+    resolve: { extensions: ['.js', '.ts', '.tsx'] },
     output: {
         chunkFilename: '[name].js',
         filename: '[name].js',
         library: 'JSDataExplorer',
-        libraryTarget: 'umd'
+        libraryTarget: 'umd',
+        path: path.resolve(__dirname, 'dist'),
     },
 
     mode: 'development',
