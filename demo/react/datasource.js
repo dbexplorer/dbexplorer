@@ -1,117 +1,126 @@
 const dbDescription = {
   entities: {
     customers: {
-      attributes: {
-        customerNumber: {
+      attributes: [
+        {
+          name: "customerNumber",
           isPrimaryKey: true
         },
-        customerName: {},
-        contactLastName: {},
-        contactFirstName: {},
-        phone: {},
-        addressLine1: {},
-        addressLine2: {},
-        city: {},
-        state: {},
-        postalCode: {},
-        country: {},
-        salesRepEmployeeNumber: {},
-        creditLimit: {}
-      }
+        "customerName",
+        "contactLastName",
+        "contactFirstName",
+        "phone",
+        "addressLine1",
+        "addressLine2",
+        "city",
+        "state",
+        "postalCode",
+        "country",
+        "salesRepEmployeeNumber",
+        "creditLimit"
+      ],
     },
     employees: {
-      attributes: {
-        employeeNumber: {
+      attributes: [
+        {
+          name: "employeeNumber",
           isPrimaryKey: true
         },
-        lastName: {},
-        firstName: {},
-        extension: {},
-        email: {},
-        officeCode: {},
-        reportsTo: {},
-        jobTitle: {},
-      }
+        "lastName",
+        "firstName",
+        "extension",
+        "email",
+        "officeCode",
+        "reportsTo",
+        "jobTitle",
+      ]
     },
     offices: {
-      attributes: {
-        officeCode: {
+      attributes: [
+        {
+          name: "officeCode",
           isPrimaryKey: true
         },
-        city: {},
-        phone: {},
-        addressLine1: {},
-        addressLine2: {},
-        state: {},
-        country: {},
-        postalCode: {},
-        territory: {},
-      }
+        "city",
+        "phone",
+        "addressLine1",
+        "addressLine2",
+        "state",
+        "country",
+        "postalCode",
+        "territory",
+      ]
     },
     orders: {
-      attributes: {
-        orderNumber: {
+      attributes: [
+        {
+          name: "orderNumber",
           isPrimaryKey: true
         },
-        orderDate: {},
-        requiredDate: {},
-        shippedDate: {},
-        status: {},
-        comments: {},
-        customerNumber: {},
-      }
+        "orderDate",
+        "requiredDate",
+        "shippedDate",
+        "status",
+        "comments",
+        "customerNumber",
+      ]
     },
     orderdetails: {
-      attributes: {
-        orderNumber: {
+      attributes: [
+        {
+          name: "orderNumber",
           isPrimaryKey: true
         },
-        productCode: {
+        {
+          name: "productCode",
           isPrimaryKey: true
         },
-        quantityOrdered: {},
-        priceEach: {},
-        orderLineNumber: {},
-      }
+        "quantityOrdered",
+        "priceEach",
+        "orderLineNumber",
+      ]
     },
     payments: {
-      attributes: {
-        customerNumber: {
+      attributes: [
+        {
+          name: "customerNumber",
           isPrimaryKey: true
         },
-        checkNumber: {
+        {
+          name: "checkNumber",
           isPrimaryKey: true
         },
-        paymentDate: {},
-        amount: {},
-      }
+        "paymentDate",
+        "amount",
+      ]
     },
     productlines: {
-      attributes: {
-        productLine: {
+      attributes: [
+        {
+          name: "productLine",
           isPrimaryKey: true
         },
-        textDescription: {},
-        htmlDescription: {},
-        image: {}
-      }
+        "textDescription",
+        "htmlDescription",
+        "image"
+      ]
     },
     products: {
-      attributes: {
-        productCode: {
+      attributes: [
+        {
+          name: "productCode",
           isPrimaryKey: true
         },
-        productName: {},
-        productLine: {},
-        productScale: {},
-        productVendor: {},
-        productDescription: {},
-        quantityInStock: {},
-        buyPrice: {},
-        MSRP: {}
-      }
+        "productName",
+        "productLine",
+        "productScale",
+        "productVendor",
+        "productDescription",
+        "quantityInStock",
+        "buyPrice",
+        "MSRP"
+      ]
     }
-
   },
   relationships: [{
     title: "Customers",

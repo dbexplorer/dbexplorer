@@ -1,4 +1,5 @@
 export interface IDataAttribute {
+  name: string;
   title?: string;
   type?: string;
   isPrimaryKey?: boolean;
@@ -11,7 +12,7 @@ export interface IDataAttributes {
 }
 export interface IDataEntity {
   title?: string;
-  attributes: IDataAttributes;
+  attributes: (string | IDataAttribute)[];
 }
 export interface IDataEntities {
   [key: string]: IDataEntity;
@@ -29,50 +30,50 @@ export interface IDataBase {
 }
 
 export class DataBaseDescription {
-  constructor(private database: IDataBase) { }
-  public getPrimaryKey(entityId: string): string | string[] {
-    let columns = [];
-    const attributes = this.database.entities[entityId].attributes;
-    for (let col in attributes) {
-      if (attributes[col].isPrimaryKey) {
-        columns.push(col);
-      }
+  constructor(private database: IDataBase) {
+    this.entityAttributes = {};
+    for (let entity in database.entities) {
+      this.entityAttributes[entity] = this.getEntityAttributes(entity);
     }
+  }
+  private entityAttributes: {
+    [key: string]: IDataAttribute[];
+  };
+  private getEntityAttributes(entity: string) {
+    const attrMap: IDataAttributes = {};
+    return this.database.entities[entity].attributes.map(a => {
+      if (typeof (a) === "string") {
+        return { name: a };
+      } else {
+        return a;
+      }
+    })
+  }
+  public getPrimaryKey(entityId: string): string | string[] {
+    const attributes = this.entityAttributes[entityId];
+    const columns = attributes.filter(a => a.isPrimaryKey).map(a => a.name);
     return columns.length == 1 ? columns[0] : columns;
   }
   public getTableTitle(entityId: string) {
     return this.database.entities[entityId].title || entityId;
   }
   public getTableColumns(entityId: string) {
-    let columns = [];
-    const attributes = this.database.entities[entityId].attributes;
-    for (let col in attributes) {
-      if (!attributes[col].hideInTable) {
-        columns.push({ name: col, title: attributes[col].title || col });
-      }
-    }
-    return columns;
+    const attributes = this.entityAttributes[entityId];
+    return attributes.filter(a => !a.hideInTable).map(a => ({ name: a.name, title: a.title || a.name }))
   }
   public getFormFields(entityId: string) {
     let fields = [];
-    const attributes = this.database.entities[entityId].attributes;
-    for (let col in attributes) {
-      if (!attributes[col].hideInForm) {
-        fields.push(
-          this.database.relationships.filter(rel => rel.child == entityId && rel.childKey == col).length > 0 ?
-            {
-              name: col,
-              title: attributes[col].title || col,
-              hasReference: true
-            } :
-            {
-              name: col,
-              title: attributes[col].title || col
-            }
-        );
+    const attributes = this.entityAttributes[entityId];
+    return attributes.filter(a => !a.hideInForm).map(a => {
+      const res: { name: string, title: string, hasReference?: boolean } = {
+        name: a.name,
+        title: a.title || a.name
       }
-    }
-    return fields;
+      if (this.database.relationships.filter(rel => rel.child == entityId && rel.childKey == a.name).length > 0) {
+        res.hasReference = true;
+      }
+      return res;
+    })
   }
   public getDownRelationships(entityId: string) {
     return this.database.relationships
