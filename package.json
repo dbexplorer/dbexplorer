@@ -45,7 +45,6 @@
     "wepack-cli": "latest"
   },
   "dependencies": {
-    "jsdbmock": "../db-stub/dist",
     "react": "^18.0.0"
   }
 }
