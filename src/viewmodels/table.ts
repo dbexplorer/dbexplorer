@@ -1,5 +1,5 @@
 import { IGetDataOptions } from "../data";
-import { cssPrefix } from "../utils";
+import { cssPrefix, keysEqual } from "../utils";
 
 export class TableCellViewModel {
   private text: string;
@@ -108,7 +108,7 @@ export class TableViewModel {
                 this.columns.map((col) => rowData.data[col.name].toString()),
                 rowData.key
               )
-              if (rowData.key == this.key) {
+              if (keysEqual(rowData.key, this.key)) {
                 this.exploredRow = row;
                 this.exploredRow.setExplored(true, false);
                 this.exploreRowCallback(row);
@@ -160,11 +160,14 @@ export class TableViewModel {
   getKey() {
     return this.key;
   }
+  getKeyAsString() {
+    return this.key.toString();
+  }
   getTitle() {
     return this.title;
   }
   getCurrentRowIndex() {
-    let index = this.rows.indexOf(this.rows.filter(r => r.getKey() == this.key)[0]);
+    let index = this.rows.indexOf(this.rows.filter(r => keysEqual(r.getKey(), this.key))[0]);
     if (index >= 0 && this.loadBackVisible) index++;
     return index;
   }
