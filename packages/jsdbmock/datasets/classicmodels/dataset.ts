@@ -1,0 +1,9 @@
+export const classicmodels: any = {};
+classicmodels["customers"] = require("./customers.csv");
+classicmodels["employees"] = require("./employees.csv");
+classicmodels["offices"] = require("./offices.csv");
+classicmodels["orderdetails"] = require("./orderdetails.csv");
+classicmodels["orders"] = require("./orders.csv");
+classicmodels["payments"] = require("./payments.csv");
+classicmodels["productlines"] = require("./productlines.csv");
+classicmodels["products"] = require("./products.csv");

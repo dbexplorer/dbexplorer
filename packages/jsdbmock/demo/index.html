@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Welcome to React</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script src="jsdbmock.js"></script>
+</head>
+
+<body>
+  <select id="tableSelect">
+  </select>
+  <table id="table">
+    
+  </table>
+</body>
+<script>
+  var select = document.getElementById("tableSelect");
+  var table = document.getElementById("table");
+  var entities = JSDBMock.JSDBMock.Instance.getEntities();
+  entities.forEach(e => {
+    var opt = document.createElement('option');
+    opt.value = e;
+    opt.innerHTML = e;
+    select.appendChild(opt);
+  });
+  
+  select.onchange = ()=>{
+    var fields = JSDBMock.JSDBMock.Instance.getFields(select.value);
+    table.innerHTML = "";
+    var tr = document.createElement("tr");
+    fields.forEach(f => {
+      var th = document.createElement('th');
+      th.innerHTML = f;
+      tr.appendChild(th);
+    });
+    table.appendChild(tr);
+  }
+
+
+</script>  
+</html>
